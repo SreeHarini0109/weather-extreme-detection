@@ -1,0 +1,3 @@
+event_id,station_id,event_type,method,severity,start_date,end_date,duration_days,peak_value,peak_date
+MAA_heat_stress_20200518,MAA,heat_stress,threshold,danger,2020-05-18,2020-05-31,14,48.2498,2020-05-28
+CCU_heat_stress_20200530,CCU,heat_stress,threshold,danger,2020-05-30,2020-05-31,2,42.2156,2020-05-30

@@ -1,0 +1,43 @@
+{
+ "scenario": "michaung_2023",
+ "master": "local[4]",
+ "landing": "/Users/sreehariniganishkaa/weather/data/stream/landing",
+ "baseline": "/Users/sreehariniganishkaa/weather/results/sequential_p1_2026-10-18T22-59-19",
+ "watermark": "2 hours",
+ "trigger_s": 1,
+ "max_files_per_trigger": 64,
+ "startup_s": 2.52,
+ "started": 1792355485.271638,
+ "run_dir": "/Users/sreehariniganishkaa/weather/results/stream/michaung_2023_2026-10-19T02-01-21",
+ "status": "finished",
+ "replay": {
+  "data": "/Users/sreehariniganishkaa/weather/data/parquet/real",
+  "stations": [
+   "BOM",
+   "CCU",
+   "DEL",
+   "LKO",
+   "MAA",
+   "PHL"
+  ],
+  "start": "2023-11-25",
+  "end": "2023-12-10",
+  "step_hours": 6,
+  "speed_days_per_second": 2.0,
+  "rows": 2304,
+  "steps": 64,
+  "started": 1792355487.077543
+ },
+ "batches": 9,
+ "rows_in": 2304,
+ "days_analysed": 96,
+ "alerts": 30,
+ "closed_events": 15,
+ "active_events": 0,
+ "late_days_dropped": 0,
+ "stream_seconds": 5.1,
+ "latency_median_s": 2.213,
+ "latency_p95_s": 3.6832999999999987,
+ "parity_ok": true,
+ "updated": 1792355497.4800582
+}

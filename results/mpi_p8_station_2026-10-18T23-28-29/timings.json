@@ -1,0 +1,120 @@
+{
+  "phases": {
+    "load": 0.226172,
+    "clean": 0.963925,
+    "stats": 2.118679,
+    "thresholds": 0.070431,
+    "detect": 0.957361,
+    "trends": 0.354478
+  },
+  "comm": 0.466551,
+  "merge": 0.003934,
+  "total_s": 4.309126,
+  "write_s": 0.34201495797606185,
+  "per_worker": {
+    "0": {
+      "comm": 0.0416,
+      "load": 0.1938,
+      "clean": 0.9633,
+      "stats": 2.1187,
+      "thresholds": 0.0522,
+      "detect": 0.565,
+      "trends": 0.3545,
+      "merge": 0.0036,
+      "host": "SreeHarinis-MacBook-Pro.local",
+      "rows": 1841035,
+      "n_stations": 7
+    },
+    "1": {
+      "comm": 0.0951,
+      "load": 0.2262,
+      "clean": 0.9639,
+      "stats": 2.0378,
+      "thresholds": 0.065,
+      "detect": 0.58,
+      "trends": 0.2883,
+      "merge": 0.0014,
+      "host": "SreeHarinis-MacBook-Pro.local",
+      "rows": 1841035,
+      "n_stations": 7
+    },
+    "2": {
+      "comm": 0.3025,
+      "load": 0.1936,
+      "clean": 0.809,
+      "stats": 1.8298,
+      "thresholds": 0.0473,
+      "detect": 0.8169,
+      "trends": 0.2554,
+      "merge": 0.0039,
+      "host": "SreeHarinis-MacBook-Pro.local",
+      "rows": 1578030,
+      "n_stations": 6
+    },
+    "3": {
+      "comm": 0.407,
+      "load": 0.197,
+      "clean": 0.9232,
+      "stats": 2.0435,
+      "thresholds": 0.0437,
+      "detect": 0.4359,
+      "trends": 0.2074,
+      "merge": 0.0018,
+      "host": "SreeHarinis-MacBook-Pro.local",
+      "rows": 1578030,
+      "n_stations": 6
+    },
+    "4": {
+      "comm": 0.4666,
+      "load": 0.1845,
+      "clean": 0.8706,
+      "stats": 1.9464,
+      "thresholds": 0.0704,
+      "detect": 0.5732,
+      "trends": 0.1498,
+      "merge": 0.0018,
+      "host": "SreeHarinis-MacBook-Pro.local",
+      "rows": 1578030,
+      "n_stations": 6
+    },
+    "5": {
+      "comm": 0.1939,
+      "load": 0.1907,
+      "clean": 0.82,
+      "stats": 1.7396,
+      "thresholds": 0.067,
+      "detect": 0.9574,
+      "trends": 0.2921,
+      "merge": 0.0015,
+      "host": "SreeHarinis-MacBook-Pro.local",
+      "rows": 1578030,
+      "n_stations": 6
+    },
+    "6": {
+      "comm": 0.2761,
+      "load": 0.1942,
+      "clean": 0.9305,
+      "stats": 1.8281,
+      "thresholds": 0.0536,
+      "detect": 0.7262,
+      "trends": 0.2523,
+      "merge": 0.0032,
+      "host": "SreeHarinis-MacBook-Pro.local",
+      "rows": 1578030,
+      "n_stations": 6
+    },
+    "7": {
+      "comm": 0.4321,
+      "load": 0.1817,
+      "clean": 0.9097,
+      "stats": 1.9214,
+      "thresholds": 0.0419,
+      "detect": 0.5253,
+      "trends": 0.2478,
+      "merge": 0.0017,
+      "host": "SreeHarinis-MacBook-Pro.local",
+      "rows": 1578030,
+      "n_stations": 6
+    }
+  }
+}

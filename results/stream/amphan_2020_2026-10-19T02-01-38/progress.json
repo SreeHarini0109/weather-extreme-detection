@@ -1,0 +1,43 @@
+{
+ "scenario": "amphan_2020",
+ "master": "local[4]",
+ "landing": "/Users/sreehariniganishkaa/weather/data/stream/landing",
+ "baseline": "/Users/sreehariniganishkaa/weather/results/sequential_p1_2026-10-18T22-59-19",
+ "watermark": "2 hours",
+ "trigger_s": 1,
+ "max_files_per_trigger": 64,
+ "startup_s": 2.21,
+ "started": 1792355502.074847,
+ "run_dir": "/Users/sreehariniganishkaa/weather/results/stream/amphan_2020_2026-10-19T02-01-38",
+ "status": "finished",
+ "replay": {
+  "data": "/Users/sreehariniganishkaa/weather/data/parquet/real",
+  "stations": [
+   "BOM",
+   "CCU",
+   "DEL",
+   "LKO",
+   "MAA",
+   "PHL"
+  ],
+  "start": "2020-05-10",
+  "end": "2020-05-31",
+  "step_hours": 6,
+  "speed_days_per_second": 2.0,
+  "rows": 3168,
+  "steps": 88,
+  "started": 1792355503.7512078
+ },
+ "batches": 12,
+ "rows_in": 3168,
+ "days_analysed": 132,
+ "alerts": 50,
+ "closed_events": 24,
+ "active_events": 2,
+ "late_days_dropped": 0,
+ "stream_seconds": 10.21,
+ "latency_median_s": 2.0220000000000002,
+ "latency_p95_s": 2.1940749999999998,
+ "parity_ok": true,
+ "updated": 1792355517.352596
+}

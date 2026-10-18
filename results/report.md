@@ -1,6 +1,6 @@
 # Weather Data Processing & Extreme Weather Detection: Results Report
 
-Run `sequential_p1_2026-10-18T22-58-18` · engine **sequential** · p = 1 · 13,150,250 hourly rows · 50 stations · 1995–2024 · source: synthetic
+Run `mpi_p8_station_2026-10-18T23-28-29` · engine **mpi** · p = 8 · 13,150,250 hourly rows · 50 stations · 1995–2024 · source: synthetic
 
 ## 1. Global records
 
@@ -118,7 +118,7 @@ Recovery of the generator's true trend: mean absolute error **0.051 °C/decade**
 
 ## 4. Processing time & scalability
 
-This run: **11.63 s** wall (excluding 0.28 s writing outputs). Phases (slowest worker): load 0.33 s, clean 1.98 s, stats 6.60 s, thresholds 0.20 s, detect 1.82 s, trends 0.65 s.
+This run: **4.31 s** wall (excluding 0.34 s writing outputs). Phases (slowest worker): load 0.23 s, clean 0.96 s, stats 2.12 s, thresholds 0.07 s, detect 0.96 s, trends 0.35 s, comm 0.47 s.
 
 Median of repeated runs on the same 13.1M-row dataset (T₁ = sequential):
 
@@ -183,3 +183,28 @@ Same image on every node; MPI ranks launched over SSH from a hostfile, Spark in 
 | csv | 6 needed | 2630050 | 2.968 | 186.941 | 0.886 |
 | parquet | all | 2630050 | 0.059 | 34.829 | 44.721 |
 | parquet | 6 needed (pruned) | 2630050 | 0.027 | 34.829 | 95.737 |
+
+## 5. Streaming extension: live detection
+
+The batch engines analyse stored history. The streaming extension (`streaming/`) detects extremes while data arrives: a replayer feeds the stored hourly readings back as a live feed (6 simulated hours per Parquet file, written atomically), and **Spark Structured Streaming** deduplicates them with a 2-hour watermark, applies the batch engine's cleaning expressions and aggregates each station's day in a 1-day event-time window (append mode, so a day is emitted once, when complete). In `foreachBatch` the day is joined with the station-month thresholds from a batch run and evaluated with the same rule definitions; `core.streaming.StreamDetector` keeps one open run per station × rule and turns it into NEW / ESCALATED / ENDED alerts. It is gaps-and-islands, computed incrementally.
+
+Every closed streamed event is compared with the batch run's events at the end of a run. Events already running when the replay starts, or still running at its end, are left out because the stream cannot see their full extent.
+
+| run | master | stations | sim days/s | rows_in | alerts | rows_per_s | latency median / p95 (s) | parity |
+|---|---|---|---|---|---|---|---|---|
+| cluster/stream_amphan_2020_3workers | spark://master:7077 | 6 | 2.0 | 3168 | 50 | 207.2 | 7.47 / 9.12 | 22/22 |
+| cluster/stream_heatwave_2024_worker_killed | spark://master:7077 | 6 | 1.5 | 8784 | 232 | 190.0 | 3.03 / 15.57 | 101/101 |
+| stream/amphan_2020_2026-10-19T02-01-38 | local[4] | 6 | 2.0 | 3168 | 50 | 249.9 | 2.02 / 2.19 | 22/22 |
+| stream/heatwave_2024_2026-10-19T01-53-46 | local[4] | 6 | 1.0 | 8784 | 232 | 139.4 | 2.28 / 2.48 | 101/101 |
+| stream/heatwave_2024_resume_after_driver_kill | local[4] | 6 | 2.0 | 8784 | 232 | 267.0 | 2.22 / 10.17 | 101/101 |
+| stream/michaung_2023_2026-10-19T02-01-21 | local[4] | 6 | 2.0 | 2304 | 30 | 223.6 | 2.21 / 3.68 | 15/15 |
+| stream/synthetic_2024_2026-10-19T01-55-02 | local[4] | 50 | 0.0 | 146407 | 1893 | 14017.9 | 6.37 / 9.72 | 865/865 |
+
+* **Latency** is the wall-clock time from the replayer delivering a day's last hour to that day's alerts. It is about 2 s locally, made up of the watermark (the next file has to arrive), the 1 s trigger and about 0.3 s of processing. On the Docker cluster it is about 3 s.
+* **Throughput.** Replayed as fast as possible, 50 synthetic stations stream at about 14,000 hourly rows/s on `local[4]`. Paced runs are limited by the replay speed, not by Spark.
+* **Fault tolerance.** Spark checkpoints its file offsets and dedup/window state, and the detector saves its open runs after every micro-batch, skipping batch ids it has already processed. Stopping a worker mid-stream (Spark re-runs its tasks) and SIGKILLing the detector then restarting it with `--resume` both gave the same 232 alerts and identical events.
+* Real events caught live: the 2024 heatwave (Delhi severe heatwave from 25 May, Phalodi 47.3 °C), Cyclone Amphan (Kolkata heavy rain and gale on 20 May 2020) and Cyclone Michaung (Chennai 254.9 mm, extremely heavy, on 4 Dec 2023).
+
+![alert timeline](plots/stream_alert_timeline.png)
+
+![stream latency](plots/stream_latency.png)

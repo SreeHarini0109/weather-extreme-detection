@@ -7,7 +7,8 @@ const {
 } = require("docx");
 
 const ROOT = "/Users/sreehariniganishkaa/weather";
-const F = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "facts.json"), "utf8"));
+// facts.json: numbers taken from results/ (regenerate it, then run: node docs/build_implementation_doc.js)
+const F = JSON.parse(fs.readFileSync(process.argv[2] || path.join(ROOT, "docs", "facts.json"), "utf8"));
 const PLOTS = path.join(ROOT, "results", "plots");
 const CONTENT_W = 9026; // A4 width 11906 - 2 x 1440 margins (DXA)
 const ACCENT = "1D5FAE", HEAT = "C2410C", GREY = "4A5866", LINE = "C9D2DB", HEAD_FILL = "E8EEF5";
@@ -100,12 +101,12 @@ const children = [];
 children.push(
   new Paragraph({ spacing: { before: 2600, after: 200 }, children: [new TextRun({ text: "PARALLEL AND DISTRIBUTED SYSTEMS LABORATORY", size: 20, color: HEAT, bold: true, characterSpacing: 40 })] }),
   new Paragraph({ spacing: { after: 300 }, children: [new TextRun({ text: "Distributed Weather Data Processing and Extreme Weather Detection", size: 52, bold: true, color: "14202B" })] }),
-  new Paragraph({ spacing: { after: 600 }, children: [new TextRun({ text: "Implementation report: every phase from data generation to cluster deployment", size: 28, color: GREY })] }),
+  new Paragraph({ spacing: { after: 600 }, children: [new TextRun({ text: "Implementation report: every phase from data generation to cluster deployment and live streaming", size: 28, color: GREY })] }),
   ...table(["Item", "Value"], [
     ["Dataset", "13.15 million hourly readings, 50 stations, 1995–2024 (synthetic) + 526,032 ERA5 hours, 6 Indian cities, 2015–2024"],
-    ["Engines", "Sequential, multiprocessing, MPI (mpi4py), Apache Spark (PySpark)"],
+    ["Engines", "Sequential, multiprocessing, MPI (mpi4py), Apache Spark (PySpark), plus a Spark Structured Streaming extension for live alerts"],
     ["Best speedup", `${fmt(best.speedup)}× (${best.label}, p = ${best.p}) over ${fmt(seqT)} s sequential`],
-    ["Correctness", "All engines produce identical results (24 automated tests incl. cross-engine parity)"],
+    ["Correctness", "All engines produce identical results (29 automated tests incl. cross-engine and stream-vs-batch parity)"],
     ["Repository", "github.com/SreeHarini0109/weather-extreme-detection"],
   ], [2200, 6826]),
   new Paragraph({ children: [new PageBreak()] }),
@@ -123,12 +124,14 @@ children.push(
   B("**Extreme weather records:** heatwaves, cold waves, heavy rain, cloudbursts, heat stress, humidity extremes and gales, detected with fixed meteorological thresholds, station-relative statistics and multi-day spell rules."),
   B("**Trends:** yearly climate indices tested with linear regression, the Mann–Kendall test and Sen's slope."),
   B("**Processing time:** per-phase timings for every run, speedup, efficiency, the Karp–Flatt serial fraction and an Amdahl's-law fit."),
+  B("**Live alerts (extension):** the same detection running on a stream of hourly readings with Spark Structured Streaming, raising alerts about 2 s after a day's last reading arrives."),
   H2("1.2 Architecture and the central design rule"),
   P("All weather logic lives in one shared package, `core/`. The engines in `engines/` only decide how the work is split across processes or machines and how partial results are combined. Because every engine calls the same rules, the results can be compared one to one, and an automated parity test checks that every engine produces identical output."),
   ...table(["Folder", "Contents"], [
     ["`data/`", "stations.csv, synthetic generator, ERA5 downloader, Parquet converter"],
     ["`core/`", "cleaning, mergeable statistics, thresholds, detection rules, trends, pipeline, outputs, timing"],
     ["`engines/`", "sequential.py, parallel_mp.py, mpi_engine.py, spark_engine.py"],
+    ["`streaming/`", "replayer, Spark Structured Streaming detector, one-command demo, run summary"],
     ["`tests/`", "unit tests, ground-truth detection test, halo test, cross-engine parity tests"],
     ["`benchmark/`", "run_benchmarks.sh, analyze.py, format_benchmark.py"],
     ["`reporting/`", "evaluation against ground truth, report generator, results page, Streamlit dashboard"],
@@ -150,6 +153,7 @@ children.push(
     ["12", "Real-data validation (ERA5)", "known Indian extremes checked"],
     ["13", "Regional rule refinement", "IMD criteria for Indian plains and hills only"],
     ["14", "Reporting", "report, results page, dashboard"],
+    ["15", "Streaming extension", "replayer, Spark Structured Streaming detector, live dashboard tab"],
   ], [900, 4000, 4126]),
 );
 
@@ -222,7 +226,7 @@ children.push(
     ["wind, gust", "0–400 km/h", "out of range → missing"],
     ["duplicate timestamps", "", "keep the first"],
   ], [2000, 2400, 4626]),
-  P(`Invalid values become missing rather than being deleted, so no hours are lost. On the synthetic dataset this removed ${q.duplicates.toLocaleString()} duplicate rows and blanked ${(q.temp_c_flagged + q.humidity_pct_flagged + q.precip_mm_flagged + q.wind_kmh_flagged + q.gust_kmh_flagged).toLocaleString()} impossible values. Hourly data is then aggregated to daily values (UTC days): Tmax, Tmin, Tmean, mean / max / min humidity, rainfall total, wettest hour, maximum wind and gust, and the maximum NWS heat index (Rothfusz regression with its standard adjustments). The daily table is extended to a continuous date range so a missing day always breaks a multi-day event.`),
+  P(`Invalid values become missing rather than being deleted, so no hours are lost. On the synthetic dataset this removed ${q.duplicates.toLocaleString("en-US")} duplicate rows and blanked ${(q.temp_c_flagged + q.humidity_pct_flagged + q.precip_mm_flagged + q.wind_kmh_flagged + q.gust_kmh_flagged).toLocaleString("en-US")} impossible values. Hourly data is then aggregated to daily values (UTC days): Tmax, Tmin, Tmean, mean / max / min humidity, rainfall total, wettest hour, maximum wind and gust, and the maximum NWS heat index (Rothfusz regression with its standard adjustments). The daily table is extended to a continuous date range so a missing day always breaks a multi-day event.`),
   H2("5.2 P3: Mergeable statistics"),
   P("Each worker computes partial records of (count, mean, M2, min, max, time of min, time of max). Records from different workers combine **exactly** with Chan's parallel-variance formula, so no raw data needs to move:"),
   ...Code(["n    = nA + nB", "d    = meanB − meanA", "mean = meanA + d · nB / n", "M2   = M2A + M2B + d² · nA · nB / n          (std = √(M2 / n))"]),
@@ -304,7 +308,7 @@ children.push(
 // Phase 9 testing
 children.push(
   H1("10. Phase 9: Testing and validation"),
-  P("The test suite (`pytest tests/`, 24 tests) covers four levels:"),
+  P("The test suite (`pytest tests/`, 29 tests) covers these levels:"),
   ...table(["Level", "What is checked"], [
     ["Unit: statistics", "merging partial statistics of random splits equals the statistics of the whole; commutativity; earliest-time tie breaking; multi-way merge of frames"],
     ["Unit: detection", "IMD boundaries (64.4 mm is not heavy rain, 64.5 mm is), Beaufort categories, cloudburst, heatwave severity and spells, zero-variance z-scores, regional IMD rules (plains, hills, outside India), histogram percentiles vs exact nearest-rank values"],
@@ -312,6 +316,7 @@ children.push(
     ["Ground truth", "injected heatwaves, cloudbursts and cyclones are found (recall ≥ 90 % on a test dataset)"],
     ["Engine parity", "multiprocessing (static and dynamic), MPI (station, dynamic, time) and Spark each match the sequential engine: statistics within 10⁻⁶, identical event sets, thresholds, indices, trends and records"],
     ["Unit: trends", "Sen's slope and OLS exact on linear data; Mann–Kendall detects trends, has about 5 % false positives on noise, and agrees with SciPy's Kendall tau"],
+    ["Streaming", "the incremental detector fed random-size chunks of days equals batch detection; late days are ignored; checkpointed state resumes open events; end-to-end Spark Structured Streaming run on ERA5 (Cyclone Amphan) matches the batch events (Phase 15)"],
   ], [2000, 7026]),
   H2("10.1 Detection quality against injected ground truth (full dataset)"),
   ...table(["Injected event", "Injected", "Found by ≥ 1 matching detector", "Recall"],
@@ -386,25 +391,73 @@ children.push(
   H1("15. Phase 14: Reporting"),
   B("**`reporting/make_report.py`** produces a self-contained HTML and Markdown report with records, event tables, detection quality, trends and all performance plots."),
   B("**`reporting/make_page.py`** builds the shareable results page, including the ERA5 reality check."),
-  B("**`reporting/dashboard.py`** (Streamlit) offers a station explorer with detected events shaded on the temperature, rain and wind series, a world map of station trends, records and the benchmark charts."),
+  B("**`reporting/dashboard.py`** (Streamlit) offers a station explorer with detected events shaded on the temperature, rain and wind series, a world map of station trends, records, the benchmark charts and (Phase 15) a live stream tab."),
   B("**`reporting/evaluate.py`** computes recall and precision against the injected ground truth."),
   ...figure("extremes_per_year.png", "Figure 4. Fixed-threshold extreme events per year across all stations."),
 );
 
+// Phase 15 streaming
+const S = F.stream || [];
+const sRun = (pred) => S.find(pred) || {};
+const sLocal = sRun((r) => r.scenario === "heatwave_2024" && r.master.startsWith("local") && !r.run.includes("kill"));
+const sMax = sRun((r) => r.speed_days_per_s === 0);
+const sName = (r) => {
+  const base = { heatwave_2024: "2024 heatwave", amphan_2020: "Cyclone Amphan 2020", michaung_2023: "Cyclone Michaung 2023",
+                 synthetic_2024: "Synthetic, 50 stations" }[r.scenario] || r.scenario;
+  if (r.run.includes("worker_killed")) return base + ", worker stopped";
+  if (r.run.includes("driver_kill")) return base + ", detector killed + resumed";
+  return base;
+};
+children.push(
+  H1("16. Phase 15: Streaming extension (live detection)"),
+  P("The four engines analyse stored history in batch: a run reads all the Parquet files, computes everything and writes the results. The plan listed real-time detection as an extension, and it was implemented in this phase: extremes are detected while the data arrives, and an alert is raised as soon as a day is complete."),
+  H2("16.1 Design"),
+  ...table(["Step", "Component", "What it does"], [
+    ["1", "`streaming/replayer.py`", "Feeds stored hourly readings back as a live feed: six simulated hours per Parquet file, at a chosen speed (e.g. one simulated day per second). Files are written under a hidden name and renamed into place, so Spark never reads half a file. A replay is needed because no free live feed exists for these stations (ERA5 arrives about 5 days late); it also makes demos repeatable."],
+    ["2", "`streaming/detector.py`", "Spark Structured Streaming job: file source → 2-hour event-time watermark + duplicate removal → the batch Spark engine's own cleaning expressions → one-day event-time window per station (append mode, so each day is emitted once, when complete) → foreachBatch."],
+    ["2", "`core/streaming.py`", "StreamDetector: joins each finished day with the station-month thresholds from a batch run and evaluates the same 19 rules. One open run per station × rule turns into NEW (event confirmed, e.g. day 3 of a heatwave spell), ESCALATED (severity rises) and ENDED (final event record) alerts. This is the batch gaps-and-islands method done incrementally."],
+    ["3", "dashboard \"Live stream\" tab", "Refreshes every 2 s: replay progress, rows in, station-days, alerts, active events, detection latency, the temperature, rain and wind of a chosen station as they stream in, the alert feed and the list of active events."],
+  ], [700, 2300, 6026]),
+  P("Because the stream uses the same expressions, rules and thresholds as the batch engines, every closed streamed event must equal the batch event with the same id. Each run checks this at the end (`parity.json`). Events already running when the replay starts, or still running at its end, are left out of the comparison because the stream cannot see their full extent."),
+  H2("16.2 Results"),
+  ...table(["Run", "Spark", "Rows", "Alerts", "Latency median / p95", "Parity"],
+    S.map((r) => [sName(r), r.master.replace("spark://master:7077", "cluster (3 workers)"), Number(r.rows_in).toLocaleString("en-US"), Number(r.alerts).toLocaleString("en-US"),
+      r.speed_days_per_s === 0 ? "n/a (max speed)" : `${fmt(r.latency_median_s, 1)} s / ${fmt(r.latency_p95_s, 1)} s`,
+      `${r.parity_matched} / ${r.parity_batch_events}`]),
+    [2900, 1500, 1050, 850, 1600, 1126]),
+  B(`**Latency:** a day's alerts appear about ${fmt(sLocal.latency_median_s || 2, 1)} s after its last hourly reading arrives. This is the watermark (the next file must arrive), the 1 s trigger interval and about 0.3 s of processing.`),
+  B(`**Throughput:** replayed as fast as possible, the 50-station synthetic network streams at about ${Math.round(sMax.rows_per_s || 14000).toLocaleString("en-US")} hourly rows per second on four local cores.`),
+  B("**Real events caught live:** the 2024 heatwave (Delhi severe heatwave from 25 May, Phalodi 47.3 °C), Cyclone Amphan (Kolkata heavy rain and gale on 20 May 2020) and Cyclone Michaung (Chennai 254.9 mm, extremely heavy, on 4 Dec 2023)."),
+  ...figure("stream_dashboard.png", "Figure 5. The dashboard's Live stream tab during the 2024 heatwave replay (Delhi)."),
+  ...figure("stream_alert_timeline.png", "Figure 6. NEW alerts from fixed-threshold rules per station as the May–June 2024 replay advanced."),
+  H2("16.3 Fault tolerance"),
+  P("Spark checkpoints the file offsets and the duplicate-removal and window state; the detector saves its open events after every micro-batch and skips batch ids it has already processed. Two failures were tested. Stopping a worker container mid-stream on the Docker cluster only delayed alerts while Spark re-ran the lost tasks on the other workers. Killing the detector process (SIGKILL) and restarting it with `--resume` continued from the checkpoint. Both runs produced the same 232 alerts as an undisturbed run, and all comparable events matched the batch engine."),
+  ...figure("stream_latency.png", "Figure 7. Detection latency per micro-batch: local, and on the cluster with a worker stopped mid-stream."),
+  H2("16.4 Running it"),
+  ...Code([
+    "python -m streaming.demo --list",
+    "python -m streaming.demo --scenario heatwave_2024        # 1 simulated day per second",
+    "streamlit run reporting/dashboard.py                     # open the Live stream tab",
+    "docker exec -w /app master python3 -m streaming.demo --scenario amphan_2020 --master spark://master:7077",
+  ]),
+);
+
 // Conclusion + how to run
 children.push(
-  H1("16. Results summary and limitations"),
-  H2("16.1 Summary"),
+  H1("17. Results summary and limitations"),
+  H2("17.1 Summary"),
   B(`Global records on the synthetic data: hottest ${rec.highest_temperature.value} °C (${rec.highest_temperature.station_id}), coldest ${rec.lowest_temperature.value} °C (${rec.lowest_temperature.station_id}), wettest day ${rec.max_daily_rainfall.value} mm (${rec.max_daily_rainfall.station_id}), strongest gust ${rec.max_wind_gust.value} km/h (${rec.max_wind_gust.station_id}).`),
-  B(`${F.events_total.toLocaleString()} extreme events detected: ${Object.entries(F.events_by_method).map(([k, v]) => `${v.toLocaleString()} ${k}`).join(", ")}.`),
+  B(`${F.events_total.toLocaleString("en-US")} extreme events detected: ${Object.entries(F.events_by_method).map(([k, v]) => `${v.toLocaleString("en-US")} ${k}`).join(", ")}.`),
   B(`Best processing time ${fmt(best.total_s)} s (${best.label}, p = ${best.p}) versus ${fmt(seqT)} s sequential: ${fmt(best.speedup)}× faster, with identical results from every engine.`),
   B("Distributed runs on a 4-node Docker cluster and recovery from a lost Spark worker were demonstrated."),
-  H2("16.2 Limitations"),
+  B(`Streaming extension: live alerts about ${fmt(sLocal.latency_median_s || 2, 1)} s after a day completes, identical to batch detection, and recovery from a lost worker or a killed detector.`),
+  H2("17.2 Limitations"),
   B("Synthetic data comes from a statistical weather model, not a physical climate model."),
   B("Days are UTC days, and \"departure from normal\" uses the station-month mean instead of IMD's daily normals."),
   B("ERA5 underestimates local extremes, especially short, intense rain."),
   B("Cluster timings come from containers sharing one virtual machine; physical lab PCs remain to be tested with the LAN kit."),
-  H1("17. How to run"),
+  B("The live stream replays stored data, and its thresholds (the station's normal) come from a batch run over the same years."),
+  H1("18. How to run"),
   ...Code([
     "pip install -r requirements.txt            # plus Open MPI and Java 17",
     "python data/generator.py --workers 8        # 13.1 M synthetic rows",
@@ -416,6 +469,7 @@ children.push(
     "pytest tests/ -v",
     "bash benchmark/run_benchmarks.sh --repeats 3 && python benchmark/analyze.py",
     "python reporting/make_report.py --run results/sequential_latest",
+    "python -m streaming.demo --scenario heatwave_2024           # streaming extension",
     "streamlit run reporting/dashboard.py",
     "docker compose -f docker/docker-compose.yml up -d --build   # 4-node cluster",
   ]),

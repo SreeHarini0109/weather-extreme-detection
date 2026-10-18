@@ -33,6 +33,10 @@ configurable Spark master host) on the 4-container cluster, where MPI reached al
    `docker exec pds-node mpirun --hostfile /app/docker/lan/hostfile -np 16 python3 -m engines.mpi_engine --mode station --tag lan`
    `docker exec pds-node python3 -m engines.spark_engine --master spark://192.168.1.10:7077 --tag lan`
    Rows go to `results/benchmark.csv` with the number of distinct nodes in the `nodes` column.
+   Streaming extension: Spark's file source and checkpoint must be on storage every Spark node shares.
+   `sync_project.sh` copies files but does not share them, so either mount one network share at the same
+   path on every PC, or run the stream on the master PC only:
+   `docker exec -w /app pds-node python3 -m streaming.demo --scenario heatwave_2024 --master "local[4]"`
 7. **Fault-tolerance demo:** during a Spark run, `docker stop pds-node` on one worker PC. The job still
    completes (lost partitions are recomputed from lineage). Restart it with step 3.
 8. **Stop:** `docker compose -f docker/lan/docker-compose.lan.yml down` on every PC.

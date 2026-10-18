@@ -2,12 +2,16 @@
 
     streamlit run reporting/dashboard.py
     streamlit run reporting/dashboard.py -- --run results/mpi_latest --data data/parquet/synthetic
+
+The "Live stream" tab follows the newest streaming run (results/stream_latest) and refreshes itself
+every 2 s while `python -m streaming.demo` is running.
 """
 from __future__ import annotations
 
 import argparse
 import json
 import sys
+import time
 from pathlib import Path
 
 import pandas as pd
@@ -25,6 +29,7 @@ from reporting.style import ENGINE_COLORS, EVENT_COLORS, SERIES  # noqa: E402
 ap = argparse.ArgumentParser()
 ap.add_argument("--run", default="results/sequential_latest")
 ap.add_argument("--data", default=None)
+ap.add_argument("--stream", default="results/stream_latest", help="streaming run to follow")
 args, _ = ap.parse_known_args()
 cfg = load_config()
 RUN = resolve(args.run)
@@ -66,7 +71,8 @@ stations = load_manifest(str(DATA))
 st.title("Weather Data Processing & Extreme Weather Detection")
 st.caption(f"Run `{RUN.resolve().name}` · {len(stations)} stations · data `{DATA.name}`")
 
-tab1, tab2, tab3, tab4 = st.tabs(["Station explorer", "Trends map", "Records & extremes", "Performance"])
+tab1, tab2, tab3, tab4, tab5 = st.tabs(["Station explorer", "Trends map", "Records & extremes", "Performance",
+                                        "Live stream"])
 
 with tab1:
     c1, c2, c3 = st.columns([2, 2, 3])
@@ -178,3 +184,150 @@ with tab4:
         p = RESULTS / "plots" / img
         if p.exists():
             st.image(str(p))
+
+
+# ----------------------------------------------------------------------------- live stream
+
+STREAM = resolve(args.stream)
+KIND_LABEL = {"NEW": "NEW", "ESCALATED": "ESCALATED", "ENDED": "ended"}
+
+
+def read_stream(run: Path):
+    prog = json.loads((run / "progress.json").read_text()) if (run / "progress.json").exists() else {}
+    daily = pd.read_csv(run / "daily.csv", parse_dates=["date"]) if (run / "daily.csv").exists() else pd.DataFrame()
+    alerts = pd.read_json(run / "alerts.jsonl", lines=True) if (run / "alerts.jsonl").exists() and \
+        (run / "alerts.jsonl").stat().st_size else pd.DataFrame()
+    active = pd.read_csv(run / "active.csv") if (run / "active.csv").exists() else pd.DataFrame()
+    return prog, daily, alerts, active
+
+
+@st.cache_data
+def stream_thresholds(baseline: str):
+    return pd.read_csv(Path(baseline) / "thresholds.csv")
+
+
+@st.cache_data
+def stream_names(data: str):
+    try:
+        return {k: v["name"] for k, v in json.loads((resolve(data) / "manifest.json").read_text())["stations"].items()}
+    except Exception:
+        return {}
+
+
+@st.fragment(run_every="2s")
+def live_stream():
+    if not (STREAM / "progress.json").exists():
+        st.info("No streaming run yet. Start one with `python -m streaming.demo --scenario heatwave_2024` "
+                "(list scenarios with `--list`); this tab updates itself while it runs.")
+        return
+    prog, daily, alerts, active = read_stream(STREAM)
+    replay = prog.get("replay") or {}
+    scen = cfg["streaming"]["scenarios"].get(prog.get("scenario"), {})
+    names = stream_names(replay.get("data", ""))
+    status = prog.get("status", "?")
+    live = status == "running" and time.time() - prog.get("updated", 0) < 10
+    st.markdown(f"**{scen.get('title', prog.get('scenario') or 'Streaming run')}** · "
+                f"{'LIVE' if live else status} · run `{STREAM.resolve().name}` · Spark `{prog.get('master', '')}`")
+    if replay and not daily.empty:
+        w0, w1 = pd.Timestamp(replay["start"]), pd.Timestamp(replay["end"])
+        cur = daily["date"].max()
+        frac = min(1.0, max(0.0, ((cur - w0).days + 1) / ((w1 - w0).days + 1)))
+        st.progress(frac, text=f"simulated date {cur:%d %b %Y} of {w0:%d %b} to {w1:%d %b %Y}")
+    m = st.columns(6)
+    m[0].metric("Hourly rows in", f"{prog.get('rows_in', 0):,}")
+    m[1].metric("Station-days analysed", f"{prog.get('days_analysed', 0):,}")
+    m[2].metric("Alerts", f"{prog.get('alerts', 0):,}")
+    m[3].metric("Active events", f"{prog.get('active_events', 0):,}")
+    if prog.get("latency_median_s") is not None:
+        lat = prog["latency_median_s"]
+    elif not daily.empty and "latency_s" in daily:
+        lat = float(daily["latency_s"].tail(30).median())
+    else:
+        lat = None
+    m[4].metric("Detection latency", "-" if lat is None or pd.isna(lat) else f"{lat:.1f} s",
+                help="wall-clock time from a day's last hourly reading arriving to its alerts (median)")
+    po = prog.get("parity_ok")
+    m[5].metric("Parity with batch", "pending" if po is None else ("identical" if po else "MISMATCH"),
+                help="at the end of a run, every closed streamed event is compared with the batch run's events")
+    if daily.empty:
+        st.caption("waiting for the first finalized day...")
+        return
+
+    sids = sorted(daily["station_id"].unique())
+    pick = st.selectbox("Station", sids, format_func=lambda s: f"{s} · {names.get(s, s)}", key="live_station",
+                        index=sids.index("DEL") if "DEL" in sids else 0)
+    d = daily[daily["station_id"] == pick].sort_values("date")
+    thr = stream_thresholds(prog.get("baseline", str(RUN)))
+    t = thr[thr["station_id"] == pick].set_index("month")
+    hwc = cfg["thresholds"]["heatwave"]
+    normal = d["date"].dt.month.map(t["tmax_mean"]) if not t.empty else None
+    ev = alerts[(alerts["station_id"] == pick)] if not alerts.empty else pd.DataFrame()
+
+    fig = go.Figure()
+    fig.add_scatter(x=d["date"], y=d["tmax"], name="Tmax", mode="lines+markers", line=dict(color=SERIES[1], width=2),
+                    marker=dict(size=5))
+    fig.add_scatter(x=d["date"], y=d["tmin"], name="Tmin", mode="lines", line=dict(color=SERIES[0], width=1.5))
+    if normal is not None and normal.notna().any():
+        fig.add_scatter(x=d["date"], y=normal + hwc["departure"], name=f"normal + {hwc['departure']} °C",
+                        line=dict(color="#898781", dash="dot", width=1.2, shape="hv"))
+    if not ev.empty:
+        for _, e in ev[(ev["kind"] == "NEW") & ev["event_type"].isin(["heatwave", "cold_wave"])].iterrows():
+            row = active[(active["event_id"] == e["event_id"])] if not active.empty else pd.DataFrame()
+            end = pd.Timestamp(row["end_date"].iloc[0]) if not row.empty else None
+            ended = ev[(ev["kind"] == "ENDED") & (ev["event_id"] == e["event_id"])]
+            if not ended.empty:
+                end = pd.Timestamp(ended["date"].iloc[0]) - pd.Timedelta(days=1)
+            end = end or d["date"].max()
+            fig.add_vrect(x0=pd.Timestamp(e["start_date"]), x1=end + pd.Timedelta(days=1), line_width=0, opacity=0.15,
+                          fillcolor=EVENT_COLORS.get(e["event_type"], SERIES[6]))
+    fig.update_layout(title=f"{names.get(pick, pick)}: daily temperature as it streams in (shaded = heatwave / cold wave)",
+                      yaxis_title="°C", height=360, **LAYOUT)
+    xr = [pd.Timestamp(replay["start"]) - pd.Timedelta(days=1), pd.Timestamp(replay["end"]) + pd.Timedelta(days=1)] \
+        if replay else None
+    fig.update_xaxes(range=xr)
+    st.plotly_chart(fig, use_container_width=True, key="live_temp")
+
+    c1, c2 = st.columns(2)
+    fig = go.Figure()
+    fig.add_bar(x=d["date"], y=d["precip_sum"], name="rain", marker_color=SERIES[0])
+    fig.add_hline(y=cfg["thresholds"]["heavy_rain"]["heavy"], line=dict(color="#898781", dash="dot", width=1),
+                  annotation_text="heavy 64.5 mm", annotation_position="top left")
+    fig.update_layout(title="Daily rainfall", yaxis_title="mm/day", height=260, showlegend=False, **LAYOUT)
+    fig.update_xaxes(range=xr)
+    c1.plotly_chart(fig, use_container_width=True, key="live_rain")
+    fig = go.Figure()
+    fig.add_scatter(x=d["date"], y=d["wind_max"], name="max wind", line=dict(color=SERIES[2], width=1.5))
+    fig.add_hline(y=62, line=dict(color="#898781", dash="dot", width=1), annotation_text="gale (B8) 62 km/h",
+                  annotation_position="top left")
+    fig.update_layout(title="Daily maximum wind", yaxis_title="km/h", height=260, showlegend=False, **LAYOUT)
+    fig.update_xaxes(range=xr)
+    c2.plotly_chart(fig, use_container_width=True, key="live_wind")
+
+    a1, a2 = st.columns([3, 2])
+    with a1:
+        st.subheader("Alert feed (newest first)")
+        if alerts.empty:
+            st.caption("no alerts yet")
+        else:
+            only = st.multiselect("Event types", sorted(alerts["event_type"].unique()),
+                                  default=[x for x in ["heatwave", "heatwave_spell", "cold_wave", "heavy_rain",
+                                                       "high_wind", "cloudburst"] if x in set(alerts["event_type"])],
+                                  key="live_types")
+            f = alerts[alerts["event_type"].isin(only)] if only else alerts
+            f = f.iloc[::-1].head(40)
+            st.dataframe(pd.DataFrame({"sim date": pd.to_datetime(f["date"]).dt.strftime("%Y-%m-%d"), "kind": f["kind"].map(KIND_LABEL),
+                                       "alert": f["message"],
+                                       "latency s": f["latency_s"].round(2) if "latency_s" in f else None}),
+                         use_container_width=True, hide_index=True, height=420)
+    with a2:
+        st.subheader("Active events")
+        if active.empty:
+            st.caption("none running")
+        else:
+            st.dataframe(active.assign(station=active["station_id"].map(lambda s: names.get(s, s)))[
+                ["station", "event_type", "severity", "start_date", "duration_days", "peak_value"]]
+                .sort_values(["duration_days"], ascending=False), use_container_width=True, hide_index=True, height=420)
+
+
+with tab5:
+    live_stream()

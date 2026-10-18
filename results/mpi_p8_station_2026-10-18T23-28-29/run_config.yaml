@@ -1,0 +1,232 @@
+run:
+  engine: mpi
+  p: 8
+  nodes: 1
+  partition_mode: station
+  schedule: lpt
+  total_s: 4.309126
+  tag: demo
+  per_worker:
+    '0':
+      comm: 0.0416
+      load: 0.1938
+      clean: 0.9633
+      stats: 2.1187
+      thresholds: 0.0522
+      detect: 0.565
+      trends: 0.3545
+      merge: 0.0036
+      host: SreeHarinis-MacBook-Pro.local
+      rows: 1841035
+      n_stations: 7
+    '1':
+      comm: 0.0951
+      load: 0.2262
+      clean: 0.9639
+      stats: 2.0378
+      thresholds: 0.065
+      detect: 0.58
+      trends: 0.2883
+      merge: 0.0014
+      host: SreeHarinis-MacBook-Pro.local
+      rows: 1841035
+      n_stations: 7
+    '2':
+      comm: 0.3025
+      load: 0.1936
+      clean: 0.809
+      stats: 1.8298
+      thresholds: 0.0473
+      detect: 0.8169
+      trends: 0.2554
+      merge: 0.0039
+      host: SreeHarinis-MacBook-Pro.local
+      rows: 1578030
+      n_stations: 6
+    '3':
+      comm: 0.407
+      load: 0.197
+      clean: 0.9232
+      stats: 2.0435
+      thresholds: 0.0437
+      detect: 0.4359
+      trends: 0.2074
+      merge: 0.0018
+      host: SreeHarinis-MacBook-Pro.local
+      rows: 1578030
+      n_stations: 6
+    '4':
+      comm: 0.4666
+      load: 0.1845
+      clean: 0.8706
+      stats: 1.9464
+      thresholds: 0.0704
+      detect: 0.5732
+      trends: 0.1498
+      merge: 0.0018
+      host: SreeHarinis-MacBook-Pro.local
+      rows: 1578030
+      n_stations: 6
+    '5':
+      comm: 0.1939
+      load: 0.1907
+      clean: 0.82
+      stats: 1.7396
+      thresholds: 0.067
+      detect: 0.9574
+      trends: 0.2921
+      merge: 0.0015
+      host: SreeHarinis-MacBook-Pro.local
+      rows: 1578030
+      n_stations: 6
+    '6':
+      comm: 0.2761
+      load: 0.1942
+      clean: 0.9305
+      stats: 1.8281
+      thresholds: 0.0536
+      detect: 0.7262
+      trends: 0.2523
+      merge: 0.0032
+      host: SreeHarinis-MacBook-Pro.local
+      rows: 1578030
+      n_stations: 6
+    '7':
+      comm: 0.4321
+      load: 0.1817
+      clean: 0.9097
+      stats: 1.9214
+      thresholds: 0.0419
+      detect: 0.5253
+      trends: 0.2478
+      merge: 0.0017
+      host: SreeHarinis-MacBook-Pro.local
+      rows: 1578030
+      n_stations: 6
+machine:
+  host: SreeHarinis-MacBook-Pro.local
+  platform: macOS-26.6.2-arm64-arm-64bit-Mach-O
+  python: 3.13.5
+  cpu_count: 10
+  processor: arm
+  ram_gb: 16.0
+config:
+  paths:
+    stations: data/stations.csv
+    raw_synthetic: data/raw/synthetic
+    raw_openmeteo: data/raw/openmeteo
+    parquet: data/parquet/synthetic
+    results: results
+  generator:
+    start_year: 1995
+    end_year: 2024
+    seed: 42
+    n_stations: 50
+    workers: 8
+    format: parquet
+    warming_per_decade:
+    - 0.05
+    - 0.45
+    no_trend_fraction: 0.2
+    inject:
+      heatwave_rate: 0.5
+      coldwave_rate: 0.3
+      cloudburst_rate: 0.3
+      cyclone_rate: 0.25
+      rate_growth_per_year: 0.03
+    quality:
+      nan_frac: 0.001
+      spike_frac: 5.0e-05
+      dup_frac: 5.0e-05
+  downloader:
+    start: '1995-01-01'
+    end: '2024-12-31'
+    requests_per_second: 4
+    chunk_years: 10
+    threads: 4
+  cleaning:
+    round_decimals: 2
+    temp_range:
+    - -90
+    - 60
+    humidity_range:
+    - 0
+    - 100
+    humidity_clip_tolerance: 2
+    precip_range:
+    - 0
+    - 500
+    wind_range:
+    - 0
+    - 400
+    min_hours_complete: 20
+  thresholds:
+    imd:
+      countries:
+      - IN
+      hill_elevation_m: 1000
+      apply_everywhere: false
+    heatwave:
+      tmax_min: 40.0
+      hill_tmax_min: 30.0
+      departure: 4.5
+      severe_departure: 6.5
+      absolute: 45.0
+      severe_absolute: 47.0
+    coldwave:
+      tmin_max: 10.0
+      hill_tmin_max: 0.0
+      departure: -4.5
+      severe_departure: -6.5
+      absolute: 4.0
+      severe_absolute: 2.0
+    heavy_rain:
+      heavy: 64.5
+      very_heavy: 115.6
+      extremely_heavy: 204.5
+    cloudburst_mm_per_hour: 100.0
+    heat_index:
+      danger: 41.0
+      extreme_danger: 54.0
+    humidity:
+      high_mean: 95.0
+      low_min: 10.0
+    wind_beaufort:
+      B8_gale: 62.0
+      B9_strong_gale: 75.0
+      B10_storm: 89.0
+      B11_violent_storm: 103.0
+      B12_hurricane: 118.0
+    wet_day_mm: 1.0
+    zscore: 3.0
+    iqr_k: 3.0
+    spells:
+      heatwave_min_days: 3
+      warm_spell_min_days: 6
+  histograms:
+    tmax:
+      lo: -60.05
+      hi: 60.05
+      width: 0.1
+    tmin:
+      lo: -60.05
+      hi: 60.05
+      width: 0.1
+    precip_wet:
+      lo: -0.25
+      hi: 1000.25
+      width: 0.5
+    wind_max:
+      lo: -0.05
+      hi: 300.05
+      width: 0.1
+  trends:
+    min_days_per_year: 300
+    min_years: 8
+    alpha: 0.05
+  mpi:
+    halo_days: 31
+  spark:
+    shuffle_partitions: 16
+    driver_memory: 4g
+    approx_accuracy: 10000

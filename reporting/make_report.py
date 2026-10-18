@@ -253,7 +253,104 @@ def build_markdown(run: Path, data: Path, plots: Path, results_root: Path, val: 
     fb = results_root / "format_benchmark.csv"
     if fb.exists():
         L += ["### File format: CSV vs Parquet", "", md_table(pd.read_csv(fb)), ""]
+    L += stream_markdown(results_root, rel)
     return "\n".join(L)
+
+
+def stream_plots(results_root: Path, out: Path) -> dict:
+    """Streaming extension: alert timeline of the newest run + per-micro-batch detection latency."""
+    run = results_root / "stream_latest"
+    if not (run / "alerts.jsonl").exists():
+        return {}
+    style.apply()
+    al = pd.read_json(run / "alerts.jsonl", lines=True)
+    prog = json.loads((run / "progress.json").read_text())
+    rep = prog.get("replay") or {}
+    names = {}
+    try:
+        names = {k: v["name"] for k, v in json.loads((resolve(rep["data"]) / "manifest.json").read_text())["stations"].items()}
+    except Exception:
+        pass
+    new = al[(al["kind"] == "NEW") & al["event_type"].isin(THRESH_TYPES)].copy()
+    new["date"] = pd.to_datetime(new["date"])
+    sids = sorted(al["station_id"].unique())
+    fig, ax = plt.subplots(figsize=(10, 0.45 * len(sids) + 1.6))
+    types = [t for t in THRESH_TYPES if t in set(new["event_type"])]
+    for k, t in enumerate(types):
+        f = new[new["event_type"] == t]
+        y = f["station_id"].map({s: i for i, s in enumerate(sids)}) + (k - (len(types) - 1) / 2) * 0.12
+        ax.scatter(f["date"], y, s=40, color=EVENT_COLORS.get(t, SERIES[6]), label=t.replace("_", " "),
+                   edgecolor="#fcfcfb", linewidth=1, zorder=3)
+    ax.set_yticks(range(len(sids)), [names.get(s, s) for s in sids])
+    ax.set_ylim(-0.6, len(sids) - 0.4)
+    if rep:
+        ax.set_xlim(pd.Timestamp(rep["start"]) - pd.Timedelta(days=1), pd.Timestamp(rep["end"]) + pd.Timedelta(days=1))
+    ax.grid(axis="x", color="#e1e0d9", linewidth=0.6)
+    ax.set_title("Streaming: NEW alerts (fixed-threshold rules) as the replay advanced")
+    ax.legend(ncol=min(len(types), 5), loc="upper center", bbox_to_anchor=(0.5, -0.12))
+    style.save(fig, out / "stream_alert_timeline.png")
+
+    fig, ax = plt.subplots(figsize=(10, 3.6))
+    runs = [(run, "local[4], 1 day/s", SERIES[0])]
+    ft = results_root / "cluster" / "stream_heatwave_2024_worker_killed"
+    if ft.exists():
+        runs.append((ft, "Docker cluster (3 workers), 1.5 days/s", SERIES[1]))
+    for r, lab, col in runs:
+        m = pd.read_csv(r / "metrics_batches.csv").dropna(subset=["latency_median_s"])
+        pr = json.loads((r / "progress.json").read_text())
+        t0 = (pr.get("replay") or {}).get("started", m["wall"].min())
+        x = (m["wall"] - t0).to_numpy()
+        ax.plot(x, m["latency_median_s"], color=col, label=lab, marker="o", markersize=3)
+        if r == ft and len(x) > 2:      # longest pause between micro-batches = worker2 stopped, tasks re-run
+            i = int(np.argmax(np.diff(x)))
+            ax.axvspan(x[i], x[i + 1], color=col, alpha=0.08, linewidth=0)
+            ax.text(x[i] + 0.4, 13.2, "worker2 stopped:\ntasks re-run elsewhere",
+                    ha="left", va="bottom", fontsize=9, color=INK2)
+    ax.set_xlabel("seconds since replay start")
+    ax.set_ylabel("latency (s)")
+    ax.set_ylim(bottom=0)
+    ax.set_title("Detection latency per micro-batch (day's last hour delivered to alert)")
+    ax.legend()
+    style.save(fig, out / "stream_latency.png")
+    return {"alerts": al, "progress": prog}
+
+
+def stream_markdown(results_root: Path, rel) -> list[str]:
+    sm = results_root / "stream" / "summary.csv"
+    if not sm.exists():
+        return []
+    s = pd.read_csv(sm)
+    s["latency median / p95 (s)"] = s["latency_median_s"].map("{:.2f}".format) + " / " + s["latency_p95_s"].map("{:.2f}".format)
+    s["parity"] = s["parity_matched"].astype("Int64").astype(str) + "/" + s["parity_batch_events"].astype("Int64").astype(str)
+    t = s[["run", "master", "stations", "speed_days_per_s", "rows_in", "alerts", "rows_per_s",
+           "latency median / p95 (s)", "parity"]].rename(columns={"speed_days_per_s": "sim days/s"})
+    L = ["## 5. Streaming extension: live detection", "",
+         "The batch engines analyse stored history. The streaming extension (`streaming/`) detects extremes while "
+         "data arrives: a replayer feeds the stored hourly readings back as a live feed (6 simulated hours per "
+         "Parquet file, written atomically), and **Spark Structured Streaming** deduplicates them with a 2-hour "
+         "watermark, applies the batch engine's cleaning expressions and aggregates each station's day in a "
+         "1-day event-time window (append mode, so a day is emitted once, when complete). In `foreachBatch` the "
+         "day is joined with the station-month thresholds from a batch run and evaluated with the same rule "
+         "definitions; `core.streaming.StreamDetector` keeps one open run per station × rule and turns it into "
+         "NEW / ESCALATED / ENDED alerts. It is gaps-and-islands, computed incrementally.", "",
+         "Every closed streamed event is compared with the batch run's events at the end of a run. Events already "
+         "running when the replay starts, or still running at its end, are left out because the stream cannot see "
+         "their full extent.", "",
+         md_table(t, "{:.1f}"), "",
+         "* **Latency** is the wall-clock time from the replayer delivering a day's last hour to that day's alerts. "
+         "It is about 2 s locally, made up of the watermark (the next file has to arrive), the 1 s trigger and about "
+         "0.3 s of processing. On the Docker cluster it is about 3 s.",
+         "* **Throughput.** Replayed as fast as possible, 50 synthetic stations stream at about 14,000 hourly "
+         "rows/s on `local[4]`. Paced runs are limited by the replay speed, not by Spark.",
+         "* **Fault tolerance.** Spark checkpoints its file offsets and dedup/window state, and the detector saves "
+         "its open runs after every micro-batch, skipping batch ids it has already processed. Stopping a worker "
+         "mid-stream (Spark re-runs its tasks) and SIGKILLing the detector then restarting it with `--resume` both "
+         "gave the same 232 alerts and identical events.",
+         "* Real events caught live: the 2024 heatwave (Delhi severe heatwave from 25 May, Phalodi 47.3 °C), "
+         "Cyclone Amphan (Kolkata heavy rain and gale on 20 May 2020) and Cyclone Michaung (Chennai 254.9 mm, "
+         "extremely heavy, on 4 Dec 2023).", "",
+         f"![alert timeline]({rel('stream_alert_timeline.png')})", "", f"![stream latency]({rel('stream_latency.png')})", ""]
+    return L
 
 
 def md_to_html(md: str, plots: Path) -> str:
@@ -334,6 +431,7 @@ def main():
                              for k, v in json.loads((data / "manifest.json").read_text())["stations"].items()])
     weather_plots(run, plots, cfg, stations)
     val = validation_plots(run, data, plots)
+    stream_plots(results_root, plots)
     md = build_markdown(run, data, plots, results_root, val)
     out_html.with_suffix(".md").write_text(md)
     out_html.write_text(md_to_html(md, plots))

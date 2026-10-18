@@ -1,0 +1,16 @@
+event_id,station_id,event_type,method,severity,start_date,end_date,duration_days,peak_value,peak_date
+DEL_wind_p99_20231127,DEL,wind_p99,percentile,p99,2023-11-27,2023-11-27,1,23.2,2023-11-27
+PHL_wind_p99_20231126,PHL,wind_p99,percentile,p99,2023-11-26,2023-11-26,1,33.4,2023-11-26
+PHL_wind_zscore_20231126,PHL,wind_zscore,zscore,z>3,2023-11-26,2023-11-26,1,33.4,2023-11-26
+PHL_wind_iqr_20231126,PHL,wind_iqr,iqr,q3+3iqr,2023-11-26,2023-11-26,1,33.4,2023-11-26
+CCU_hot_day_p99_20231201,CCU,hot_day_p99,percentile,p99,2023-12-01,2023-12-01,1,30.2,2023-12-01
+CCU_hot_day_p99_20231203,CCU,hot_day_p99,percentile,p99,2023-12-03,2023-12-03,1,30.1,2023-12-03
+LKO_hot_day_p99_20231203,LKO,hot_day_p99,percentile,p99,2023-12-03,2023-12-03,1,28.1,2023-12-03
+MAA_heavy_rain_20231204,MAA,heavy_rain,threshold,extremely_heavy,2023-12-04,2023-12-04,1,254.9,2023-12-04
+MAA_rain_p99_20231204,MAA,rain_p99,percentile,p99,2023-12-04,2023-12-04,1,254.9,2023-12-04
+MAA_wind_p99_20231204,MAA,wind_p99,percentile,p99,2023-12-04,2023-12-04,1,50.1,2023-12-04
+MAA_wind_zscore_20231203,MAA,wind_zscore,zscore,z>3,2023-12-03,2023-12-04,2,50.1,2023-12-04
+MAA_rain_iqr_20231203,MAA,rain_iqr,iqr,q3+3iqr,2023-12-03,2023-12-04,2,254.9,2023-12-04
+MAA_wind_iqr_20231204,MAA,wind_iqr,iqr,q3+3iqr,2023-12-04,2023-12-04,1,50.1,2023-12-04
+MAA_hot_day_p99_20231205,MAA,hot_day_p99,percentile,p99,2023-12-05,2023-12-05,1,31.0,2023-12-05
+MAA_hot_zscore_20231205,MAA,hot_zscore,zscore,z>3,2023-12-05,2023-12-05,1,31.0,2023-12-05

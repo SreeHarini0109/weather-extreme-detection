@@ -1,0 +1,43 @@
+{
+ "scenario": "heatwave_2024",
+ "master": "spark://master:7077",
+ "landing": "/app/data/stream/landing",
+ "baseline": "/app/results/sequential_p1_2026-10-18T22-59-19",
+ "watermark": "2 hours",
+ "trigger_s": 1,
+ "max_files_per_trigger": 64,
+ "startup_s": 2.5,
+ "started": 1792355363.8623326,
+ "run_dir": "/app/results/stream/heatwave_2024_2026-10-18T20-29-19",
+ "status": "finished",
+ "replay": {
+  "data": "/app/data/parquet/real",
+  "stations": [
+   "BOM",
+   "CCU",
+   "DEL",
+   "LKO",
+   "MAA",
+   "PHL"
+  ],
+  "start": "2024-05-01",
+  "end": "2024-06-30",
+  "step_hours": 6,
+  "speed_days_per_second": 1.5,
+  "rows": 8784,
+  "steps": 244,
+  "started": 1792355365.6268497
+ },
+ "batches": 23,
+ "rows_in": 8784,
+ "days_analysed": 366,
+ "alerts": 232,
+ "closed_events": 109,
+ "active_events": 5,
+ "late_days_dropped": 0,
+ "stream_seconds": 35.9,
+ "latency_median_s": 3.0250000000000004,
+ "latency_p95_s": 15.5705,
+ "parity_ok": true,
+ "updated": 1792355412.2724493
+}

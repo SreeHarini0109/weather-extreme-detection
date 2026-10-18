@@ -1,0 +1,28 @@
+== North India heatwave, May-June 2024 (ERA5): 2024-05-01 .. 2024-06-30 at 1.5 simulated days/s ==
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/18 20:29:20 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+streaming query started on spark://master:7077 (Spark start-up 2.5 s); watching /app/data/stream/landing
+output -> /app/results/stream/heatwave_2024_2026-10-18T20-29-19
+replaying 8,784 hourly rows from 6 stations, 2024-05-01 .. 2024-06-30: 244 files of 6 h, 1.5 sim-days/s -> /app/data/stream/landing
+  sim time 2024-05-01 06:00  (1/244 files)
+  sim time 2024-05-06 06:00  (21/244 files)
+  sim time 2024-05-11 06:00  (41/244 files)
+  sim time 2024-05-16 06:00  (61/244 files)
+  sim time 2024-05-21 06:00  (81/244 files)
+  sim time 2024-05-26 06:00  (101/244 files)
+  sim time 2024-05-31 06:00  (121/244 files)
+  sim time 2024-06-05 06:00  (141/244 files)
+  sim time 2024-06-10 06:00  (161/244 files)
+26/10/18 20:29:54 ERROR TaskSchedulerImpl: Lost executor 1 on 172.19.0.5: Command exited with code 143
+  sim time 2024-06-15 06:00  (181/244 files)
+  sim time 2024-06-20 06:00  (201/244 files)
+  sim time 2024-06-25 06:00  (221/244 files)
+  sim time 2024-06-30 06:00  (241/244 files)
+  sim time 2024-07-01 00:00  (244/244 files)
+replay finished in 40.7 s (216 rows/s)
+
+finished: 8,784 hourly rows -> 366 station-days -> 232 alerts (109 closed events, 5 still active)
+detection latency (day's last hour delivered -> alert): median 3.03 s, p95 15.57 s
+parity with batch run sequential_p1_2026-10-18T22-59-19: 101/101 events identical -> OK
+results in /app/results/stream/heatwave_2024_2026-10-18T20-29-19 (status finished, parity True)

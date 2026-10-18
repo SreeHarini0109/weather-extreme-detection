@@ -1,0 +1,14 @@
+{
+ "batch_events": 22,
+ "stream_events": 22,
+ "matched": 22,
+ "only_batch": [],
+ "only_stream": [],
+ "field_mismatches": [],
+ "ok": true,
+ "window": [
+  "2020-05-10",
+  "2020-05-31"
+ ],
+ "baseline": "/app/results/sequential_p1_2026-10-18T22-59-19"
+}

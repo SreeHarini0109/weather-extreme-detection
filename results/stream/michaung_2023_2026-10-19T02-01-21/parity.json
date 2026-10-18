@@ -1,0 +1,14 @@
+{
+ "batch_events": 15,
+ "stream_events": 15,
+ "matched": 15,
+ "only_batch": [],
+ "only_stream": [],
+ "field_mismatches": [],
+ "ok": true,
+ "window": [
+  "2023-11-25",
+  "2023-12-10"
+ ],
+ "baseline": "/Users/sreehariniganishkaa/weather/results/sequential_p1_2026-10-18T22-59-19"
+}

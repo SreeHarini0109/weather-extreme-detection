@@ -11,6 +11,7 @@ long-term trends (OLS, Mann–Kendall, Sen's slope), and measures processing tim
 | Shared memory | `engines/parallel_mp.py` | `multiprocessing.Pool`, static vs dynamic scheduling |
 | Message passing | `engines/mpi_engine.py` | `mpi4py`, station / time (halo exchange) / dynamic master–worker modes |
 | Big data | `engines/spark_engine.py` | PySpark DataFrames, histogram percentiles, broadcast join, window functions, pandas UDFs |
+| Streaming (extension) | `streaming/` | Spark Structured Streaming: watermarks, stateful dedup + windowed daily aggregation, live alerts |
 
 Design docs: [implementation_plan.md](implementation_plan.md), [project_workflow.md](project_workflow.md).
 All weather logic lives in `core/`; engines only decide how work is split and combined, and the parity
@@ -39,6 +40,44 @@ python reporting/make_report.py --run results/mpi_latest      # results/report.h
 streamlit run reporting/dashboard.py
 ```
 
+## Streaming extension (live alerts)
+
+The batch engines analyse stored history. `streaming/` adds near-real-time detection: a **replayer** feeds
+stored hourly data back as a live feed (no free live feed exists for these stations; ERA5 arrives ~5 days
+late), **Spark Structured Streaming** turns it into daily values, and the same detection rules raise alerts
+as days complete.
+
+```bash
+python -m streaming.demo --list                          # scenarios from config.yaml
+python -m streaming.demo --scenario heatwave_2024        # May-June 2024 heatwave, 1 simulated day/s
+streamlit run reporting/dashboard.py                     # "Live stream" tab refreshes every 2 s
+```
+
+```
+replayer.py  -> data/stream/landing/part-*.parquet (6 simulated hours per file, atomic rename)
+detector.py  -> readStream -> withWatermark(2 h) + dropDuplicates -> shared cleaning expressions
+             -> groupBy(station, window(1 day)) [append mode: a day is emitted once, when complete]
+             -> foreachBatch: batch-run thresholds + shared rules -> core/streaming.py StreamDetector
+                (open runs per station x rule -> NEW / ESCALATED / ENDED alerts)
+             -> results/stream_latest/{alerts.jsonl, daily.csv, events.csv, active.csv, progress.json, parity.json}
+```
+
+At the end of a run every closed streamed event is compared with the batch run's events (`parity.json`).
+All runs so far are identical (`results/stream/summary.csv`, `python -m streaming.summarize`):
+
+| Run | Rows | Alerts | Detection latency (median / p95) | Parity |
+|---|---|---|---|---|
+| 2024 heatwave, ERA5 6 cities, local[4], 1 day/s | 8,784 | 232 | 2.3 s / 2.5 s | 101/101 |
+| Cyclone Amphan 2020 / Michaung 2023, 2 days/s | 3,168 / 2,304 | 50 / 30 | 2.0 s / 2.2 s | 22/22, 15/15 |
+| Synthetic 50 stations, Apr-Jul 2024, max speed | 146,407 | 1,893 | ~14,000 rows/s | 865/865 |
+| Docker cluster, 3 workers, worker2 stopped mid-stream | 8,784 | 232 | 3.0 s / 15.6 s (recovery) | 101/101 |
+| Detector killed (SIGKILL), restarted with `--resume` | 8,784 | 232 | 2.2 s / 10.2 s | 101/101 |
+
+Latency = wall-clock time from the replayer delivering a day's last hour to that day's alerts (watermark +
+trigger interval + processing). Thresholds come from a batch run (`--baseline`), i.e. the station's
+"normal" is learnt offline and applied online. On the cluster:
+`docker exec -w /app master python3 -m streaming.demo --scenario amphan_2020 --master spark://master:7077`.
+
 Other data:
 * Real ERA5 data (Open-Meteo, no key): `python data/downloader.py` then
   `python data/to_parquet.py --input data/raw/openmeteo --output data/parquet/real` and pass `--data data/parquet/real`.
@@ -56,7 +95,8 @@ docker exec -it master python -m engines.spark_engine --master spark://master:70
 docker compose -f docker/docker-compose.yml down
 ```
 Fault-tolerance demo: start a Spark run, then `docker stop worker2`; Spark recomputes the lost partitions
-from lineage and the job still completes.
+from lineage and the job still completes. The same works for the streaming demo (state is checkpointed under
+`data/stream/checkpoint`, shared by the `/app` mount).
 
 **Lab PCs on a LAN:** see [docker/lan/README.md](docker/lan/README.md): one container per PC with host
 networking, `start_node.sh`, `make_hostfile.sh`, `sync_project.sh` and an end-to-end `check_cluster.sh`.
@@ -104,11 +144,12 @@ Michaung (Chennai, 4 Dec 2023). It misses the Dec 2015 Chennai floods because ER
 ```
 config.yaml            thresholds, histogram bins, paths, generator settings
 data/                  stations.csv, generator.py, downloader.py, to_parquet.py
-core/                  cleaning, aggregates, thresholds, detection, trends, pipeline, outputs, timing
+core/                  cleaning, aggregates, thresholds, detection, streaming, trends, pipeline, outputs, timing
 engines/               sequential, parallel_mp, mpi_engine, spark_engine
+streaming/             replayer, detector (Spark Structured Streaming), demo, summarize
 benchmark/             run_benchmarks.sh, analyze.py, format_benchmark.py
 reporting/             make_report.py, evaluate.py (vs ground truth), dashboard.py, style.py
-tests/                 aggregates, detection (+ halo, ground truth), trends, engine parity
+tests/                 aggregates, detection (+ halo, ground truth), trends, engine parity, streaming
 docker/                Dockerfile, docker-compose.yml, hostfile, entrypoint.sh
 ```
 
@@ -130,6 +171,10 @@ docker/                Dockerfile, docker-compose.yml, hostfile, entrypoint.sh
   (India), with IMD's hill-station criteria above 1000 m and the absolute plains cold-wave rule (Tmin ≤ 4 °C);
   elsewhere heat and cold extremes come from the station-relative detectors. `apply_everywhere: true` restores
   global application.
+* **Streaming = batch.** The stream reuses the batch Spark engine's cleaning and daily-aggregation
+  expressions and the same rule lambdas; `StreamDetector` keeps one open run per station × rule, which is
+  gaps-and-islands done incrementally. Events already running when a replay starts, or still running at
+  its end, are excluded from the parity check (their extent is unknown to the stream).
 * **Limitations.** Daily aggregation uses UTC days. The departure from normal uses the station-month mean
   (IMD uses daily normals). Synthetic data is a statistical model, not a climate model. ERA5 underestimates local
   extremes (~25 km grid).

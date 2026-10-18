@@ -168,6 +168,18 @@ def nan_to_null(c):
     return F.when(F.isnan(c), F.lit(None)).otherwise(c)
 
 
+def daily_aggs():
+    """hourly -> daily aggregates (same as core.cleaning.to_daily); shared with streaming/detector.py."""
+    return [
+        F.count("temp_c").alias("n_hours"),
+        F.max("temp_c").alias("tmax"), F.min("temp_c").alias("tmin"), F.avg("temp_c").alias("tmean"),
+        F.avg("humidity_pct").alias("rh_mean"), F.max("humidity_pct").alias("rh_max"),
+        F.min("humidity_pct").alias("rh_min"),
+        np_round(F.sum("precip_mm"), 4).alias("precip_sum"), F.max("precip_mm").alias("precip_max_1h"),
+        F.max("wind_kmh").alias("wind_max"), F.max("gust_kmh").alias("gust_max"),
+        np_round(F.max("hi"), 4).alias("hi_max")]
+
+
 # ----------------------------------------------------------------------------- P3 helpers
 
 # "min/max and WHEN it happened" as a single fixed-width long, so Spark can use its fast hash
@@ -299,14 +311,7 @@ def run(spark, data, cfg, stations=None, compare_approx=False, out_extra: dict |
         hourly = (clean_columns(dedup, cfg)
                   .withColumn("hi", heat_index_col(F.col("temp_c"), F.col("humidity_pct")))
                   .withColumn("year", F.year("timestamp")).withColumn("month", F.month("timestamp")))
-        daily = (hourly.groupBy("station_id", F.to_date("timestamp").alias("date")).agg(
-            F.count("temp_c").alias("n_hours"),
-            F.max("temp_c").alias("tmax"), F.min("temp_c").alias("tmin"), F.avg("temp_c").alias("tmean"),
-            F.avg("humidity_pct").alias("rh_mean"), F.max("humidity_pct").alias("rh_max"),
-            F.min("humidity_pct").alias("rh_min"),
-            np_round(F.sum("precip_mm"), 4).alias("precip_sum"), F.max("precip_mm").alias("precip_max_1h"),
-            F.max("wind_kmh").alias("wind_max"), F.max("gust_kmh").alias("gust_max"),
-            np_round(F.max("hi"), 4).alias("hi_max"))
+        daily = (hourly.groupBy("station_id", F.to_date("timestamp").alias("date")).agg(*daily_aggs())
             .withColumn("year", F.year("date").cast("long")).withColumn("month", F.month("date").cast("long"))
             .withColumn("complete", F.col("n_hours") >= cfg["cleaning"]["min_hours_complete"])
             .cache())

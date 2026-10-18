@@ -1,0 +1,608 @@
+{
+ "records": {
+  "highest_temperature": {
+   "record": "highest_temperature",
+   "value": 52.6,
+   "unit": "\u00b0C",
+   "station_id": "PHL",
+   "time": "2021-06-15 10:00:00"
+  },
+  "lowest_temperature": {
+   "record": "lowest_temperature",
+   "value": -29.2,
+   "unit": "\u00b0C",
+   "station_id": "MOW",
+   "time": "2011-02-18 23:00:00"
+  },
+  "max_daily_rainfall": {
+   "record": "max_daily_rainfall",
+   "value": 891.8,
+   "unit": "mm/day",
+   "station_id": "CHE",
+   "time": "2015-07-21 00:00:00"
+  },
+  "max_hourly_rainfall": {
+   "record": "max_hourly_rainfall",
+   "value": 494.0,
+   "unit": "mm/h",
+   "station_id": "CHE",
+   "time": "2005-06-14 20:00:00"
+  },
+  "max_wind_speed": {
+   "record": "max_wind_speed",
+   "value": 149.8,
+   "unit": "km/h",
+   "station_id": "LOS",
+   "time": "2009-04-30 23:00:00"
+  },
+  "max_wind_gust": {
+   "record": "max_wind_gust",
+   "value": 218.3,
+   "unit": "km/h",
+   "station_id": "MAA",
+   "time": "2022-10-20 02:00:00"
+  },
+  "max_humidity": {
+   "record": "max_humidity",
+   "value": 100.0,
+   "unit": "%",
+   "station_id": "SAO",
+   "time": "1995-01-01 04:00:00"
+  },
+  "min_humidity": {
+   "record": "min_humidity",
+   "value": 5.0,
+   "unit": "%",
+   "station_id": "RUH",
+   "time": "1995-01-05 10:00:00"
+  }
+ },
+ "era_records": {
+  "highest_temperature": {
+   "record": "highest_temperature",
+   "value": 48.1,
+   "unit": "\u00b0C",
+   "station_id": "PHL",
+   "time": "2024-05-27 09:00:00"
+  },
+  "lowest_temperature": {
+   "record": "lowest_temperature",
+   "value": 1.7,
+   "unit": "\u00b0C",
+   "station_id": "LKO",
+   "time": "2019-12-30 00:00:00"
+  },
+  "max_daily_rainfall": {
+   "record": "max_daily_rainfall",
+   "value": 254.9,
+   "unit": "mm/day",
+   "station_id": "MAA",
+   "time": "2023-12-04 00:00:00"
+  },
+  "max_hourly_rainfall": {
+   "record": "max_hourly_rainfall",
+   "value": 47.6,
+   "unit": "mm/h",
+   "station_id": "BOM",
+   "time": "2020-07-04 07:00:00"
+  },
+  "max_wind_speed": {
+   "record": "max_wind_speed",
+   "value": 68.9,
+   "unit": "km/h",
+   "station_id": "CCU",
+   "time": "2020-05-20 13:00:00"
+  },
+  "max_wind_gust": {
+   "record": "max_wind_gust",
+   "value": 142.9,
+   "unit": "km/h",
+   "station_id": "CCU",
+   "time": "2020-05-20 13:00:00"
+  },
+  "max_humidity": {
+   "record": "max_humidity",
+   "value": 100.0,
+   "unit": "%",
+   "station_id": "DEL",
+   "time": "2015-01-09 01:00:00"
+  },
+  "min_humidity": {
+   "record": "min_humidity",
+   "value": 3.0,
+   "unit": "%",
+   "station_id": "PHL",
+   "time": "2016-04-23 10:00:00"
+  }
+ },
+ "events_total": 60200,
+ "events_by_method": {
+  "iqr": 2490,
+  "percentile": 13181,
+  "spell": 2180,
+  "threshold": 37695,
+  "zscore": 4654
+ },
+ "threshold_counts": {
+  "heat_stress": 20391,
+  "humidity_high": 4659,
+  "heavy_rain": 4155,
+  "heatwave": 2553,
+  "humidity_low": 2482,
+  "cold_wave": 1462,
+  "high_wind": 1089,
+  "cloudburst": 904
+ },
+ "recall": [
+  {
+   "injected_type": "heatwave",
+   "injected": 1112,
+   "detected_any_method": 959,
+   "recall_any": 0.862
+  },
+  {
+   "injected_type": "cold_wave",
+   "injected": 660,
+   "detected_any_method": 581,
+   "recall_any": 0.88
+  },
+  {
+   "injected_type": "cloudburst",
+   "injected": 640,
+   "detected_any_method": 640,
+   "recall_any": 1.0
+  },
+  {
+   "injected_type": "cyclone",
+   "injected": 216,
+   "detected_any_method": 216,
+   "recall_any": 1.0
+  }
+ ],
+ "trend_mae": 0.051,
+ "trend_corr": 0.88,
+ "warming": 34,
+ "n_tm": 50,
+ "median_sen": 0.22,
+ "speedup": [
+  {
+   "label": "mpi/dynamic",
+   "p": 3,
+   "total_s": 5.695,
+   "speedup": 1.929,
+   "efficiency": 0.643,
+   "karp_flatt": 0.278
+  },
+  {
+   "label": "mpi/dynamic",
+   "p": 5,
+   "total_s": 3.548,
+   "speedup": 3.096,
+   "efficiency": 0.619,
+   "karp_flatt": 0.154
+  },
+  {
+   "label": "mpi/dynamic",
+   "p": 9,
+   "total_s": 3.052,
+   "speedup": 3.599,
+   "efficiency": 0.4,
+   "karp_flatt": 0.188
+  },
+  {
+   "label": "mpi/dynamic",
+   "p": 11,
+   "total_s": 2.992,
+   "speedup": 3.671,
+   "efficiency": 0.334,
+   "karp_flatt": 0.2
+  },
+  {
+   "label": "mpi/station",
+   "p": 1,
+   "total_s": 10.966,
+   "speedup": 1.002,
+   "efficiency": 1.002,
+   "karp_flatt": null
+  },
+  {
+   "label": "mpi/station",
+   "p": 2,
+   "total_s": 5.935,
+   "speedup": 1.851,
+   "efficiency": 0.925,
+   "karp_flatt": 0.081
+  },
+  {
+   "label": "mpi/station",
+   "p": 4,
+   "total_s": 3.281,
+   "speedup": 3.348,
+   "efficiency": 0.837,
+   "karp_flatt": 0.065
+  },
+  {
+   "label": "mpi/station",
+   "p": 8,
+   "total_s": 3.133,
+   "speedup": 3.506,
+   "efficiency": 0.438,
+   "karp_flatt": 0.183
+  },
+  {
+   "label": "mpi/station",
+   "p": 10,
+   "total_s": 2.921,
+   "speedup": 3.761,
+   "efficiency": 0.376,
+   "karp_flatt": 0.184
+  },
+  {
+   "label": "mpi/time",
+   "p": 2,
+   "total_s": 6.326,
+   "speedup": 1.736,
+   "efficiency": 0.868,
+   "karp_flatt": 0.152
+  },
+  {
+   "label": "mpi/time",
+   "p": 4,
+   "total_s": 4.78,
+   "speedup": 2.298,
+   "efficiency": 0.574,
+   "karp_flatt": 0.247
+  },
+  {
+   "label": "mpi/time",
+   "p": 8,
+   "total_s": 6.156,
+   "speedup": 1.784,
+   "efficiency": 0.223,
+   "karp_flatt": 0.498
+  },
+  {
+   "label": "mpi/time",
+   "p": 10,
+   "total_s": 7.14,
+   "speedup": 1.538,
+   "efficiency": 0.154,
+   "karp_flatt": 0.611
+  },
+  {
+   "label": "multiprocessing",
+   "p": 1,
+   "total_s": 11.359,
+   "speedup": 0.967,
+   "efficiency": 0.967,
+   "karp_flatt": null
+  },
+  {
+   "label": "multiprocessing",
+   "p": 2,
+   "total_s": 6.302,
+   "speedup": 1.743,
+   "efficiency": 0.871,
+   "karp_flatt": 0.148
+  },
+  {
+   "label": "multiprocessing",
+   "p": 4,
+   "total_s": 3.662,
+   "speedup": 3.0,
+   "efficiency": 0.75,
+   "karp_flatt": 0.111
+  },
+  {
+   "label": "multiprocessing",
+   "p": 8,
+   "total_s": 3.325,
+   "speedup": 3.304,
+   "efficiency": 0.413,
+   "karp_flatt": 0.203
+  },
+  {
+   "label": "multiprocessing",
+   "p": 10,
+   "total_s": 3.577,
+   "speedup": 3.071,
+   "efficiency": 0.307,
+   "karp_flatt": 0.251
+  },
+  {
+   "label": "sequential",
+   "p": 1,
+   "total_s": 10.984,
+   "speedup": 1.0,
+   "efficiency": 1.0,
+   "karp_flatt": null
+  },
+  {
+   "label": "spark",
+   "p": 1,
+   "total_s": 43.007,
+   "speedup": 0.255,
+   "efficiency": 0.255,
+   "karp_flatt": null
+  },
+  {
+   "label": "spark",
+   "p": 2,
+   "total_s": 32.057,
+   "speedup": 0.343,
+   "efficiency": 0.171,
+   "karp_flatt": 4.837
+  },
+  {
+   "label": "spark",
+   "p": 4,
+   "total_s": 24.405,
+   "speedup": 0.45,
+   "efficiency": 0.112,
+   "karp_flatt": 2.629
+  },
+  {
+   "label": "spark",
+   "p": 8,
+   "total_s": 25.109,
+   "speedup": 0.438,
+   "efficiency": 0.055,
+   "karp_flatt": 2.47
+  },
+  {
+   "label": "spark",
+   "p": 10,
+   "total_s": 26.72,
+   "speedup": 0.411,
+   "efficiency": 0.041,
+   "karp_flatt": 2.592
+  }
+ ],
+ "format": [
+  {
+   "format": "csv",
+   "columns": "all",
+   "rows": 2630050,
+   "seconds": 3.252,
+   "mib": 186.941,
+   "mrows_per_s": 0.809
+  },
+  {
+   "format": "csv",
+   "columns": "6 needed",
+   "rows": 2630050,
+   "seconds": 2.968,
+   "mib": 186.941,
+   "mrows_per_s": 0.886
+  },
+  {
+   "format": "parquet",
+   "columns": "all",
+   "rows": 2630050,
+   "seconds": 0.059,
+   "mib": 34.829,
+   "mrows_per_s": 44.721
+  },
+  {
+   "format": "parquet",
+   "columns": "6 needed (pruned)",
+   "rows": 2630050,
+   "seconds": 0.027,
+   "mib": 34.829,
+   "mrows_per_s": 95.737
+  }
+ ],
+ "quality": {
+  "rows_in": 13150250,
+  "duplicates": 650,
+  "temp_c_missing": 13109,
+  "humidity_pct_missing": 12903,
+  "precip_mm_missing": 13119,
+  "wind_kmh_missing": 13086,
+  "gust_kmh_missing": 13124,
+  "temp_c_flagged": 650,
+  "humidity_pct_clipped": 309,
+  "humidity_pct_flagged": 341,
+  "precip_mm_flagged": 651,
+  "wind_kmh_flagged": 650,
+  "gust_kmh_flagged": 0
+ },
+ "cluster": [
+  {
+   "engine": "mpi",
+   "p": 8,
+   "nodes": 4,
+   "partition_mode": "station",
+   "total_s": 7.1625,
+   "tag": "cluster"
+  },
+  {
+   "engine": "mpi",
+   "p": 8,
+   "nodes": 4,
+   "partition_mode": "time",
+   "total_s": 15.5833,
+   "tag": "cluster"
+  },
+  {
+   "engine": "spark",
+   "p": 6,
+   "nodes": 3,
+   "partition_mode": "",
+   "total_s": 66.8515,
+   "tag": "cluster"
+  },
+  {
+   "engine": "spark",
+   "p": 4,
+   "nodes": 2,
+   "partition_mode": "",
+   "total_s": 70.6482,
+   "tag": "fault-tolerance"
+  },
+  {
+   "engine": "mpi",
+   "p": 8,
+   "nodes": 4,
+   "partition_mode": "station",
+   "total_s": 4.306,
+   "tag": "lan-sim"
+  }
+ ],
+ "stream": [
+  {
+   "run": "cluster/stream_amphan_2020_3workers",
+   "scenario": "amphan_2020",
+   "master": "spark://master:7077",
+   "stations": 6,
+   "start": "2020-05-10",
+   "end": "2020-05-31",
+   "speed_days_per_s": 2.0,
+   "status": "finished",
+   "rows_in": 3168,
+   "station_days": 132,
+   "alerts": 50,
+   "closed_events": 24,
+   "batches": 4,
+   "replay_to_last_alert_s": 15.29,
+   "rows_per_s": 207.2,
+   "latency_median_s": 7.469,
+   "latency_p95_s": 9.1205,
+   "parity_matched": 22,
+   "parity_batch_events": 22,
+   "parity_ok": true
+  },
+  {
+   "run": "cluster/stream_heatwave_2024_worker_killed",
+   "scenario": "heatwave_2024",
+   "master": "spark://master:7077",
+   "stations": 6,
+   "start": "2024-05-01",
+   "end": "2024-06-30",
+   "speed_days_per_s": 1.5,
+   "status": "finished",
+   "rows_in": 8784,
+   "station_days": 366,
+   "alerts": 232,
+   "closed_events": 109,
+   "batches": 23,
+   "replay_to_last_alert_s": 46.23,
+   "rows_per_s": 190.0,
+   "latency_median_s": 3.025,
+   "latency_p95_s": 15.5705,
+   "parity_matched": 101,
+   "parity_batch_events": 101,
+   "parity_ok": true
+  },
+  {
+   "run": "stream/amphan_2020_2026-10-19T02-01-38",
+   "scenario": "amphan_2020",
+   "master": "local[4]",
+   "stations": 6,
+   "start": "2020-05-10",
+   "end": "2020-05-31",
+   "speed_days_per_s": 2.0,
+   "status": "finished",
+   "rows_in": 3168,
+   "station_days": 132,
+   "alerts": 50,
+   "closed_events": 24,
+   "batches": 12,
+   "replay_to_last_alert_s": 12.68,
+   "rows_per_s": 249.9,
+   "latency_median_s": 2.022,
+   "latency_p95_s": 2.194075,
+   "parity_matched": 22,
+   "parity_batch_events": 22,
+   "parity_ok": true
+  },
+  {
+   "run": "stream/heatwave_2024_2026-10-19T01-53-46",
+   "scenario": "heatwave_2024",
+   "master": "local[4]",
+   "stations": 6,
+   "start": "2024-05-01",
+   "end": "2024-06-30",
+   "speed_days_per_s": 1.0,
+   "status": "finished",
+   "rows_in": 8784,
+   "station_days": 366,
+   "alerts": 232,
+   "closed_events": 109,
+   "batches": 62,
+   "replay_to_last_alert_s": 63.02,
+   "rows_per_s": 139.4,
+   "latency_median_s": 2.276,
+   "latency_p95_s": 2.4759,
+   "parity_matched": 101,
+   "parity_batch_events": 101,
+   "parity_ok": true
+  },
+  {
+   "run": "stream/heatwave_2024_resume_after_driver_kill",
+   "scenario": "heatwave_2024",
+   "master": "local[4]",
+   "stations": 6,
+   "start": "2024-05-01",
+   "end": "2024-06-30",
+   "speed_days_per_s": 2.0,
+   "status": "finished",
+   "rows_in": 8784,
+   "station_days": 366,
+   "alerts": 232,
+   "closed_events": 109,
+   "batches": 12,
+   "replay_to_last_alert_s": 32.89,
+   "rows_per_s": 267.0,
+   "latency_median_s": 2.2185,
+   "latency_p95_s": 10.1672,
+   "parity_matched": 101,
+   "parity_batch_events": 101,
+   "parity_ok": true
+  },
+  {
+   "run": "stream/michaung_2023_2026-10-19T02-01-21",
+   "scenario": "michaung_2023",
+   "master": "local[4]",
+   "stations": 6,
+   "start": "2023-11-25",
+   "end": "2023-12-10",
+   "speed_days_per_s": 2.0,
+   "status": "finished",
+   "rows_in": 2304,
+   "station_days": 96,
+   "alerts": 30,
+   "closed_events": 15,
+   "batches": 9,
+   "replay_to_last_alert_s": 10.3,
+   "rows_per_s": 223.6,
+   "latency_median_s": 2.213,
+   "latency_p95_s": 3.6833,
+   "parity_matched": 15,
+   "parity_batch_events": 15,
+   "parity_ok": true
+  },
+  {
+   "run": "stream/synthetic_2024_2026-10-19T01-55-02",
+   "scenario": "synthetic_2024",
+   "master": "local[4]",
+   "stations": 50,
+   "start": "2024-04-01",
+   "end": "2024-07-31",
+   "speed_days_per_s": 0.0,
+   "status": "finished",
+   "rows_in": 146407,
+   "station_days": 6100,
+   "alerts": 1893,
+   "closed_events": 881,
+   "batches": 10,
+   "replay_to_last_alert_s": 10.44,
+   "rows_per_s": 14017.9,
+   "latency_median_s": 6.369,
+   "latency_p95_s": 9.7246,
+   "parity_matched": 865,
+   "parity_batch_events": 865,
+   "parity_ok": true
+  }
+ ]
+}

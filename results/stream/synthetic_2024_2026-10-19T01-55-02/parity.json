@@ -1,0 +1,14 @@
+{
+ "batch_events": 865,
+ "stream_events": 865,
+ "matched": 865,
+ "only_batch": [],
+ "only_stream": [],
+ "field_mismatches": [],
+ "ok": true,
+ "window": [
+  "2024-04-01",
+  "2024-07-31"
+ ],
+ "baseline": "/Users/sreehariniganishkaa/weather/results/mpi_p8_station_2026-10-18T23-28-29"
+}

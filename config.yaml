@@ -80,3 +80,24 @@ spark:
   shuffle_partitions: 16
   driver_memory: 4g
   approx_accuracy: 10000
+
+# Streaming extension (streaming/): a replayer feeds stored hourly data back as a live feed into a
+# landing directory; Spark Structured Streaming turns it into daily values and alerts.
+streaming:
+  landing: data/stream/landing          # replayer -> Spark file source (one Parquet file per step)
+  checkpoint: data/stream/checkpoint    # Spark offsets/state + detector state (restart resumes)
+  output: results/stream                # alerts.jsonl, daily.csv, events.csv, progress.json per run
+  step_hours: 6                         # simulated hours per landing file
+  speed_days_per_second: 1.0            # replay speed (0 = as fast as possible)
+  watermark_delay: 2 hours              # how late an hourly reading may arrive before its day is closed
+  trigger_seconds: 1                    # micro-batch interval
+  max_files_per_trigger: 64             # upper bound per micro-batch (keeps up with fast replays)
+  scenarios:                            # python -m streaming.demo --scenario <name>
+    heatwave_2024: {data: data/parquet/real, baseline: results/era5_latest, start: "2024-05-01", end: "2024-06-30",
+                    title: "North India heatwave, May-June 2024 (ERA5)"}
+    amphan_2020:   {data: data/parquet/real, baseline: results/era5_latest, start: "2020-05-10", end: "2020-05-31",
+                    title: "Cyclone Amphan, May 2020 (ERA5)"}
+    michaung_2023: {data: data/parquet/real, baseline: results/era5_latest, start: "2023-11-25", end: "2023-12-10",
+                    title: "Cyclone Michaung, Dec 2023 (ERA5)"}
+    synthetic_2024: {data: data/parquet/synthetic, baseline: results/mpi_latest, start: "2024-04-01", end: "2024-07-31",
+                     title: "Synthetic network, Apr-Jul 2024 (50 stations)"}

@@ -1,0 +1,43 @@
+{
+ "scenario": "amphan_2020",
+ "master": "spark://master:7077",
+ "landing": "/app/data/stream/landing",
+ "baseline": "/app/results/sequential_p1_2026-10-18T22-59-19",
+ "watermark": "2 hours",
+ "trigger_s": 1,
+ "max_files_per_trigger": 64,
+ "startup_s": 3.74,
+ "started": 1792355201.9233124,
+ "run_dir": "/app/results/stream/amphan_2020_2026-10-18T20-26-36",
+ "status": "finished",
+ "replay": {
+  "data": "/app/data/parquet/real",
+  "stations": [
+   "BOM",
+   "CCU",
+   "DEL",
+   "LKO",
+   "MAA",
+   "PHL"
+  ],
+  "start": "2020-05-10",
+  "end": "2020-05-31",
+  "step_hours": 6,
+  "speed_days_per_second": 2.0,
+  "rows": 3168,
+  "steps": 88,
+  "started": 1792355203.5760934
+ },
+ "batches": 4,
+ "rows_in": 3168,
+ "days_analysed": 132,
+ "alerts": 50,
+ "closed_events": 24,
+ "active_events": 2,
+ "late_days_dropped": 0,
+ "stream_seconds": 3.33,
+ "latency_median_s": 7.469,
+ "latency_p95_s": 9.1205,
+ "parity_ok": true,
+ "updated": 1792355219.9141934
+}

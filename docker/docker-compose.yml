@@ -1,0 +1,42 @@
+# 4-node cluster on one machine: master (MPI rank 0 / Spark master + driver) + 3 workers.
+#   docker compose -f docker/docker-compose.yml up -d --build
+#   docker exec -it master mpirun --hostfile /app/docker/hostfile -np 4 hostname
+# The whole project is mounted at /app on every node (code, data and results are shared).
+x-node: &node
+  image: pds-weather
+  build: {context: .., dockerfile: docker/Dockerfile}
+  volumes: ["..:/app"]
+  networks: [pdsnet]
+  shm_size: 1gb
+  environment:
+    SPARK_WORKER_CORES: "2"
+    SPARK_WORKER_MEMORY: "3g"
+
+services:
+  master:
+    <<: *node
+    container_name: master
+    hostname: master
+    environment: {ROLE: master}
+    ports: ["8080:8080", "4040:4040", "8501:8501"]
+  worker1:
+    <<: *node
+    container_name: worker1
+    hostname: worker1
+    environment: {ROLE: worker, SPARK_WORKER_CORES: "2", SPARK_WORKER_MEMORY: "3g"}
+    depends_on: [master]
+  worker2:
+    <<: *node
+    container_name: worker2
+    hostname: worker2
+    environment: {ROLE: worker, SPARK_WORKER_CORES: "2", SPARK_WORKER_MEMORY: "3g"}
+    depends_on: [master]
+  worker3:
+    <<: *node
+    container_name: worker3
+    hostname: worker3
+    environment: {ROLE: worker, SPARK_WORKER_CORES: "2", SPARK_WORKER_MEMORY: "3g"}
+    depends_on: [master]
+
+networks:
+  pdsnet: {driver: bridge}

@@ -1,0 +1,5 @@
+format,columns,rows,seconds,mib,mrows_per_s
+csv,all,1315025,1.664,94.311,0.79
+csv,6 needed,1315025,1.552,94.311,0.847
+parquet,all,1315025,0.044,17.446,30.225
+parquet,6 needed (pruned),1315025,0.015,17.446,87.905

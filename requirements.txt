@@ -1,0 +1,13 @@
+numpy>=1.24
+pandas>=2.0
+pyarrow>=14
+scipy>=1.10
+pyyaml>=6.0
+matplotlib>=3.7
+seaborn>=0.12
+plotly>=5.0
+streamlit>=1.30
+requests>=2.31
+pytest>=7.0
+mpi4py>=3.1        # needs an MPI library (OpenMPI: `brew install open-mpi` / `apt install libopenmpi-dev`)
+pyspark>=3.5       # needs Java 17

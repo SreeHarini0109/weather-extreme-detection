@@ -1,0 +1,5 @@
+# MPI hosts (Docker Compose service names). For the lab LAN, replace with the PCs' IP addresses.
+master slots=2
+worker1 slots=2
+worker2 slots=2
+worker3 slots=2

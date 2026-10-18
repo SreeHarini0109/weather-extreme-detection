@@ -1,0 +1,48 @@
+{
+  "dataset": "tiny",
+  "source": "synthetic",
+  "created": "2026-10-18T11:54:39",
+  "stations": {
+    "BOM": {
+      "rows": 43826,
+      "path": "station_id=BOM",
+      "bytes": 611532,
+      "first": "1995-01-01 00:00:00+00:00",
+      "last": "1999-12-31 23:00:00+00:00",
+      "name": "Mumbai",
+      "lat": 19.079999923706055,
+      "lon": 72.87999725341797,
+      "elevation": 14.0
+    },
+    "DEL": {
+      "rows": 43826,
+      "path": "station_id=DEL",
+      "bytes": 611784,
+      "first": "1995-01-01 00:00:00+00:00",
+      "last": "1999-12-31 23:00:00+00:00",
+      "name": "Delhi",
+      "lat": 28.610000610351562,
+      "lon": 77.20999908447266,
+      "elevation": 216.0
+    },
+    "MAA": {
+      "rows": 43826,
+      "path": "station_id=MAA",
+      "bytes": 616120,
+      "first": "1995-01-01 00:00:00+00:00",
+      "last": "1999-12-31 23:00:00+00:00",
+      "name": "Chennai",
+      "lat": 13.079999923706055,
+      "lon": 80.2699966430664,
+      "elevation": 7.0
+    }
+  },
+  "n_stations": 3,
+  "total_rows": 131478,
+  "total_bytes": 1839436,
+  "years": [
+    1995,
+    1999
+  ],
+  "ground_truth": "ground_truth_events.csv"
+}

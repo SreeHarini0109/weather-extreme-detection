@@ -1,0 +1,134 @@
+=== repeat 1 / 3 ===
++ python3 -m engines.sequential --data data/parquet/synthetic --no-write --quiet --tag strong
++ python3 -m engines.parallel_mp --data data/parquet/synthetic -p 1 --no-write --quiet --tag strong
++ mpirun --oversubscribe -np 1 python3 -m engines.mpi_engine --data data/parquet/synthetic --mode station --no-write --quiet --tag strong
++ python3 -m engines.spark_engine --data data/parquet/synthetic -p 1 --no-write --quiet --tag strong
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+26/10/18 20:46:24 WARN Utils: Your hostname, SreeHarinis-MacBook-Pro.local, resolves to a loopback address: 127.0.0.1; using 10.10.12.178 instead (on interface en0)
+26/10/18 20:46:24 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/18 20:46:25 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
++ python3 -m engines.parallel_mp --data data/parquet/synthetic -p 2 --no-write --quiet --tag strong
++ mpirun --oversubscribe -np 2 python3 -m engines.mpi_engine --data data/parquet/synthetic --mode station --no-write --quiet --tag strong
++ mpirun --oversubscribe -np 2 python3 -m engines.mpi_engine --data data/parquet/synthetic --mode time --no-write --quiet --tag strong
++ mpirun --oversubscribe -np 3 python3 -m engines.mpi_engine --data data/parquet/synthetic --mode dynamic --no-write --quiet --tag strong
++ python3 -m engines.spark_engine --data data/parquet/synthetic -p 2 --no-write --quiet --tag strong
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+26/10/18 20:48:47 WARN Utils: Your hostname, SreeHarinis-MacBook-Pro.local, resolves to a loopback address: 127.0.0.1; using 10.10.12.178 instead (on interface en0)
+26/10/18 20:48:47 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/18 20:48:48 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
++ python3 -m engines.parallel_mp --data data/parquet/synthetic -p 4 --no-write --quiet --tag strong
++ mpirun --oversubscribe -np 4 python3 -m engines.mpi_engine --data data/parquet/synthetic --mode station --no-write --quiet --tag strong
++ mpirun --oversubscribe -np 4 python3 -m engines.mpi_engine --data data/parquet/synthetic --mode time --no-write --quiet --tag strong
++ mpirun --oversubscribe -np 5 python3 -m engines.mpi_engine --data data/parquet/synthetic --mode dynamic --no-write --quiet --tag strong
++ python3 -m engines.spark_engine --data data/parquet/synthetic -p 4 --no-write --quiet --tag strong
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+26/10/18 20:51:14 WARN Utils: Your hostname, SreeHarinis-MacBook-Pro.local, resolves to a loopback address: 127.0.0.1; using 10.10.12.178 instead (on interface en0)
+26/10/18 20:51:14 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/18 20:51:14 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
++ python3 -m engines.parallel_mp --data data/parquet/synthetic -p 8 --no-write --quiet --tag strong
++ mpirun --oversubscribe -np 8 python3 -m engines.mpi_engine --data data/parquet/synthetic --mode station --no-write --quiet --tag strong
++ mpirun --oversubscribe -np 8 python3 -m engines.mpi_engine --data data/parquet/synthetic --mode time --no-write --quiet --tag strong
++ mpirun --oversubscribe -np 9 python3 -m engines.mpi_engine --data data/parquet/synthetic --mode dynamic --no-write --quiet --tag strong
++ python3 -m engines.spark_engine --data data/parquet/synthetic -p 8 --no-write --quiet --tag strong
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+26/10/18 20:53:07 WARN Utils: Your hostname, SreeHarinis-MacBook-Pro.local, resolves to a loopback address: 127.0.0.1; using 10.10.12.178 instead (on interface en0)
+26/10/18 20:53:07 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/18 20:53:07 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
++ python3 -m engines.sequential --data data/parquet/synthetic --stations AMD ATQ BBI BHO BJS BKK --no-write --quiet --tag weak
++ python3 -m engines.parallel_mp --data data/parquet/synthetic -p 1 --stations AMD ATQ BBI BHO BJS BKK --no-write --quiet --tag weak
++ mpirun --oversubscribe -np 1 python3 -m engines.mpi_engine --data data/parquet/synthetic --mode station --stations AMD ATQ BBI BHO BJS BKK --no-write --quiet --tag weak
++ python3 -m engines.parallel_mp --data data/parquet/synthetic -p 2 --stations AMD ATQ BBI BHO BJS BKK BLR BOM CAI CCU CHE CHI --no-write --quiet --tag weak
++ mpirun --oversubscribe -np 2 python3 -m engines.mpi_engine --data data/parquet/synthetic --mode station --stations AMD ATQ BBI BHO BJS BKK BLR BOM CAI CCU CHE CHI --no-write --quiet --tag weak
++ python3 -m engines.parallel_mp --data data/parquet/synthetic -p 4 --stations AMD ATQ BBI BHO BJS BKK BLR BOM CAI CCU CHE CHI COK CPT DAC DEL DXB GAU GOI HYD IXC JAI JKT KHI --no-write --quiet --tag weak
++ mpirun --oversubscribe -np 4 python3 -m engines.mpi_engine --data data/parquet/synthetic --mode station --stations AMD ATQ BBI BHO BJS BKK BLR BOM CAI CCU CHE CHI COK CPT DAC DEL DXB GAU GOI HYD IXC JAI JKT KHI --no-write --quiet --tag weak
++ python3 -m engines.parallel_mp --data data/parquet/synthetic -p 8 --stations AMD ATQ BBI BHO BJS BKK BLR BOM CAI CCU CHE CHI COK CPT DAC DEL DXB GAU GOI HYD IXC JAI JKT KHI LAX LDN LKO LOS MAA MEX MNL MOW NAG NBO NYC PAR PAT PHL PNQ REK RUH SAO SIN SLV SXR SYD TRV TYO --no-write --quiet --tag weak
++ mpirun --oversubscribe -np 8 python3 -m engines.mpi_engine --data data/parquet/synthetic --mode station --stations AMD ATQ BBI BHO BJS BKK BLR BOM CAI CCU CHE CHI COK CPT DAC DEL DXB GAU GOI HYD IXC JAI JKT KHI LAX LDN LKO LOS MAA MEX MNL MOW NAG NBO NYC PAR PAT PHL PNQ REK RUH SAO SIN SLV SXR SYD TRV TYO --no-write --quiet --tag weak
++ python3 -m engines.sequential --data data/parquet/large --stations AMD AMD001 AMD002 AMD003 ATQ ATQ001 ATQ002 ATQ003 BBI BBI001 --no-write --quiet --tag size
++ python3 -m engines.parallel_mp --data data/parquet/large -p 8 --stations AMD AMD001 AMD002 AMD003 ATQ ATQ001 ATQ002 ATQ003 BBI BBI001 --no-write --quiet --tag size
++ mpirun --oversubscribe -np 8 python3 -m engines.mpi_engine --data data/parquet/large --mode station --stations AMD AMD001 AMD002 AMD003 ATQ ATQ001 ATQ002 ATQ003 BBI BBI001 --no-write --quiet --tag size
++ python3 -m engines.spark_engine --data data/parquet/large -p 8 --stations AMD AMD001 AMD002 AMD003 ATQ ATQ001 ATQ002 ATQ003 BBI BBI001 --no-write --quiet --tag size
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+26/10/18 20:54:59 WARN Utils: Your hostname, SreeHarinis-MacBook-Pro.local, resolves to a loopback address: 127.0.0.1; using 10.10.12.178 instead (on interface en0)
+26/10/18 20:54:59 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/18 20:54:59 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
++ python3 -m engines.sequential --data data/parquet/large --stations AMD AMD001 AMD002 AMD003 ATQ ATQ001 ATQ002 ATQ003 BBI BBI001 BBI002 BBI003 BHO BHO001 BHO002 BHO003 BJS BJS001 BJS002 BJS003 BKK BKK001 BKK002 BKK003 BLR BLR001 BLR002 BLR003 BOM BOM001 BOM002 BOM003 CAI CAI001 CAI002 CAI003 CCU CCU001 CCU002 CCU003 CHE CHE001 CHE002 CHE003 CHI CHI001 CHI002 CHI003 COK COK001 --no-write --quiet --tag size
++ python3 -m engines.parallel_mp --data data/parquet/large -p 8 --stations AMD AMD001 AMD002 AMD003 ATQ ATQ001 ATQ002 ATQ003 BBI BBI001 BBI002 BBI003 BHO BHO001 BHO002 BHO003 BJS BJS001 BJS002 BJS003 BKK BKK001 BKK002 BKK003 BLR BLR001 BLR002 BLR003 BOM BOM001 BOM002 BOM003 CAI CAI001 CAI002 CAI003 CCU CCU001 CCU002 CCU003 CHE CHE001 CHE002 CHE003 CHI CHI001 CHI002 CHI003 COK COK001 --no-write --quiet --tag size
++ mpirun --oversubscribe -np 8 python3 -m engines.mpi_engine --data data/parquet/large --mode station --stations AMD AMD001 AMD002 AMD003 ATQ ATQ001 ATQ002 ATQ003 BBI BBI001 BBI002 BBI003 BHO BHO001 BHO002 BHO003 BJS BJS001 BJS002 BJS003 BKK BKK001 BKK002 BKK003 BLR BLR001 BLR002 BLR003 BOM BOM001 BOM002 BOM003 CAI CAI001 CAI002 CAI003 CCU CCU001 CCU002 CCU003 CHE CHE001 CHE002 CHE003 CHI CHI001 CHI002 CHI003 COK COK001 --no-write --quiet --tag size
++ python3 -m engines.spark_engine --data data/parquet/large -p 8 --stations AMD AMD001 AMD002 AMD003 ATQ ATQ001 ATQ002 ATQ003 BBI BBI001 BBI002 BBI003 BHO BHO001 BHO002 BHO003 BJS BJS001 BJS002 BJS003 BKK BKK001 BKK002 BKK003 BLR BLR001 BLR002 BLR003 BOM BOM001 BOM002 BOM003 CAI CAI001 CAI002 CAI003 CCU CCU001 CCU002 CCU003 CHE CHE001 CHE002 CHE003 CHI CHI001 CHI002 CHI003 COK COK001 --no-write --quiet --tag size
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+26/10/18 20:55:38 WARN Utils: Your hostname, SreeHarinis-MacBook-Pro.local, resolves to a loopback address: 127.0.0.1; using 10.10.12.178 instead (on interface en0)
+26/10/18 20:55:38 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/18 20:55:38 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
++ python3 -m engines.sequential --data data/parquet/large --stations AMD AMD001 AMD002 AMD003 ATQ ATQ001 ATQ002 ATQ003 BBI BBI001 BBI002 BBI003 BHO BHO001 BHO002 BHO003 BJS BJS001 BJS002 BJS003 BKK BKK001 BKK002 BKK003 BLR BLR001 BLR002 BLR003 BOM BOM001 BOM002 BOM003 CAI CAI001 CAI002 CAI003 CCU CCU001 CCU002 CCU003 CHE CHE001 CHE002 CHE003 CHI CHI001 CHI002 CHI003 COK COK001 COK002 COK003 CPT CPT001 CPT002 CPT003 DAC DAC001 DAC002 DAC003 DEL DEL001 DEL002 DEL003 DXB DXB001 DXB002 DXB003 GAU GAU001 GAU002 GAU003 GOI GOI001 GOI002 GOI003 HYD HYD001 HYD002 HYD003 IXC IXC001 IXC002 IXC003 JAI JAI001 JAI002 JAI003 JKT JKT001 JKT002 JKT003 KHI KHI001 KHI002 KHI003 LAX LAX001 LAX002 LAX003 --no-write --quiet --tag size
++ python3 -m engines.parallel_mp --data data/parquet/large -p 8 --stations AMD AMD001 AMD002 AMD003 ATQ ATQ001 ATQ002 ATQ003 BBI BBI001 BBI002 BBI003 BHO BHO001 BHO002 BHO003 BJS BJS001 BJS002 BJS003 BKK BKK001 BKK002 BKK003 BLR BLR001 BLR002 BLR003 BOM BOM001 BOM002 BOM003 CAI CAI001 CAI002 CAI003 CCU CCU001 CCU002 CCU003 CHE CHE001 CHE002 CHE003 CHI CHI001 CHI002 CHI003 COK COK001 COK002 COK003 CPT CPT001 CPT002 CPT003 DAC DAC001 DAC002 DAC003 DEL DEL001 DEL002 DEL003 DXB DXB001 DXB002 DXB003 GAU GAU001 GAU002 GAU003 GOI GOI001 GOI002 GOI003 HYD HYD001 HYD002 HYD003 IXC IXC001 IXC002 IXC003 JAI JAI001 JAI002 JAI003 JKT JKT001 JKT002 JKT003 KHI KHI001 KHI002 KHI003 LAX LAX001 LAX002 LAX003 --no-write --quiet --tag size
++ mpirun --oversubscribe -np 8 python3 -m engines.mpi_engine --data data/parquet/large --mode station --stations AMD AMD001 AMD002 AMD003 ATQ ATQ001 ATQ002 ATQ003 BBI BBI001 BBI002 BBI003 BHO BHO001 BHO002 BHO003 BJS BJS001 BJS002 BJS003 BKK BKK001 BKK002 BKK003 BLR BLR001 BLR002 BLR003 BOM BOM001 BOM002 BOM003 CAI CAI001 CAI002 CAI003 CCU CCU001 CCU002 CCU003 CHE CHE001 CHE002 CHE003 CHI CHI001 CHI002 CHI003 COK COK001 COK002 COK003 CPT CPT001 CPT002 CPT003 DAC DAC001 DAC002 DAC003 DEL DEL001 DEL002 DEL003 DXB DXB001 DXB002 DXB003 GAU GAU001 GAU002 GAU003 GOI GOI001 GOI002 GOI003 HYD HYD001 HYD002 HYD003 IXC IXC001 IXC002 IXC003 JAI JAI001 JAI002 JAI003 JKT JKT001 JKT002 JKT003 KHI KHI001 KHI002 KHI003 LAX LAX001 LAX002 LAX003 --no-write --quiet --tag size
++ python3 -m engines.spark_engine --data data/parquet/large -p 8 --stations AMD AMD001 AMD002 AMD003 ATQ ATQ001 ATQ002 ATQ003 BBI BBI001 BBI002 BBI003 BHO BHO001 BHO002 BHO003 BJS BJS001 BJS002 BJS003 BKK BKK001 BKK002 BKK003 BLR BLR001 BLR002 BLR003 BOM BOM001 BOM002 BOM003 CAI CAI001 CAI002 CAI003 CCU CCU001 CCU002 CCU003 CHE CHE001 CHE002 CHE003 CHI CHI001 CHI002 CHI003 COK COK001 COK002 COK003 CPT CPT001 CPT002 CPT003 DAC DAC001 DAC002 DAC003 DEL DEL001 DEL002 DEL003 DXB DXB001 DXB002 DXB003 GAU GAU001 GAU002 GAU003 GOI GOI001 GOI002 GOI003 HYD HYD001 HYD002 HYD003 IXC IXC001 IXC002 IXC003 JAI JAI001 JAI002 JAI003 JKT JKT001 JKT002 JKT003 KHI KHI001 KHI002 KHI003 LAX LAX001 LAX002 LAX003 --no-write --quiet --tag size
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+26/10/18 20:57:16 WARN Utils: Your hostname, SreeHarinis-MacBook-Pro.local, resolves to a loopback address: 127.0.0.1; using 10.10.12.178 instead (on interface en0)
+26/10/18 20:57:16 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/18 20:57:16 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
++ python3 -m engines.sequential --data data/parquet/large --stations AMD AMD001 AMD002 AMD003 ATQ ATQ001 ATQ002 ATQ003 BBI BBI001 BBI002 BBI003 BHO BHO001 BHO002 BHO003 BJS BJS001 BJS002 BJS003 BKK BKK001 BKK002 BKK003 BLR BLR001 BLR002 BLR003 BOM BOM001 BOM002 BOM003 CAI CAI001 CAI002 CAI003 CCU CCU001 CCU002 CCU003 CHE CHE001 CHE002 CHE003 CHI CHI001 CHI002 CHI003 COK COK001 COK002 COK003 CPT CPT001 CPT002 CPT003 DAC DAC001 DAC002 DAC003 DEL DEL001 DEL002 DEL003 DXB DXB001 DXB002 DXB003 GAU GAU001 GAU002 GAU003 GOI GOI001 GOI002 GOI003 HYD HYD001 HYD002 HYD003 IXC IXC001 IXC002 IXC003 JAI JAI001 JAI002 JAI003 JKT JKT001 JKT002 JKT003 KHI KHI001 KHI002 KHI003 LAX LAX001 LAX002 LAX003 LDN LDN001 LDN002 LDN003 LKO LKO001 LKO002 LKO003 LOS LOS001 LOS002 LOS003 MAA MAA001 MAA002 MAA003 MEX MEX001 MEX002 MEX003 MNL MNL001 MNL002 MNL003 MOW MOW001 MOW002 MOW003 NAG NAG001 NAG002 NAG003 NBO NBO001 NBO002 NBO003 NYC NYC001 NYC002 NYC003 PAR PAR001 PAR002 PAR003 PAT PAT001 PAT002 PAT003 PHL PHL001 PHL002 PHL003 PNQ PNQ001 PNQ002 PNQ003 REK REK001 REK002 REK003 RUH RUH001 RUH002 RUH003 SAO SAO001 SAO002 SAO003 SIN SIN001 SIN002 SIN003 SLV SLV001 SLV002 SLV003 SXR SXR001 SXR002 SXR003 SYD SYD001 SYD002 SYD003 TRV TRV001 TRV002 TRV003 TYO TYO001 TYO002 TYO003 VTZ VTZ001 VTZ002 VTZ003 YTO YTO001 YTO002 YTO003 --no-write --quiet --tag size
++ python3 -m engines.parallel_mp --data data/parquet/large -p 8 --stations AMD AMD001 AMD002 AMD003 ATQ ATQ001 ATQ002 ATQ003 BBI BBI001 BBI002 BBI003 BHO BHO001 BHO002 BHO003 BJS BJS001 BJS002 BJS003 BKK BKK001 BKK002 BKK003 BLR BLR001 BLR002 BLR003 BOM BOM001 BOM002 BOM003 CAI CAI001 CAI002 CAI003 CCU CCU001 CCU002 CCU003 CHE CHE001 CHE002 CHE003 CHI CHI001 CHI002 CHI003 COK COK001 COK002 COK003 CPT CPT001 CPT002 CPT003 DAC DAC001 DAC002 DAC003 DEL DEL001 DEL002 DEL003 DXB DXB001 DXB002 DXB003 GAU GAU001 GAU002 GAU003 GOI GOI001 GOI002 GOI003 HYD HYD001 HYD002 HYD003 IXC IXC001 IXC002 IXC003 JAI JAI001 JAI002 JAI003 JKT JKT001 JKT002 JKT003 KHI KHI001 KHI002 KHI003 LAX LAX001 LAX002 LAX003 LDN LDN001 LDN002 LDN003 LKO LKO001 LKO002 LKO003 LOS LOS001 LOS002 LOS003 MAA MAA001 MAA002 MAA003 MEX MEX001 MEX002 MEX003 MNL MNL001 MNL002 MNL003 MOW MOW001 MOW002 MOW003 NAG NAG001 NAG002 NAG003 NBO NBO001 NBO002 NBO003 NYC NYC001 NYC002 NYC003 PAR PAR001 PAR002 PAR003 PAT PAT001 PAT002 PAT003 PHL PHL001 PHL002 PHL003 PNQ PNQ001 PNQ002 PNQ003 REK REK001 REK002 REK003 RUH RUH001 RUH002 RUH003 SAO SAO001 SAO002 SAO003 SIN SIN001 SIN002 SIN003 SLV SLV001 SLV002 SLV003 SXR SXR001 SXR002 SXR003 SYD SYD001 SYD002 SYD003 TRV TRV001 TRV002 TRV003 TYO TYO001 TYO002 TYO003 VTZ VTZ001 VTZ002 VTZ003 YTO YTO001 YTO002 YTO003 --no-write --quiet --tag size
++ mpirun --oversubscribe -np 8 python3 -m engines.mpi_engine --data data/parquet/large --mode station --stations AMD AMD001 AMD002 AMD003 ATQ ATQ001 ATQ002 ATQ003 BBI BBI001 BBI002 BBI003 BHO BHO001 BHO002 BHO003 BJS BJS001 BJS002 BJS003 BKK BKK001 BKK002 BKK003 BLR BLR001 BLR002 BLR003 BOM BOM001 BOM002 BOM003 CAI CAI001 CAI002 CAI003 CCU CCU001 CCU002 CCU003 CHE CHE001 CHE002 CHE003 CHI CHI001 CHI002 CHI003 COK COK001 COK002 COK003 CPT CPT001 CPT002 CPT003 DAC DAC001 DAC002 DAC003 DEL DEL001 DEL002 DEL003 DXB DXB001 DXB002 DXB003 GAU GAU001 GAU002 GAU003 GOI GOI001 GOI002 GOI003 HYD HYD001 HYD002 HYD003 IXC IXC001 IXC002 IXC003 JAI JAI001 JAI002 JAI003 JKT JKT001 JKT002 JKT003 KHI KHI001 KHI002 KHI003 LAX LAX001 LAX002 LAX003 LDN LDN001 LDN002 LDN003 LKO LKO001 LKO002 LKO003 LOS LOS001 LOS002 LOS003 MAA MAA001 MAA002 MAA003 MEX MEX001 MEX002 MEX003 MNL MNL001 MNL002 MNL003 MOW MOW001 MOW002 MOW003 NAG NAG001 NAG002 NAG003 NBO NBO001 NBO002 NBO003 NYC NYC001 NYC002 NYC003 PAR PAR001 PAR002 PAR003 PAT PAT001 PAT002 PAT003 PHL PHL001 PHL002 PHL003 PNQ PNQ001 PNQ002 PNQ003 REK REK001 REK002 REK003 RUH RUH001 RUH002 RUH003 SAO SAO001 SAO002 SAO003 SIN SIN001 SIN002 SIN003 SLV SLV001 SLV002 SLV003 SXR SXR001 SXR002 SXR003 SYD SYD001 SYD002 SYD003 TRV TRV001 TRV002 TRV003 TYO TYO001 TYO002 TYO003 VTZ VTZ001 VTZ002 VTZ003 YTO YTO001 YTO002 YTO003 --no-write --quiet --tag size
++ python3 -m engines.spark_engine --data data/parquet/large -p 8 --stations AMD AMD001 AMD002 AMD003 ATQ ATQ001 ATQ002 ATQ003 BBI BBI001 BBI002 BBI003 BHO BHO001 BHO002 BHO003 BJS BJS001 BJS002 BJS003 BKK BKK001 BKK002 BKK003 BLR BLR001 BLR002 BLR003 BOM BOM001 BOM002 BOM003 CAI CAI001 CAI002 CAI003 CCU CCU001 CCU002 CCU003 CHE CHE001 CHE002 CHE003 CHI CHI001 CHI002 CHI003 COK COK001 COK002 COK003 CPT CPT001 CPT002 CPT003 DAC DAC001 DAC002 DAC003 DEL DEL001 DEL002 DEL003 DXB DXB001 DXB002 DXB003 GAU GAU001 GAU002 GAU003 GOI GOI001 GOI002 GOI003 HYD HYD001 HYD002 HYD003 IXC IXC001 IXC002 IXC003 JAI JAI001 JAI002 JAI003 JKT JKT001 JKT002 JKT003 KHI KHI001 KHI002 KHI003 LAX LAX001 LAX002 LAX003 LDN LDN001 LDN002 LDN003 LKO LKO001 LKO002 LKO003 LOS LOS001 LOS002 LOS003 MAA MAA001 MAA002 MAA003 MEX MEX001 MEX002 MEX003 MNL MNL001 MNL002 MNL003 MOW MOW001 MOW002 MOW003 NAG NAG001 NAG002 NAG003 NBO NBO001 NBO002 NBO003 NYC NYC001 NYC002 NYC003 PAR PAR001 PAR002 PAR003 PAT PAT001 PAT002 PAT003 PHL PHL001 PHL002 PHL003 PNQ PNQ001 PNQ002 PNQ003 REK REK001 REK002 REK003 RUH RUH001 RUH002 RUH003 SAO SAO001 SAO002 SAO003 SIN SIN001 SIN002 SIN003 SLV SLV001 SLV002 SLV003 SXR SXR001 SXR002 SXR003 SYD SYD001 SYD002 SYD003 TRV TRV001 TRV002 TRV003 TYO TYO001 TYO002 TYO003 VTZ VTZ001 VTZ002 VTZ003 YTO YTO001 YTO002 YTO003 --no-write --quiet --tag size
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+26/10/18 20:59:55 WARN Utils: Your hostname, SreeHarinis-MacBook-Pro.local, resolves to a loopback address: 127.0.0.1; using 10.10.12.178 instead (on interface en0)
+26/10/18 20:59:55 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/18 20:59:55 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
++ mpirun --oversubscribe -np 4 python3 -m engines.mpi_engine --data data/parquet/large --mode station --balance block --no-write --quiet --tag balance
++ mpirun --oversubscribe -np 4 python3 -m engines.mpi_engine --data data/parquet/large --mode station --balance round_robin --no-write --quiet --tag balance
++ mpirun --oversubscribe -np 4 python3 -m engines.mpi_engine --data data/parquet/large --mode station --balance lpt --no-write --quiet --tag balance
++ mpirun --oversubscribe -np 5 python3 -m engines.mpi_engine --data data/parquet/large --mode dynamic --no-write --quiet --tag balance
++ python3 -m engines.parallel_mp --data data/parquet/large -p 4 --schedule static --order name --no-write --quiet --tag balance
++ python3 -m engines.parallel_mp --data data/parquet/large -p 4 --schedule dynamic --order lpt --no-write --quiet --tag balance
++ mpirun --oversubscribe -np 8 python3 -m engines.mpi_engine --data data/parquet/large --mode station --balance block --no-write --quiet --tag balance
++ mpirun --oversubscribe -np 8 python3 -m engines.mpi_engine --data data/parquet/large --mode station --balance round_robin --no-write --quiet --tag balance
++ mpirun --oversubscribe -np 8 python3 -m engines.mpi_engine --data data/parquet/large --mode station --balance lpt --no-write --quiet --tag balance
++ mpirun --oversubscribe -np 9 python3 -m engines.mpi_engine --data data/parquet/large --mode dynamic --no-write --quiet --tag balance
++ python3 -m engines.parallel_mp --data data/parquet/large -p 8 --schedule static --order name --no-write --quiet --tag balance
++ python3 -m engines.parallel_mp --data data/parquet/large -p 8 --schedule dynamic --order lpt --no-write --quiet --tag balance
+=== repeat 2 / 3 ===
++ python3 -m engines.sequential --data data/parquet/synthetic --no-write --quiet --tag strong
++ python3 -m engines.parallel_mp --data data/parquet/synthetic -p 1 --no-write --quiet --tag strong
++ mpirun --oversubscribe -np 1 python3 -m engines.mpi_engine --data data/parquet/synthetic --mode station --no-write --quiet --tag strong
++ python3 -m engines.spark_engine --data data/parquet/synthetic -p 1 --no-write --quiet --tag strong
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+26/10/18 21:05:45 WARN Utils: Your hostname, SreeHarinis-MacBook-Pro.local, resolves to a loopback address: 127.0.0.1; using 10.10.12.178 instead (on interface en0)
+26/10/18 21:05:45 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/18 21:05:45 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable

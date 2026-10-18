@@ -1,0 +1,4 @@
+station_id,rows_in,duplicates,temp_c_missing,humidity_pct_missing,precip_mm_missing,wind_kmh_missing,gust_kmh_missing,temp_c_flagged,humidity_pct_clipped,humidity_pct_flagged,precip_mm_flagged,wind_kmh_flagged,gust_kmh_flagged,pct_missing,pct_flagged
+BOM,43826,2,35,37,45,30,43,2,0,2,2,2,0,0.0867,0.0037
+DEL,43826,2,50,34,49,43,42,2,2,0,2,2,0,0.0995,0.0027
+MAA,43826,2,46,52,47,38,34,2,0,2,2,2,0,0.099,0.0037

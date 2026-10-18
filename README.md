@@ -74,6 +74,11 @@ Detection vs injected ground truth: recall 90 % heatwaves, 96 % cold waves, 100 
 true warming trends recovered with MAE 0.05 °C/decade. Verified on the Docker cluster: MPI across 4 containers
 and Spark on 3 workers give identical results; stopping a Spark worker mid-job still completes correctly.
 
+Real data (ERA5 via Open-Meteo, 6 Indian cities, 2015–2024, `data/parquet/real`): the unchanged pipeline finds
+the May–June 2024 North India heatwave (Phalodi 48.1 °C), Cyclone Amphan (Kolkata, 20 May 2020) and Cyclone
+Michaung (Chennai, 4 Dec 2023). It misses the Dec 2015 Chennai floods because ERA5 smooths that rain to 41–60 mm/day
+(below the 64.5 mm IMD threshold). Shareable results page: `python reporting/make_page.py --synthetic <run> --era5 <run>`.
+
 ## Pipeline (identical in every engine)
 
 | Phase | Work | Parallel pattern |

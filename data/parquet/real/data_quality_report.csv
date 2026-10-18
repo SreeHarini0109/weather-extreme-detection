@@ -1,0 +1,7 @@
+station_id,rows_in,duplicates,temp_c_missing,humidity_pct_missing,precip_mm_missing,wind_kmh_missing,gust_kmh_missing,temp_c_flagged,humidity_pct_clipped,humidity_pct_flagged,precip_mm_flagged,wind_kmh_flagged,gust_kmh_flagged,pct_missing,pct_flagged
+BOM,87672,0,0,0,0,0,0,0,0,0,0,0,0,0.0,0.0
+CCU,87672,0,0,0,0,0,0,0,0,0,0,0,0,0.0,0.0
+DEL,87672,0,0,0,0,0,0,0,0,0,0,0,0,0.0,0.0
+LKO,87672,0,0,0,0,0,0,0,0,0,0,0,0,0.0,0.0
+MAA,87672,0,0,0,0,0,0,0,0,0,0,0,0,0.0,0.0
+PHL,87672,0,0,0,0,0,0,0,0,0,0,0,0,0.0,0.0

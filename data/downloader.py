@@ -87,10 +87,13 @@ def main(argv=None):
     ap.add_argument("--out")
     ap.add_argument("--threads", type=int)
     ap.add_argument("--limit", type=int, help="only the first N stations (testing)")
+    ap.add_argument("--ids", nargs="*", help="only these station ids, e.g. --ids DEL BOM MAA")
     a = ap.parse_args(argv)
     cfg = load_config(a.config)
     d = cfg["downloader"]
     st = pd.read_csv(resolve(a.stations or cfg["paths"]["stations"]))
+    if a.ids:
+        st = st[st["station_id"].isin(a.ids)]
     if a.limit:
         st = st.head(a.limit)
     start = date.fromisoformat(a.start or d["start"])

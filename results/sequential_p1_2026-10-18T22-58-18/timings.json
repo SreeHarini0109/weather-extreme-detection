@@ -1,0 +1,15 @@
+{
+  "phases": {
+    "load": 0.325007,
+    "clean": 1.982353,
+    "stats": 6.604091,
+    "thresholds": 0.20215,
+    "detect": 1.820999,
+    "trends": 0.654598
+  },
+  "comm": 0.0,
+  "merge": 0.009504,
+  "total_s": 11.633770874992479,
+  "write_s": 0.2754094580304809,
+  "per_worker": null
+}

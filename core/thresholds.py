@@ -21,7 +21,7 @@ THRESHOLD_COLS = [
     "station_id", "month", "n_days",
     "tmax_mean", "tmax_std", "tmin_mean", "tmin_std", "wind_mean", "wind_std",
     "tmax_p90", "tmax_p99", "tmin_p01", "n_wet", "precip_wet_p99", "precip_wet_q1", "precip_wet_q3",
-    "wind_p99", "wind_q1", "wind_q3",
+    "wind_p99", "wind_q1", "wind_q3", "imd_region", "imd_hill",
 ]
 
 
@@ -91,9 +91,23 @@ def hist_percentile(counts: np.ndarray, q: float, lo: float, width: float) -> np
     return np.where(total > 0, val, np.nan)
 
 
+def imd_flags(station_ids: list[str], meta: dict | None, cfg: dict) -> tuple[np.ndarray, np.ndarray]:
+    """Per station: does IMD apply (country in imd.countries), and is it a hill station (elevation)?"""
+    imd = cfg["thresholds"]["imd"]
+    meta = meta or {}
+    region = np.array([1 if imd.get("apply_everywhere") or meta.get(s, {}).get("country") in imd["countries"] else 0
+                       for s in station_ids], dtype=np.int64)
+    hill = np.array([1 if (meta.get(s, {}).get("elevation") or 0) >= imd["hill_elevation_m"] else 0
+                     for s in station_ids], dtype=np.int64)
+    return region, hill
+
+
 def thresholds_from_arrays(mom: np.ndarray, hist: dict[str, np.ndarray], station_ids: list[str],
-                           cfg: dict) -> pd.DataFrame:
-    """Build the station x month thresholds table from (merged) moments and histograms."""
+                           cfg: dict, meta: dict | None = None) -> pd.DataFrame:
+    """Build the station x month thresholds table from (merged) moments and histograms.
+
+    meta: {station_id: {"country": .., "elevation": ..}} (from manifest.json) for the IMD region / hill flags.
+    """
     S = len(station_ids)
     n = mom[..., N]
     with np.errstate(invalid="ignore", divide="ignore"):
@@ -120,6 +134,9 @@ def thresholds_from_arrays(mom: np.ndarray, hist: dict[str, np.ndarray], station
         "wind_p99": pct("wind_max", 0.99).reshape(-1),
         "wind_q1": pct("wind_max", 0.25).reshape(-1), "wind_q3": pct("wind_max", 0.75).reshape(-1),
     })
+    region, hill = imd_flags(station_ids, meta, cfg)
+    df["imd_region"] = np.repeat(region, 12)
+    df["imd_hill"] = np.repeat(hill, 12)
     return df[THRESHOLD_COLS]
 
 

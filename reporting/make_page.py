@@ -267,7 +267,8 @@ def build(syn: Path, era: Path, syn_data: Path, era_data: Path, results_root: Pa
   <div class="grid2">{P("size_scaling.png", "Data-size scaling")}{P("load_balancing.png", "Load balancing strategies")}</div>
   <h3>On a real cluster</h3>
   <p>A Docker Compose cluster (one master, three workers) ran MPI across four containers and Spark on three worker
-  nodes, and both produced output identical to the sequential engine. Stopping a Spark worker mid-job did not break
+  nodes, and both produced output identical to the sequential engine. A deployment kit for separate lab PCs
+  (host networking, SSH on port 2222) is in <code>docker/lan/</code>. Stopping a Spark worker mid-job did not break
   the run: Spark rebuilt the lost partitions from lineage and finished with the same results.</p>
 </section>
 
@@ -276,8 +277,8 @@ def build(syn: Path, era: Path, syn_data: Path, era_data: Path, results_root: Pa
   <ul>
     <li>Synthetic data comes from a statistical weather model, not a climate model. It contains natural extremes as well
     as injected ones, so detector precision against the injected set is a lower bound.</li>
-    <li>IMD heatwave and cold-wave rules were designed for India but are applied to every station, which inflates
-    cold-wave counts in cold climates.</li>
+    <li>IMD heatwave and cold-wave rules apply to Indian stations only (with IMD's hill-station criteria above
+    1000 m); other stations rely on the station-relative detectors, so their heat and cold recall is lower.</li>
     <li>Days are UTC days, and "departure from normal" uses the station-month mean rather than IMD's daily normals.</li>
     <li>ERA5 underestimates local extremes, especially short, intense rain.</li>
     <li>Cluster timings come from four containers sharing one 8-CPU virtual machine. They show correctness and

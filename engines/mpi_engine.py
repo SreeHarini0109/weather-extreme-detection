@@ -32,7 +32,7 @@ from core.aggregates import STAT_VARS, VEC_WIDTH, empty_vec, frame_to_vec, merge
 from core.cleaning import clean_hourly, empty_quality, merge_quality, to_daily  # noqa: E402
 from core.detection import EVENT_COLS, build_rules, detect_events, filter_owned_events  # noqa: E402
 from core.outputs import combine_station_results, merge_combined, write_outputs  # noqa: E402
-from core.pipeline import assign, load_station, process_station, read_manifest, year_chunks  # noqa: E402
+from core.pipeline import assign, load_station, process_station, read_manifest, station_meta, year_chunks  # noqa: E402
 from core.thresholds import attach_thresholds, climatology_arrays, empty_arrays, thresholds_from_arrays  # noqa: E402
 from core.timing import PhaseTimer, max_per_phase  # noqa: E402
 from core.trends import INDEX_COLS, TREND_COLS, station_trends, yearly_indices  # noqa: E402
@@ -190,7 +190,7 @@ def run_time(comm, data, cfg, stations=None):
             hist_g[v] = np.empty_like(h)
             comm.Allreduce(h, hist_g[v], op=MPI.SUM)
     with timer.phase("thresholds"):
-        thr = thresholds_from_arrays(mom_g, hist_g, ids, cfg)
+        thr = thresholds_from_arrays(mom_g, hist_g, ids, cfg, station_meta(manifest))
         thr_by = {s: g for s, g in thr.groupby("station_id")}
     # P5 detection with halo exchange: receive the previous rank's last H days, send ours onward
     H = cfg["mpi"]["halo_days"]

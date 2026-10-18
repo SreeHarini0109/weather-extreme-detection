@@ -139,6 +139,15 @@ def main(argv=None):
     manifest["total_rows"] = int(sum(m["rows"] for m in st.values()))
     manifest["total_bytes"] = int(sum(m["bytes"] for m in st.values()))
     manifest["years"] = [min(int(m["first"][:4]) for m in st.values()), max(int(m["last"][:4]) for m in st.values())]
+    # station country (for region-specific rules such as IMD): from the generator's stations_used.csv
+    # when present (covers virtual stations), else from the configured stations.csv
+    sources = [src / "stations_used.csv", resolve(cfg["paths"]["stations"])]
+    countries = {}
+    for f in sources[::-1]:
+        if f.exists():
+            countries.update(pd.read_csv(f).set_index("station_id")["country"].to_dict())
+    for sid, m in manifest["stations"].items():
+        m["country"] = countries.get(sid)
     gt = src / "ground_truth_events.csv"
     if gt.exists():
         shutil.copy(gt, out / "ground_truth_events.csv")

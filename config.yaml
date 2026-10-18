@@ -45,8 +45,11 @@ cleaning:
   min_hours_complete: 20
 
 thresholds:
-  heatwave:   {tmax_min: 40.0, departure: 4.5, severe_departure: 6.5, absolute: 45.0, severe_absolute: 47.0}
-  coldwave:   {tmin_max: 10.0, departure: -4.5, severe_departure: -6.5}
+  # IMD rules apply to stations in imd.countries only (they are India's criteria); elsewhere the
+  # station-relative detectors (P99 / z-score / warm spells, ETCCDI-style) cover heat and cold.
+  imd:        {countries: [IN], hill_elevation_m: 1000, apply_everywhere: false}
+  heatwave:   {tmax_min: 40.0, hill_tmax_min: 30.0, departure: 4.5, severe_departure: 6.5, absolute: 45.0, severe_absolute: 47.0}
+  coldwave:   {tmin_max: 10.0, hill_tmin_max: 0.0, departure: -4.5, severe_departure: -6.5, absolute: 4.0, severe_absolute: 2.0}
   heavy_rain: {heavy: 64.5, very_heavy: 115.6, extremely_heavy: 204.5}
   cloudburst_mm_per_hour: 100.0
   heat_index: {danger: 41.0, extreme_danger: 54.0}

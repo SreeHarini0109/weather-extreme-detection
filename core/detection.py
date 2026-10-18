@@ -1,8 +1,8 @@
 """P5: extreme-weather detection.
 
 Three complementary methods:
-  (a) fixed meteorological thresholds (IMD heatwave/cold wave/heavy rain, cloudburst, NWS heat index,
-      humidity, Beaufort wind),
+  (a) fixed meteorological thresholds (IMD heatwave/cold wave - Indian stations only, with IMD's
+      plains and hill-station criteria - IMD heavy rain, cloudburst, NWS heat index, humidity, Beaufort wind),
   (b) statistical, location-relative (station-month P99/P1, z-score, IQR),
   (c) multi-day spells (heatwave spell >= 3 days, warm spell / WSDI >= 6 days above P90).
 
@@ -42,11 +42,25 @@ def build_rules(cfg: dict) -> list[Rule]:
                               t["wind_beaufort"])
     wet, z, k = t["wet_day_mm"], t["zscore"], t["iqr_k"]
 
+    # IMD criteria (India only; plains vs hill stations). imd_region / imd_hill are 0/1 columns
+    # joined from the thresholds table; "== 1" keeps the expression valid for pandas AND Spark.
     def heatwave(c):
-        return ((c.tmax >= hw["tmax_min"]) & ((c.tmax - c.tmax_mean) >= hw["departure"])) | (c.tmax >= hw["absolute"])
+        plains = (c.imd_hill == 0) & (((c.tmax >= hw["tmax_min"]) & ((c.tmax - c.tmax_mean) >= hw["departure"]))
+                                      | (c.tmax >= hw["absolute"]))
+        hills = (c.imd_hill == 1) & (c.tmax >= hw["hill_tmax_min"]) & ((c.tmax - c.tmax_mean) >= hw["departure"])
+        return (c.imd_region == 1) & (plains | hills)
 
     def heatwave_severe(c):
-        return ((c.tmax - c.tmax_mean) >= hw["severe_departure"]) | (c.tmax >= hw["severe_absolute"])
+        return ((c.tmax - c.tmax_mean) >= hw["severe_departure"]) | ((c.imd_hill == 0) & (c.tmax >= hw["severe_absolute"]))
+
+    def cold_wave(c):
+        plains = (c.imd_hill == 0) & (((c.tmin <= cw["tmin_max"]) & ((c.tmin - c.tmin_mean) <= cw["departure"]))
+                                      | (c.tmin <= cw["absolute"]))
+        hills = (c.imd_hill == 1) & (c.tmin <= cw["hill_tmin_max"]) & ((c.tmin - c.tmin_mean) <= cw["departure"])
+        return (c.imd_region == 1) & (plains | hills)
+
+    def cold_wave_severe(c):
+        return ((c.tmin - c.tmin_mean) <= cw["severe_departure"]) | ((c.imd_hill == 0) & (c.tmin <= cw["severe_absolute"]))
 
     hw_levels = [("heatwave", None), ("severe_heatwave", heatwave_severe)]
     bf_names = list(bf.items())
@@ -54,9 +68,8 @@ def build_rules(cfg: dict) -> list[Rule]:
     return [
         # (a) fixed thresholds -------------------------------------------------------------
         Rule("heatwave", "threshold", "tmax", +1, heatwave, hw_levels),
-        Rule("cold_wave", "threshold", "tmin", -1,
-             lambda c: (c.tmin <= cw["tmin_max"]) & ((c.tmin - c.tmin_mean) <= cw["departure"]),
-             [("cold_wave", None), ("severe_cold_wave", lambda c: (c.tmin - c.tmin_mean) <= cw["severe_departure"])]),
+        Rule("cold_wave", "threshold", "tmin", -1, cold_wave,
+             [("cold_wave", None), ("severe_cold_wave", cold_wave_severe)]),
         Rule("heavy_rain", "threshold", "precip_sum", +1, lambda c: c.precip_sum >= hr["heavy"],
              [("heavy", None), ("very_heavy", lambda c: c.precip_sum >= hr["very_heavy"]),
               ("extremely_heavy", lambda c: c.precip_sum >= hr["extremely_heavy"])]),

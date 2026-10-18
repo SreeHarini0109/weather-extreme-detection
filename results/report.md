@@ -1,6 +1,6 @@
 # Weather Data Processing & Extreme Weather Detection: Results Report
 
-Run `sequential_p1_2026-10-18T20-41-58` · engine **sequential** · p = 1 · 13,150,250 hourly rows · 50 stations · 1995–2024 · source: synthetic
+Run `sequential_p1_2026-10-18T22-58-18` · engine **sequential** · p = 1 · 13,150,250 hourly rows · 50 stations · 1995–2024 · source: synthetic
 
 ## 1. Global records
 
@@ -40,12 +40,12 @@ Run `sequential_p1_2026-10-18T20-41-58` · engine **sequential** · p = 1 · 13,
 | percentile | hot_day_p99 | 3426 | 5091 | 50 |
 | percentile | rain_p99 | 1090 | 1145 | 50 |
 | percentile | wind_p99 | 4912 | 5269 | 50 |
-| spell | heatwave_spell | 1176 | 5621 | 40 |
+| spell | heatwave_spell | 893 | 4162 | 25 |
 | spell | warm_spell | 1287 | 9192 | 50 |
 | threshold | cloudburst | 904 | 947 | 50 |
-| threshold | cold_wave | 5792 | 12838 | 46 |
+| threshold | cold_wave | 1462 | 3332 | 22 |
 | threshold | heat_stress | 20391 | 139215 | 49 |
-| threshold | heatwave | 3266 | 8237 | 44 |
+| threshold | heatwave | 2553 | 6225 | 25 |
 | threshold | heavy_rain | 4155 | 5162 | 50 |
 | threshold | high_wind | 1089 | 1362 | 27 |
 | threshold | humidity_high | 4659 | 12071 | 34 |
@@ -68,10 +68,10 @@ Run `sequential_p1_2026-10-18T20-41-58` · engine **sequential** · p = 1 · 13,
 | cloudburst | CHE | cloudburst | 2005-06-14 | 1 | 494.0 |
 | heat_stress | JKT | extreme_danger | 2009-10-03 | 5 | 191.4 |
 | high_wind | LOS | B12_hurricane | 2009-04-30 | 2 | 149.8 |
-| humidity_high | CHE | saturated | 2019-06-07 | 68 | 100.0 |
+| humidity_high | LOS | saturated | 2003-07-16 | 5 | 100.0 |
 | heatwave | PHL | severe_heatwave | 2021-06-12 | 17 | 52.6 |
-| humidity_low | PHL | very_dry | 2005-06-01 | 1 | 10.0 |
-| cold_wave | JAI | cold_wave | 2000-09-19 | 1 | 10.0 |
+| humidity_low | RUH | very_dry | 2003-07-05 | 1 | 10.0 |
+| cold_wave | PNQ | cold_wave | 2010-09-07 | 1 | 10.0 |
 
 ### Detection quality vs injected ground truth
 
@@ -79,19 +79,19 @@ Recall = injected events found by ≥1 detector of the matching family. Precisio
 
 | injected_type | injected | detected_any_method | recall_any |
 |---|---|---|---|
-| heatwave | 1112 | 1004 | 0.903 |
-| cold_wave | 660 | 633 | 0.959 |
+| heatwave | 1112 | 959 | 0.862 |
+| cold_wave | 660 | 581 | 0.880 |
 | cloudburst | 640 | 640 | 1.000 |
 | cyclone | 216 | 216 | 1.000 |
 
 | detector | matches_injected | detected | overlap_injected | precision | recall |
 |---|---|---|---|---|---|
-| heatwave | heatwave | 3266 | 851 | 0.261 | 0.713 |
-| heatwave_spell | heatwave | 1176 | 635 | 0.540 | 0.595 |
+| heatwave | heatwave | 2553 | 573 | 0.224 | 0.483 |
+| heatwave_spell | heatwave | 893 | 463 | 0.518 | 0.432 |
 | hot_day_p99 | heatwave | 3426 | 641 | 0.187 | 0.504 |
 | hot_zscore | heatwave | 1113 | 745 | 0.669 | 0.603 |
 | warm_spell | heatwave | 1287 | 414 | 0.322 | 0.402 |
-| cold_wave | cold_wave | 5792 | 518 | 0.089 | 0.765 |
+| cold_wave | cold_wave | 1462 | 252 | 0.172 | 0.364 |
 | cold_night_p01 | cold_wave | 3753 | 528 | 0.141 | 0.692 |
 | cold_zscore | cold_wave | 872 | 553 | 0.634 | 0.767 |
 | cloudburst | cloudburst | 904 | 632 | 0.699 | 0.997 |
@@ -118,7 +118,7 @@ Recovery of the generator's true trend: mean absolute error **0.051 °C/decade**
 
 ## 4. Processing time & scalability
 
-This run: **11.12 s** wall (excluding 0.25 s writing outputs). Phases (slowest worker): load 0.21 s, clean 1.80 s, stats 6.38 s, thresholds 0.18 s, detect 1.86 s, trends 0.64 s.
+This run: **11.63 s** wall (excluding 0.28 s writing outputs). Phases (slowest worker): load 0.33 s, clean 1.98 s, stats 6.60 s, thresholds 0.20 s, detect 1.82 s, trends 0.65 s.
 
 Median of repeated runs on the same 13.1M-row dataset (T₁ = sequential):
 
@@ -173,6 +173,7 @@ Same image on every node; MPI ranks launched over SSH from a hostfile, Spark in 
 | mpi/time | 8 | 4 | 13150250 | 15.58 | cluster |
 | spark | 6 | 3 | 13150250 | 66.85 | cluster |
 | spark | 4 | 2 | 13150250 | 70.65 | fault-tolerance |
+| mpi/station | 8 | 4 | 13150250 | 4.31 | lan-sim |
 
 ### File format: CSV vs Parquet
 

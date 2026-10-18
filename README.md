@@ -56,8 +56,10 @@ docker exec -it master python -m engines.spark_engine --master spark://master:70
 docker compose -f docker/docker-compose.yml down
 ```
 Fault-tolerance demo: start a Spark run, then `docker stop worker2`; Spark recomputes the lost partitions
-from lineage and the job still completes. Lab LAN: run the same image on each PC, put their IPs in
-`docker/hostfile`, and start workers against `spark://<master-ip>:7077`.
+from lineage and the job still completes.
+
+**Lab PCs on a LAN:** see [docker/lan/README.md](docker/lan/README.md): one container per PC with host
+networking, `start_node.sh`, `make_hostfile.sh`, `sync_project.sh` and an end-to-end `check_cluster.sh`.
 
 ## Results summary (13.1M rows, Apple M4: 4 performance + 6 efficiency cores)
 
@@ -124,7 +126,10 @@ docker/                Dockerfile, docker-compose.yml, hostfile, entrypoint.sh
 * **Cross-engine determinism.** Heat index is written once (`core.cleaning.hi_parts`) and evaluated on
   numpy arrays and Spark Columns with the same operation order; NaN is converted to null in Spark (Spark
   orders NaN above all numbers); ties on min/max/peaks resolve to the earliest time everywhere.
-* **Limitations.** Daily aggregation uses UTC days. The IMD heatwave / cold-wave rules are applied to every
-  station (they are designed for India). The departure from normal uses the station-month mean (IMD uses
-  daily normals). Synthetic data is a statistical model, not a climate model. ERA5 underestimates local
+* **Regional rules.** IMD heatwave / cold-wave criteria apply only to stations in `thresholds.imd.countries`
+  (India), with IMD's hill-station criteria above 1000 m and the absolute plains cold-wave rule (Tmin ≤ 4 °C);
+  elsewhere heat and cold extremes come from the station-relative detectors. `apply_everywhere: true` restores
+  global application.
+* **Limitations.** Daily aggregation uses UTC days. The departure from normal uses the station-month mean
+  (IMD uses daily normals). Synthetic data is a statistical model, not a climate model. ERA5 underestimates local
   extremes (~25 km grid).

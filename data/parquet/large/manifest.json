@@ -12,7 +12,8 @@
       "name": "Ahmedabad",
       "lat": 23.020000457763672,
       "lon": 72.56999969482422,
-      "elevation": 53.0
+      "elevation": 53.0,
+      "country": "IN"
     },
     "AMD001": {
       "rows": 227939,
@@ -23,7 +24,8 @@
       "name": "Ahmedabad #1",
       "lat": 22.389999389648438,
       "lon": 73.01000213623047,
-      "elevation": 53.0
+      "elevation": 53.0,
+      "country": "IN"
     },
     "AMD002": {
       "rows": 245460,
@@ -34,7 +36,8 @@
       "name": "Ahmedabad #2",
       "lat": 22.059999465942383,
       "lon": 73.55000305175781,
-      "elevation": 53.0
+      "elevation": 53.0,
+      "country": "IN"
     },
     "AMD003": {
       "rows": 210394,
@@ -45,7 +48,8 @@
       "name": "Ahmedabad #3",
       "lat": 22.559999465942383,
       "lon": 73.33000183105469,
-      "elevation": 53.0
+      "elevation": 53.0,
+      "country": "IN"
     },
     "ATQ": {
       "rows": 166568,
@@ -56,7 +60,8 @@
       "name": "Amritsar",
       "lat": 31.6299991607666,
       "lon": 74.87000274658203,
-      "elevation": 234.0
+      "elevation": 234.0,
+      "country": "IN"
     },
     "ATQ001": {
       "rows": 157807,
@@ -67,7 +72,8 @@
       "name": "Amritsar #1",
       "lat": 32.310001373291016,
       "lon": 74.37000274658203,
-      "elevation": 234.0
+      "elevation": 234.0,
+      "country": "IN"
     },
     "ATQ002": {
       "rows": 166568,
@@ -78,7 +84,8 @@
       "name": "Amritsar #2",
       "lat": 32.52000045776367,
       "lon": 74.58000183105469,
-      "elevation": 234.0
+      "elevation": 234.0,
+      "country": "IN"
     },
     "ATQ003": {
       "rows": 254244,
@@ -89,7 +96,8 @@
       "name": "Amritsar #3",
       "lat": 31.110000610351562,
       "lon": 73.94999694824219,
-      "elevation": 234.0
+      "elevation": 234.0,
+      "country": "IN"
     },
     "BBI": {
       "rows": 210394,
@@ -100,7 +108,8 @@
       "name": "Bhubaneswar",
       "lat": 20.299999237060547,
       "lon": 85.81999969482422,
-      "elevation": 45.0
+      "elevation": 45.0,
+      "country": "IN"
     },
     "BBI001": {
       "rows": 175328,
@@ -111,7 +120,8 @@
       "name": "Bhubaneswar #1",
       "lat": 19.979999542236328,
       "lon": 86.43000030517578,
-      "elevation": 45.0
+      "elevation": 45.0,
+      "country": "IN"
     },
     "BBI002": {
       "rows": 192873,
@@ -122,7 +132,8 @@
       "name": "Bhubaneswar #2",
       "lat": 19.799999237060547,
       "lon": 85.56999969482422,
-      "elevation": 45.0
+      "elevation": 45.0,
+      "country": "IN"
     },
     "BBI003": {
       "rows": 254244,
@@ -133,7 +144,8 @@
       "name": "Bhubaneswar #3",
       "lat": 20.489999771118164,
       "lon": 85.13999938964844,
-      "elevation": 45.0
+      "elevation": 45.0,
+      "country": "IN"
     },
     "BHO": {
       "rows": 210394,
@@ -144,7 +156,8 @@
       "name": "Bhopal",
       "lat": 23.260000228881836,
       "lon": 77.41000366210938,
-      "elevation": 527.0
+      "elevation": 527.0,
+      "country": "IN"
     },
     "BHO001": {
       "rows": 157807,
@@ -155,7 +168,8 @@
       "name": "Bhopal #1",
       "lat": 24.0,
       "lon": 78.1500015258789,
-      "elevation": 527.0
+      "elevation": 527.0,
+      "country": "IN"
     },
     "BHO002": {
       "rows": 157807,
@@ -166,7 +180,8 @@
       "name": "Bhopal #2",
       "lat": 23.309999465942383,
       "lon": 76.9000015258789,
-      "elevation": 527.0
+      "elevation": 527.0,
+      "country": "IN"
     },
     "BHO003": {
       "rows": 192873,
@@ -177,7 +192,8 @@
       "name": "Bhopal #3",
       "lat": 23.600000381469727,
       "lon": 77.94999694824219,
-      "elevation": 527.0
+      "elevation": 527.0,
+      "country": "IN"
     },
     "BJS": {
       "rows": 254244,
@@ -188,7 +204,8 @@
       "name": "Beijing",
       "lat": 39.900001525878906,
       "lon": 116.4000015258789,
-      "elevation": 44.0
+      "elevation": 44.0,
+      "country": "CN"
     },
     "BJS001": {
       "rows": 219178,
@@ -199,7 +216,8 @@
       "name": "Beijing #1",
       "lat": 39.59000015258789,
       "lon": 116.12999725341797,
-      "elevation": 44.0
+      "elevation": 44.0,
+      "country": "CN"
     },
     "BJS002": {
       "rows": 236699,
@@ -210,7 +228,8 @@
       "name": "Beijing #2",
       "lat": 40.22999954223633,
       "lon": 117.37000274658203,
-      "elevation": 44.0
+      "elevation": 44.0,
+      "country": "CN"
     },
     "BJS003": {
       "rows": 263005,
@@ -221,7 +240,8 @@
       "name": "Beijing #3",
       "lat": 39.369998931884766,
       "lon": 117.11000061035156,
-      "elevation": 44.0
+      "elevation": 44.0,
+      "country": "CN"
     },
     "BKK": {
       "rows": 227939,
@@ -232,7 +252,8 @@
       "name": "Bangkok",
       "lat": 13.760000228881836,
       "lon": 100.5,
-      "elevation": 2.0
+      "elevation": 2.0,
+      "country": "TH"
     },
     "BKK001": {
       "rows": 157807,
@@ -243,7 +264,8 @@
       "name": "Bangkok #1",
       "lat": 14.270000457763672,
       "lon": 101.37999725341797,
-      "elevation": 2.0
+      "elevation": 2.0,
+      "country": "TH"
     },
     "BKK002": {
       "rows": 227939,
@@ -254,7 +276,8 @@
       "name": "Bangkok #2",
       "lat": 12.800000190734863,
       "lon": 101.2699966430664,
-      "elevation": 2.0
+      "elevation": 2.0,
+      "country": "TH"
     },
     "BKK003": {
       "rows": 254244,
@@ -265,7 +288,8 @@
       "name": "Bangkok #3",
       "lat": 13.170000076293945,
       "lon": 101.04000091552734,
-      "elevation": 2.0
+      "elevation": 2.0,
+      "country": "TH"
     },
     "BLR": {
       "rows": 140263,
@@ -276,7 +300,8 @@
       "name": "Bengaluru",
       "lat": 12.970000267028809,
       "lon": 77.58999633789062,
-      "elevation": 920.0
+      "elevation": 920.0,
+      "country": "IN"
     },
     "BLR001": {
       "rows": 105197,
@@ -287,7 +312,8 @@
       "name": "Bengaluru #1",
       "lat": 12.869999885559082,
       "lon": 76.98999786376953,
-      "elevation": 920.0
+      "elevation": 920.0,
+      "country": "IN"
     },
     "BLR002": {
       "rows": 157807,
@@ -298,7 +324,8 @@
       "name": "Bengaluru #2",
       "lat": 13.430000305175781,
       "lon": 76.69999694824219,
-      "elevation": 920.0
+      "elevation": 920.0,
+      "country": "IN"
     },
     "BLR003": {
       "rows": 105197,
@@ -309,7 +336,8 @@
       "name": "Bengaluru #3",
       "lat": 13.670000076293945,
       "lon": 77.68000030517578,
-      "elevation": 920.0
+      "elevation": 920.0,
+      "country": "IN"
     },
     "BOM": {
       "rows": 219178,
@@ -320,7 +348,8 @@
       "name": "Mumbai",
       "lat": 19.079999923706055,
       "lon": 72.87999725341797,
-      "elevation": 14.0
+      "elevation": 14.0,
+      "country": "IN"
     },
     "BOM001": {
       "rows": 140263,
@@ -331,7 +360,8 @@
       "name": "Mumbai #1",
       "lat": 19.25,
       "lon": 73.55000305175781,
-      "elevation": 14.0
+      "elevation": 14.0,
+      "country": "IN"
     },
     "BOM002": {
       "rows": 201634,
@@ -342,7 +372,8 @@
       "name": "Mumbai #2",
       "lat": 18.729999542236328,
       "lon": 72.6500015258789,
-      "elevation": 14.0
+      "elevation": 14.0,
+      "country": "IN"
     },
     "BOM003": {
       "rows": 113981,
@@ -353,7 +384,8 @@
       "name": "Mumbai #3",
       "lat": 18.6299991607666,
       "lon": 73.19000244140625,
-      "elevation": 14.0
+      "elevation": 14.0,
+      "country": "IN"
     },
     "CAI": {
       "rows": 131502,
@@ -364,7 +396,8 @@
       "name": "Cairo",
       "lat": 30.040000915527344,
       "lon": 31.239999771118164,
-      "elevation": 23.0
+      "elevation": 23.0,
+      "country": "EG"
     },
     "CAI001": {
       "rows": 210394,
@@ -375,7 +408,8 @@
       "name": "Cairo #1",
       "lat": 30.579999923706055,
       "lon": 31.729999542236328,
-      "elevation": 23.0
+      "elevation": 23.0,
+      "country": "EG"
     },
     "CAI002": {
       "rows": 149047,
@@ -386,7 +420,8 @@
       "name": "Cairo #2",
       "lat": 30.3700008392334,
       "lon": 31.8799991607666,
-      "elevation": 23.0
+      "elevation": 23.0,
+      "country": "EG"
     },
     "CAI003": {
       "rows": 227939,
@@ -397,7 +432,8 @@
       "name": "Cairo #3",
       "lat": 29.059999465942383,
       "lon": 30.610000610351562,
-      "elevation": 23.0
+      "elevation": 23.0,
+      "country": "EG"
     },
     "CCU": {
       "rows": 149047,
@@ -408,7 +444,8 @@
       "name": "Kolkata",
       "lat": 22.56999969482422,
       "lon": 88.36000061035156,
-      "elevation": 9.0
+      "elevation": 9.0,
+      "country": "IN"
     },
     "CCU001": {
       "rows": 113981,
@@ -419,7 +456,8 @@
       "name": "Kolkata #1",
       "lat": 22.170000076293945,
       "lon": 88.08999633789062,
-      "elevation": 9.0
+      "elevation": 9.0,
+      "country": "IN"
     },
     "CCU002": {
       "rows": 87676,
@@ -430,7 +468,8 @@
       "name": "Kolkata #2",
       "lat": 22.739999771118164,
       "lon": 87.70999908447266,
-      "elevation": 9.0
+      "elevation": 9.0,
+      "country": "IN"
     },
     "CCU003": {
       "rows": 140263,
@@ -441,7 +480,8 @@
       "name": "Kolkata #3",
       "lat": 23.510000228881836,
       "lon": 88.08000183105469,
-      "elevation": 9.0
+      "elevation": 9.0,
+      "country": "IN"
     },
     "CHE": {
       "rows": 184113,
@@ -452,7 +492,8 @@
       "name": "Cherrapunji",
       "lat": 25.270000457763672,
       "lon": 91.7300033569336,
-      "elevation": 1484.0
+      "elevation": 1484.0,
+      "country": "IN"
     },
     "CHE001": {
       "rows": 184113,
@@ -463,7 +504,8 @@
       "name": "Cherrapunji #1",
       "lat": 26.110000610351562,
       "lon": 90.91999816894531,
-      "elevation": 1484.0
+      "elevation": 1484.0,
+      "country": "IN"
     },
     "CHE002": {
       "rows": 227939,
@@ -474,7 +516,8 @@
       "name": "Cherrapunji #2",
       "lat": 24.459999084472656,
       "lon": 90.8499984741211,
-      "elevation": 1484.0
+      "elevation": 1484.0,
+      "country": "IN"
     },
     "CHE003": {
       "rows": 140263,
@@ -485,7 +528,8 @@
       "name": "Cherrapunji #3",
       "lat": 25.530000686645508,
       "lon": 91.29000091552734,
-      "elevation": 1484.0
+      "elevation": 1484.0,
+      "country": "IN"
     },
     "CHI": {
       "rows": 122742,
@@ -496,7 +540,8 @@
       "name": "Chicago",
       "lat": 41.880001068115234,
       "lon": -87.62999725341797,
-      "elevation": 181.0
+      "elevation": 181.0,
+      "country": "US"
     },
     "CHI001": {
       "rows": 122742,
@@ -507,7 +552,8 @@
       "name": "Chicago #1",
       "lat": 42.40999984741211,
       "lon": -87.80999755859375,
-      "elevation": 181.0
+      "elevation": 181.0,
+      "country": "US"
     },
     "CHI002": {
       "rows": 166568,
@@ -518,7 +564,8 @@
       "name": "Chicago #2",
       "lat": 41.220001220703125,
       "lon": -87.70999908447266,
-      "elevation": 181.0
+      "elevation": 181.0,
+      "country": "US"
     },
     "CHI003": {
       "rows": 219178,
@@ -529,7 +576,8 @@
       "name": "Chicago #3",
       "lat": 42.689998626708984,
       "lon": -86.81999969482422,
-      "elevation": 181.0
+      "elevation": 181.0,
+      "country": "US"
     },
     "COK": {
       "rows": 113981,
@@ -540,7 +588,8 @@
       "name": "Kochi",
       "lat": 9.930000305175781,
       "lon": 76.2699966430664,
-      "elevation": 3.0
+      "elevation": 3.0,
+      "country": "IN"
     },
     "COK001": {
       "rows": 175328,
@@ -551,7 +600,8 @@
       "name": "Kochi #1",
       "lat": 9.989999771118164,
       "lon": 76.5,
-      "elevation": 3.0
+      "elevation": 3.0,
+      "country": "IN"
     },
     "COK002": {
       "rows": 149047,
@@ -562,7 +612,8 @@
       "name": "Kochi #2",
       "lat": 10.470000267028809,
       "lon": 76.81999969482422,
-      "elevation": 3.0
+      "elevation": 3.0,
+      "country": "IN"
     },
     "COK003": {
       "rows": 254244,
@@ -573,7 +624,8 @@
       "name": "Kochi #3",
       "lat": 9.470000267028809,
       "lon": 75.66000366210938,
-      "elevation": 3.0
+      "elevation": 3.0,
+      "country": "IN"
     },
     "CPT": {
       "rows": 149047,
@@ -584,7 +636,8 @@
       "name": "Cape Town",
       "lat": -33.91999816894531,
       "lon": 18.420000076293945,
-      "elevation": 25.0
+      "elevation": 25.0,
+      "country": "ZA"
     },
     "CPT001": {
       "rows": 140263,
@@ -595,7 +648,8 @@
       "name": "Cape Town #1",
       "lat": -33.15999984741211,
       "lon": 19.280000686645508,
-      "elevation": 25.0
+      "elevation": 25.0,
+      "country": "ZA"
     },
     "CPT002": {
       "rows": 227939,
@@ -606,7 +660,8 @@
       "name": "Cape Town #2",
       "lat": -34.880001068115234,
       "lon": 18.93000030517578,
-      "elevation": 25.0
+      "elevation": 25.0,
+      "country": "ZA"
     },
     "CPT003": {
       "rows": 105197,
@@ -617,7 +672,8 @@
       "name": "Cape Town #3",
       "lat": -34.86000061035156,
       "lon": 17.579999923706055,
-      "elevation": 25.0
+      "elevation": 25.0,
+      "country": "ZA"
     },
     "DAC": {
       "rows": 236699,
@@ -628,7 +684,8 @@
       "name": "Dhaka",
       "lat": 23.809999465942383,
       "lon": 90.41000366210938,
-      "elevation": 4.0
+      "elevation": 4.0,
+      "country": "BD"
     },
     "DAC001": {
       "rows": 96436,
@@ -639,7 +696,8 @@
       "name": "Dhaka #1",
       "lat": 24.049999237060547,
       "lon": 90.30999755859375,
-      "elevation": 4.0
+      "elevation": 4.0,
+      "country": "BD"
     },
     "DAC002": {
       "rows": 166568,
@@ -650,7 +708,8 @@
       "name": "Dhaka #2",
       "lat": 24.399999618530273,
       "lon": 89.41000366210938,
-      "elevation": 4.0
+      "elevation": 4.0,
+      "country": "BD"
     },
     "DAC003": {
       "rows": 105197,
@@ -661,7 +720,8 @@
       "name": "Dhaka #3",
       "lat": 23.719999313354492,
       "lon": 90.0199966430664,
-      "elevation": 4.0
+      "elevation": 4.0,
+      "country": "BD"
     },
     "DEL": {
       "rows": 201634,
@@ -672,7 +732,8 @@
       "name": "Delhi",
       "lat": 28.610000610351562,
       "lon": 77.20999908447266,
-      "elevation": 216.0
+      "elevation": 216.0,
+      "country": "IN"
     },
     "DEL001": {
       "rows": 175328,
@@ -683,7 +744,8 @@
       "name": "Delhi #1",
       "lat": 28.239999771118164,
       "lon": 76.45999908447266,
-      "elevation": 216.0
+      "elevation": 216.0,
+      "country": "IN"
     },
     "DEL002": {
       "rows": 113981,
@@ -694,7 +756,8 @@
       "name": "Delhi #2",
       "lat": 29.520000457763672,
       "lon": 77.48999786376953,
-      "elevation": 216.0
+      "elevation": 216.0,
+      "country": "IN"
     },
     "DEL003": {
       "rows": 140263,
@@ -705,7 +768,8 @@
       "name": "Delhi #3",
       "lat": 28.280000686645508,
       "lon": 78.05000305175781,
-      "elevation": 216.0
+      "elevation": 216.0,
+      "country": "IN"
     },
     "DXB": {
       "rows": 175328,
@@ -716,7 +780,8 @@
       "name": "Dubai",
       "lat": 25.200000762939453,
       "lon": 55.27000045776367,
-      "elevation": 5.0
+      "elevation": 5.0,
+      "country": "AE"
     },
     "DXB001": {
       "rows": 131502,
@@ -727,7 +792,8 @@
       "name": "Dubai #1",
       "lat": 25.100000381469727,
       "lon": 55.0099983215332,
-      "elevation": 5.0
+      "elevation": 5.0,
+      "country": "AE"
     },
     "DXB002": {
       "rows": 263005,
@@ -738,7 +804,8 @@
       "name": "Dubai #2",
       "lat": 25.06999969482422,
       "lon": 55.43000030517578,
-      "elevation": 5.0
+      "elevation": 5.0,
+      "country": "AE"
     },
     "DXB003": {
       "rows": 184113,
@@ -749,7 +816,8 @@
       "name": "Dubai #3",
       "lat": 24.729999542236328,
       "lon": 55.33000183105469,
-      "elevation": 5.0
+      "elevation": 5.0,
+      "country": "AE"
     },
     "GAU": {
       "rows": 113981,
@@ -760,7 +828,8 @@
       "name": "Guwahati",
       "lat": 26.139999389648438,
       "lon": 91.73999786376953,
-      "elevation": 55.0
+      "elevation": 55.0,
+      "country": "IN"
     },
     "GAU001": {
       "rows": 87676,
@@ -771,7 +840,8 @@
       "name": "Guwahati #1",
       "lat": 26.920000076293945,
       "lon": 90.75,
-      "elevation": 55.0
+      "elevation": 55.0,
+      "country": "IN"
     },
     "GAU002": {
       "rows": 140263,
@@ -782,7 +852,8 @@
       "name": "Guwahati #2",
       "lat": 25.170000076293945,
       "lon": 92.62999725341797,
-      "elevation": 55.0
+      "elevation": 55.0,
+      "country": "IN"
     },
     "GAU003": {
       "rows": 219178,
@@ -793,7 +864,8 @@
       "name": "Guwahati #3",
       "lat": 26.739999771118164,
       "lon": 91.26000213623047,
-      "elevation": 55.0
+      "elevation": 55.0,
+      "country": "IN"
     },
     "GOI": {
       "rows": 236699,
@@ -804,7 +876,8 @@
       "name": "Goa",
       "lat": 15.489999771118164,
       "lon": 73.83000183105469,
-      "elevation": 10.0
+      "elevation": 10.0,
+      "country": "IN"
     },
     "GOI001": {
       "rows": 236699,
@@ -815,7 +888,8 @@
       "name": "Goa #1",
       "lat": 15.6899995803833,
       "lon": 73.13999938964844,
-      "elevation": 10.0
+      "elevation": 10.0,
+      "country": "IN"
     },
     "GOI002": {
       "rows": 227939,
@@ -826,7 +900,8 @@
       "name": "Goa #2",
       "lat": 16.469999313354492,
       "lon": 74.41999816894531,
-      "elevation": 10.0
+      "elevation": 10.0,
+      "country": "IN"
     },
     "GOI003": {
       "rows": 96436,
@@ -837,7 +912,8 @@
       "name": "Goa #3",
       "lat": 14.75,
       "lon": 74.20999908447266,
-      "elevation": 10.0
+      "elevation": 10.0,
+      "country": "IN"
     },
     "HYD": {
       "rows": 245460,
@@ -848,7 +924,8 @@
       "name": "Hyderabad",
       "lat": 17.389999389648438,
       "lon": 78.48999786376953,
-      "elevation": 505.0
+      "elevation": 505.0,
+      "country": "IN"
     },
     "HYD001": {
       "rows": 131502,
@@ -859,7 +936,8 @@
       "name": "Hyderabad #1",
       "lat": 18.040000915527344,
       "lon": 79.0999984741211,
-      "elevation": 505.0
+      "elevation": 505.0,
+      "country": "IN"
     },
     "HYD002": {
       "rows": 166568,
@@ -870,7 +948,8 @@
       "name": "Hyderabad #2",
       "lat": 18.0,
       "lon": 78.98999786376953,
-      "elevation": 505.0
+      "elevation": 505.0,
+      "country": "IN"
     },
     "HYD003": {
       "rows": 201634,
@@ -881,7 +960,8 @@
       "name": "Hyderabad #3",
       "lat": 16.989999771118164,
       "lon": 78.68000030517578,
-      "elevation": 505.0
+      "elevation": 505.0,
+      "country": "IN"
     },
     "IXC": {
       "rows": 184113,
@@ -892,7 +972,8 @@
       "name": "Chandigarh",
       "lat": 30.729999542236328,
       "lon": 76.77999877929688,
-      "elevation": 321.0
+      "elevation": 321.0,
+      "country": "IN"
     },
     "IXC001": {
       "rows": 219178,
@@ -903,7 +984,8 @@
       "name": "Chandigarh #1",
       "lat": 29.75,
       "lon": 77.41000366210938,
-      "elevation": 321.0
+      "elevation": 321.0,
+      "country": "IN"
     },
     "IXC002": {
       "rows": 210394,
@@ -914,7 +996,8 @@
       "name": "Chandigarh #2",
       "lat": 31.700000762939453,
       "lon": 76.2300033569336,
-      "elevation": 321.0
+      "elevation": 321.0,
+      "country": "IN"
     },
     "IXC003": {
       "rows": 236699,
@@ -925,7 +1008,8 @@
       "name": "Chandigarh #3",
       "lat": 31.170000076293945,
       "lon": 76.38999938964844,
-      "elevation": 321.0
+      "elevation": 321.0,
+      "country": "IN"
     },
     "JAI": {
       "rows": 105197,
@@ -936,7 +1020,8 @@
       "name": "Jaipur",
       "lat": 26.90999984741211,
       "lon": 75.79000091552734,
-      "elevation": 431.0
+      "elevation": 431.0,
+      "country": "IN"
     },
     "JAI001": {
       "rows": 245460,
@@ -947,7 +1032,8 @@
       "name": "Jaipur #1",
       "lat": 27.81999969482422,
       "lon": 75.16999816894531,
-      "elevation": 431.0
+      "elevation": 431.0,
+      "country": "IN"
     },
     "JAI002": {
       "rows": 254244,
@@ -958,7 +1044,8 @@
       "name": "Jaipur #2",
       "lat": 27.110000610351562,
       "lon": 75.47000122070312,
-      "elevation": 431.0
+      "elevation": 431.0,
+      "country": "IN"
     },
     "JAI003": {
       "rows": 157807,
@@ -969,7 +1056,8 @@
       "name": "Jaipur #3",
       "lat": 26.959999084472656,
       "lon": 76.19000244140625,
-      "elevation": 431.0
+      "elevation": 431.0,
+      "country": "IN"
     },
     "JKT": {
       "rows": 140263,
@@ -980,7 +1068,8 @@
       "name": "Jakarta",
       "lat": -6.210000038146973,
       "lon": 106.8499984741211,
-      "elevation": 8.0
+      "elevation": 8.0,
+      "country": "ID"
     },
     "JKT001": {
       "rows": 227939,
@@ -991,7 +1080,8 @@
       "name": "Jakarta #1",
       "lat": -6.28000020980835,
       "lon": 106.13999938964844,
-      "elevation": 8.0
+      "elevation": 8.0,
+      "country": "ID"
     },
     "JKT002": {
       "rows": 245460,
@@ -1002,7 +1092,8 @@
       "name": "Jakarta #2",
       "lat": -5.25,
       "lon": 107.41999816894531,
-      "elevation": 8.0
+      "elevation": 8.0,
+      "country": "ID"
     },
     "JKT003": {
       "rows": 184113,
@@ -1013,7 +1104,8 @@
       "name": "Jakarta #3",
       "lat": -6.539999961853027,
       "lon": 107.0,
-      "elevation": 8.0
+      "elevation": 8.0,
+      "country": "ID"
     },
     "KHI": {
       "rows": 254244,
@@ -1024,7 +1116,8 @@
       "name": "Karachi",
       "lat": 24.860000610351562,
       "lon": 67.01000213623047,
-      "elevation": 10.0
+      "elevation": 10.0,
+      "country": "PK"
     },
     "KHI001": {
       "rows": 210394,
@@ -1035,7 +1128,8 @@
       "name": "Karachi #1",
       "lat": 25.829999923706055,
       "lon": 67.48999786376953,
-      "elevation": 10.0
+      "elevation": 10.0,
+      "country": "PK"
     },
     "KHI002": {
       "rows": 245460,
@@ -1046,7 +1140,8 @@
       "name": "Karachi #2",
       "lat": 24.850000381469727,
       "lon": 66.7300033569336,
-      "elevation": 10.0
+      "elevation": 10.0,
+      "country": "PK"
     },
     "KHI003": {
       "rows": 175328,
@@ -1057,7 +1152,8 @@
       "name": "Karachi #3",
       "lat": 25.399999618530273,
       "lon": 67.97000122070312,
-      "elevation": 10.0
+      "elevation": 10.0,
+      "country": "PK"
     },
     "LAX": {
       "rows": 131502,
@@ -1068,7 +1164,8 @@
       "name": "Los Angeles",
       "lat": 34.04999923706055,
       "lon": -118.23999786376953,
-      "elevation": 89.0
+      "elevation": 89.0,
+      "country": "US"
     },
     "LAX001": {
       "rows": 245460,
@@ -1079,7 +1176,8 @@
       "name": "Los Angeles #1",
       "lat": 33.25,
       "lon": -117.38999938964844,
-      "elevation": 89.0
+      "elevation": 89.0,
+      "country": "US"
     },
     "LAX002": {
       "rows": 254244,
@@ -1090,7 +1188,8 @@
       "name": "Los Angeles #2",
       "lat": 33.06999969482422,
       "lon": -117.58999633789062,
-      "elevation": 89.0
+      "elevation": 89.0,
+      "country": "US"
     },
     "LAX003": {
       "rows": 113981,
@@ -1101,7 +1200,8 @@
       "name": "Los Angeles #3",
       "lat": 33.40999984741211,
       "lon": -118.94000244140625,
-      "elevation": 89.0
+      "elevation": 89.0,
+      "country": "US"
     },
     "LDN": {
       "rows": 201634,
@@ -1112,7 +1212,8 @@
       "name": "London",
       "lat": 51.5099983215332,
       "lon": -0.12999999523162842,
-      "elevation": 11.0
+      "elevation": 11.0,
+      "country": "GB"
     },
     "LDN001": {
       "rows": 157807,
@@ -1123,7 +1224,8 @@
       "name": "London #1",
       "lat": 50.56999969482422,
       "lon": 0.5199999809265137,
-      "elevation": 11.0
+      "elevation": 11.0,
+      "country": "GB"
     },
     "LDN002": {
       "rows": 184113,
@@ -1134,7 +1236,8 @@
       "name": "London #2",
       "lat": 51.25,
       "lon": -1.0700000524520874,
-      "elevation": 11.0
+      "elevation": 11.0,
+      "country": "GB"
     },
     "LDN003": {
       "rows": 96436,
@@ -1145,7 +1248,8 @@
       "name": "London #3",
       "lat": 52.119998931884766,
       "lon": 0.03999999910593033,
-      "elevation": 11.0
+      "elevation": 11.0,
+      "country": "GB"
     },
     "LKO": {
       "rows": 236699,
@@ -1156,7 +1260,8 @@
       "name": "Lucknow",
       "lat": 26.850000381469727,
       "lon": 80.94999694824219,
-      "elevation": 123.0
+      "elevation": 123.0,
+      "country": "IN"
     },
     "LKO001": {
       "rows": 245460,
@@ -1167,7 +1272,8 @@
       "name": "Lucknow #1",
       "lat": 27.25,
       "lon": 80.58000183105469,
-      "elevation": 123.0
+      "elevation": 123.0,
+      "country": "IN"
     },
     "LKO002": {
       "rows": 201634,
@@ -1178,7 +1284,8 @@
       "name": "Lucknow #2",
       "lat": 27.18000030517578,
       "lon": 80.66000366210938,
-      "elevation": 123.0
+      "elevation": 123.0,
+      "country": "IN"
     },
     "LKO003": {
       "rows": 140263,
@@ -1189,7 +1296,8 @@
       "name": "Lucknow #3",
       "lat": 27.760000228881836,
       "lon": 81.88999938964844,
-      "elevation": 123.0
+      "elevation": 123.0,
+      "country": "IN"
     },
     "LOS": {
       "rows": 87676,
@@ -1200,7 +1308,8 @@
       "name": "Lagos",
       "lat": 6.519999980926514,
       "lon": 3.380000114440918,
-      "elevation": 41.0
+      "elevation": 41.0,
+      "country": "NG"
     },
     "LOS001": {
       "rows": 263005,
@@ -1211,7 +1320,8 @@
       "name": "Lagos #1",
       "lat": 5.809999942779541,
       "lon": 4.139999866485596,
-      "elevation": 41.0
+      "elevation": 41.0,
+      "country": "NG"
     },
     "LOS002": {
       "rows": 184113,
@@ -1222,7 +1332,8 @@
       "name": "Lagos #2",
       "lat": 7.130000114440918,
       "lon": 2.9800000190734863,
-      "elevation": 41.0
+      "elevation": 41.0,
+      "country": "NG"
     },
     "LOS003": {
       "rows": 219178,
@@ -1233,7 +1344,8 @@
       "name": "Lagos #3",
       "lat": 7.480000019073486,
       "lon": 2.509999990463257,
-      "elevation": 41.0
+      "elevation": 41.0,
+      "country": "NG"
     },
     "MAA": {
       "rows": 140263,
@@ -1244,7 +1356,8 @@
       "name": "Chennai",
       "lat": 13.079999923706055,
       "lon": 80.2699966430664,
-      "elevation": 7.0
+      "elevation": 7.0,
+      "country": "IN"
     },
     "MAA001": {
       "rows": 122742,
@@ -1255,7 +1368,8 @@
       "name": "Chennai #1",
       "lat": 13.279999732971191,
       "lon": 80.08999633789062,
-      "elevation": 7.0
+      "elevation": 7.0,
+      "country": "IN"
     },
     "MAA002": {
       "rows": 96436,
@@ -1266,7 +1380,8 @@
       "name": "Chennai #2",
       "lat": 13.210000038146973,
       "lon": 81.16000366210938,
-      "elevation": 7.0
+      "elevation": 7.0,
+      "country": "IN"
     },
     "MAA003": {
       "rows": 210394,
@@ -1277,7 +1392,8 @@
       "name": "Chennai #3",
       "lat": 12.149999618530273,
       "lon": 79.66000366210938,
-      "elevation": 7.0
+      "elevation": 7.0,
+      "country": "IN"
     },
     "MEX": {
       "rows": 149047,
@@ -1288,7 +1404,8 @@
       "name": "Mexico City",
       "lat": 19.43000030517578,
       "lon": -99.12999725341797,
-      "elevation": 2240.0
+      "elevation": 2240.0,
+      "country": "MX"
     },
     "MEX001": {
       "rows": 105197,
@@ -1299,7 +1416,8 @@
       "name": "Mexico City #1",
       "lat": 19.170000076293945,
       "lon": -99.25,
-      "elevation": 2240.0
+      "elevation": 2240.0,
+      "country": "MX"
     },
     "MEX002": {
       "rows": 87676,
@@ -1310,7 +1428,8 @@
       "name": "Mexico City #2",
       "lat": 20.059999465942383,
       "lon": -99.8499984741211,
-      "elevation": 2240.0
+      "elevation": 2240.0,
+      "country": "MX"
     },
     "MEX003": {
       "rows": 245460,
@@ -1321,7 +1440,8 @@
       "name": "Mexico City #3",
       "lat": 19.190000534057617,
       "lon": -98.86000061035156,
-      "elevation": 2240.0
+      "elevation": 2240.0,
+      "country": "MX"
     },
     "MNL": {
       "rows": 166568,
@@ -1332,7 +1452,8 @@
       "name": "Manila",
       "lat": 14.600000381469727,
       "lon": 120.9800033569336,
-      "elevation": 16.0
+      "elevation": 16.0,
+      "country": "PH"
     },
     "MNL001": {
       "rows": 236699,
@@ -1343,7 +1464,8 @@
       "name": "Manila #1",
       "lat": 13.729999542236328,
       "lon": 120.73999786376953,
-      "elevation": 16.0
+      "elevation": 16.0,
+      "country": "PH"
     },
     "MNL002": {
       "rows": 245460,
@@ -1354,7 +1476,8 @@
       "name": "Manila #2",
       "lat": 15.520000457763672,
       "lon": 120.9800033569336,
-      "elevation": 16.0
+      "elevation": 16.0,
+      "country": "PH"
     },
     "MNL003": {
       "rows": 87676,
@@ -1365,7 +1488,8 @@
       "name": "Manila #3",
       "lat": 14.149999618530273,
       "lon": 120.02999877929688,
-      "elevation": 16.0
+      "elevation": 16.0,
+      "country": "PH"
     },
     "MOW": {
       "rows": 131502,
@@ -1376,7 +1500,8 @@
       "name": "Moscow",
       "lat": 55.7599983215332,
       "lon": 37.619998931884766,
-      "elevation": 156.0
+      "elevation": 156.0,
+      "country": "RU"
     },
     "MOW001": {
       "rows": 184113,
@@ -1387,7 +1512,8 @@
       "name": "Moscow #1",
       "lat": 56.130001068115234,
       "lon": 37.22999954223633,
-      "elevation": 156.0
+      "elevation": 156.0,
+      "country": "RU"
     },
     "MOW002": {
       "rows": 113981,
@@ -1398,7 +1524,8 @@
       "name": "Moscow #2",
       "lat": 55.130001068115234,
       "lon": 37.95000076293945,
-      "elevation": 156.0
+      "elevation": 156.0,
+      "country": "RU"
     },
     "MOW003": {
       "rows": 210394,
@@ -1409,7 +1536,8 @@
       "name": "Moscow #3",
       "lat": 56.220001220703125,
       "lon": 36.9900016784668,
-      "elevation": 156.0
+      "elevation": 156.0,
+      "country": "RU"
     },
     "NAG": {
       "rows": 149047,
@@ -1420,7 +1548,8 @@
       "name": "Nagpur",
       "lat": 21.149999618530273,
       "lon": 79.08999633789062,
-      "elevation": 310.0
+      "elevation": 310.0,
+      "country": "IN"
     },
     "NAG001": {
       "rows": 131502,
@@ -1431,7 +1560,8 @@
       "name": "Nagpur #1",
       "lat": 21.850000381469727,
       "lon": 78.26000213623047,
-      "elevation": 310.0
+      "elevation": 310.0,
+      "country": "IN"
     },
     "NAG002": {
       "rows": 140263,
@@ -1442,7 +1572,8 @@
       "name": "Nagpur #2",
       "lat": 20.479999542236328,
       "lon": 78.30000305175781,
-      "elevation": 310.0
+      "elevation": 310.0,
+      "country": "IN"
     },
     "NAG003": {
       "rows": 105197,
@@ -1453,7 +1584,8 @@
       "name": "Nagpur #3",
       "lat": 20.93000030517578,
       "lon": 78.13999938964844,
-      "elevation": 310.0
+      "elevation": 310.0,
+      "country": "IN"
     },
     "NBO": {
       "rows": 192873,
@@ -1464,7 +1596,8 @@
       "name": "Nairobi",
       "lat": -1.2899999618530273,
       "lon": 36.81999969482422,
-      "elevation": 1795.0
+      "elevation": 1795.0,
+      "country": "KE"
     },
     "NBO001": {
       "rows": 219178,
@@ -1475,7 +1608,8 @@
       "name": "Nairobi #1",
       "lat": -0.9300000071525574,
       "lon": 37.22999954223633,
-      "elevation": 1795.0
+      "elevation": 1795.0,
+      "country": "KE"
     },
     "NBO002": {
       "rows": 219178,
@@ -1486,7 +1620,8 @@
       "name": "Nairobi #2",
       "lat": -0.44999998807907104,
       "lon": 37.2400016784668,
-      "elevation": 1795.0
+      "elevation": 1795.0,
+      "country": "KE"
     },
     "NBO003": {
       "rows": 210394,
@@ -1497,7 +1632,8 @@
       "name": "Nairobi #3",
       "lat": -1.1299999952316284,
       "lon": 36.33000183105469,
-      "elevation": 1795.0
+      "elevation": 1795.0,
+      "country": "KE"
     },
     "NYC": {
       "rows": 175328,
@@ -1508,7 +1644,8 @@
       "name": "New York",
       "lat": 40.709999084472656,
       "lon": -74.01000213623047,
-      "elevation": 10.0
+      "elevation": 10.0,
+      "country": "US"
     },
     "NYC001": {
       "rows": 122742,
@@ -1519,7 +1656,8 @@
       "name": "New York #1",
       "lat": 39.77000045776367,
       "lon": -73.5999984741211,
-      "elevation": 10.0
+      "elevation": 10.0,
+      "country": "US"
     },
     "NYC002": {
       "rows": 184113,
@@ -1530,7 +1668,8 @@
       "name": "New York #2",
       "lat": 39.779998779296875,
       "lon": -73.04000091552734,
-      "elevation": 10.0
+      "elevation": 10.0,
+      "country": "US"
     },
     "NYC003": {
       "rows": 87676,
@@ -1541,7 +1680,8 @@
       "name": "New York #3",
       "lat": 40.849998474121094,
       "lon": -74.0,
-      "elevation": 10.0
+      "elevation": 10.0,
+      "country": "US"
     },
     "PAR": {
       "rows": 157807,
@@ -1552,7 +1692,8 @@
       "name": "Paris",
       "lat": 48.86000061035156,
       "lon": 2.3499999046325684,
-      "elevation": 35.0
+      "elevation": 35.0,
+      "country": "FR"
     },
     "PAR001": {
       "rows": 201634,
@@ -1563,7 +1704,8 @@
       "name": "Paris #1",
       "lat": 49.099998474121094,
       "lon": 3.180000066757202,
-      "elevation": 35.0
+      "elevation": 35.0,
+      "country": "FR"
     },
     "PAR002": {
       "rows": 192873,
@@ -1574,7 +1716,8 @@
       "name": "Paris #2",
       "lat": 49.599998474121094,
       "lon": 2.7200000286102295,
-      "elevation": 35.0
+      "elevation": 35.0,
+      "country": "FR"
     },
     "PAR003": {
       "rows": 245460,
@@ -1585,7 +1728,8 @@
       "name": "Paris #3",
       "lat": 49.63999938964844,
       "lon": 1.840000033378601,
-      "elevation": 35.0
+      "elevation": 35.0,
+      "country": "FR"
     },
     "PAT": {
       "rows": 87676,
@@ -1596,7 +1740,8 @@
       "name": "Patna",
       "lat": 25.59000015258789,
       "lon": 85.13999938964844,
-      "elevation": 53.0
+      "elevation": 53.0,
+      "country": "IN"
     },
     "PAT001": {
       "rows": 201634,
@@ -1607,7 +1752,8 @@
       "name": "Patna #1",
       "lat": 25.56999969482422,
       "lon": 84.81999969482422,
-      "elevation": 53.0
+      "elevation": 53.0,
+      "country": "IN"
     },
     "PAT002": {
       "rows": 236699,
@@ -1618,7 +1764,8 @@
       "name": "Patna #2",
       "lat": 25.260000228881836,
       "lon": 85.87000274658203,
-      "elevation": 53.0
+      "elevation": 53.0,
+      "country": "IN"
     },
     "PAT003": {
       "rows": 192873,
@@ -1629,7 +1776,8 @@
       "name": "Patna #3",
       "lat": 25.329999923706055,
       "lon": 84.37999725341797,
-      "elevation": 53.0
+      "elevation": 53.0,
+      "country": "IN"
     },
     "PHL": {
       "rows": 210394,
@@ -1640,7 +1788,8 @@
       "name": "Phalodi",
       "lat": 27.1299991607666,
       "lon": 72.36000061035156,
-      "elevation": 233.0
+      "elevation": 233.0,
+      "country": "IN"
     },
     "PHL001": {
       "rows": 96436,
@@ -1651,7 +1800,8 @@
       "name": "Phalodi #1",
       "lat": 27.59000015258789,
       "lon": 71.62000274658203,
-      "elevation": 233.0
+      "elevation": 233.0,
+      "country": "IN"
     },
     "PHL002": {
       "rows": 96436,
@@ -1662,7 +1812,8 @@
       "name": "Phalodi #2",
       "lat": 27.489999771118164,
       "lon": 71.75,
-      "elevation": 233.0
+      "elevation": 233.0,
+      "country": "IN"
     },
     "PHL003": {
       "rows": 254244,
@@ -1673,7 +1824,8 @@
       "name": "Phalodi #3",
       "lat": 28.010000228881836,
       "lon": 71.97000122070312,
-      "elevation": 233.0
+      "elevation": 233.0,
+      "country": "IN"
     },
     "PNQ": {
       "rows": 236699,
@@ -1684,7 +1836,8 @@
       "name": "Pune",
       "lat": 18.520000457763672,
       "lon": 73.86000061035156,
-      "elevation": 560.0
+      "elevation": 560.0,
+      "country": "IN"
     },
     "PNQ001": {
       "rows": 201634,
@@ -1695,7 +1848,8 @@
       "name": "Pune #1",
       "lat": 18.65999984741211,
       "lon": 73.16000366210938,
-      "elevation": 560.0
+      "elevation": 560.0,
+      "country": "IN"
     },
     "PNQ002": {
       "rows": 210394,
@@ -1706,7 +1860,8 @@
       "name": "Pune #2",
       "lat": 18.09000015258789,
       "lon": 74.12000274658203,
-      "elevation": 560.0
+      "elevation": 560.0,
+      "country": "IN"
     },
     "PNQ003": {
       "rows": 245460,
@@ -1717,7 +1872,8 @@
       "name": "Pune #3",
       "lat": 18.969999313354492,
       "lon": 73.79000091552734,
-      "elevation": 560.0
+      "elevation": 560.0,
+      "country": "IN"
     },
     "REK": {
       "rows": 87676,
@@ -1728,7 +1884,8 @@
       "name": "Reykjavik",
       "lat": 64.1500015258789,
       "lon": -21.940000534057617,
-      "elevation": 15.0
+      "elevation": 15.0,
+      "country": "IS"
     },
     "REK001": {
       "rows": 263005,
@@ -1739,7 +1896,8 @@
       "name": "Reykjavik #1",
       "lat": 64.79000091552734,
       "lon": -21.1200008392334,
-      "elevation": 15.0
+      "elevation": 15.0,
+      "country": "IS"
     },
     "REK002": {
       "rows": 184113,
@@ -1750,7 +1908,8 @@
       "name": "Reykjavik #2",
       "lat": 63.619998931884766,
       "lon": -21.459999084472656,
-      "elevation": 15.0
+      "elevation": 15.0,
+      "country": "IS"
     },
     "REK003": {
       "rows": 236699,
@@ -1761,7 +1920,8 @@
       "name": "Reykjavik #3",
       "lat": 63.15999984741211,
       "lon": -22.34000015258789,
-      "elevation": 15.0
+      "elevation": 15.0,
+      "country": "IS"
     },
     "RUH": {
       "rows": 105197,
@@ -1772,7 +1932,8 @@
       "name": "Riyadh",
       "lat": 24.709999084472656,
       "lon": 46.68000030517578,
-      "elevation": 612.0
+      "elevation": 612.0,
+      "country": "SA"
     },
     "RUH001": {
       "rows": 87676,
@@ -1783,7 +1944,8 @@
       "name": "Riyadh #1",
       "lat": 24.190000534057617,
       "lon": 47.27000045776367,
-      "elevation": 612.0
+      "elevation": 612.0,
+      "country": "SA"
     },
     "RUH002": {
       "rows": 263005,
@@ -1794,7 +1956,8 @@
       "name": "Riyadh #2",
       "lat": 24.3799991607666,
       "lon": 46.439998626708984,
-      "elevation": 612.0
+      "elevation": 612.0,
+      "country": "SA"
     },
     "RUH003": {
       "rows": 254244,
@@ -1805,7 +1968,8 @@
       "name": "Riyadh #3",
       "lat": 24.770000457763672,
       "lon": 47.060001373291016,
-      "elevation": 612.0
+      "elevation": 612.0,
+      "country": "SA"
     },
     "SAO": {
       "rows": 201634,
@@ -1816,7 +1980,8 @@
       "name": "Sao Paulo",
       "lat": -23.549999237060547,
       "lon": -46.630001068115234,
-      "elevation": 760.0
+      "elevation": 760.0,
+      "country": "BR"
     },
     "SAO001": {
       "rows": 245460,
@@ -1827,7 +1992,8 @@
       "name": "Sao Paulo #1",
       "lat": -22.690000534057617,
       "lon": -45.900001525878906,
-      "elevation": 760.0
+      "elevation": 760.0,
+      "country": "BR"
     },
     "SAO002": {
       "rows": 219178,
@@ -1838,7 +2004,8 @@
       "name": "Sao Paulo #2",
       "lat": -23.270000457763672,
       "lon": -46.52000045776367,
-      "elevation": 760.0
+      "elevation": 760.0,
+      "country": "BR"
     },
     "SAO003": {
       "rows": 227939,
@@ -1849,7 +2016,8 @@
       "name": "Sao Paulo #3",
       "lat": -22.729999542236328,
       "lon": -46.04999923706055,
-      "elevation": 760.0
+      "elevation": 760.0,
+      "country": "BR"
     },
     "SIN": {
       "rows": 149047,
@@ -1860,7 +2028,8 @@
       "name": "Singapore",
       "lat": 1.350000023841858,
       "lon": 103.81999969482422,
-      "elevation": 15.0
+      "elevation": 15.0,
+      "country": "SG"
     },
     "SIN001": {
       "rows": 219178,
@@ -1871,7 +2040,8 @@
       "name": "Singapore #1",
       "lat": 0.9700000286102295,
       "lon": 103.80999755859375,
-      "elevation": 15.0
+      "elevation": 15.0,
+      "country": "SG"
     },
     "SIN002": {
       "rows": 245460,
@@ -1882,7 +2052,8 @@
       "name": "Singapore #2",
       "lat": 0.47999998927116394,
       "lon": 104.30999755859375,
-      "elevation": 15.0
+      "elevation": 15.0,
+      "country": "SG"
     },
     "SIN003": {
       "rows": 175328,
@@ -1893,7 +2064,8 @@
       "name": "Singapore #3",
       "lat": 2.2899999618530273,
       "lon": 103.20999908447266,
-      "elevation": 15.0
+      "elevation": 15.0,
+      "country": "SG"
     },
     "SLV": {
       "rows": 149047,
@@ -1904,7 +2076,8 @@
       "name": "Shimla",
       "lat": 31.100000381469727,
       "lon": 77.16999816894531,
-      "elevation": 2200.0
+      "elevation": 2200.0,
+      "country": "IN"
     },
     "SLV001": {
       "rows": 219178,
@@ -1915,7 +2088,8 @@
       "name": "Shimla #1",
       "lat": 30.239999771118164,
       "lon": 76.45999908447266,
-      "elevation": 2200.0
+      "elevation": 2200.0,
+      "country": "IN"
     },
     "SLV002": {
       "rows": 236699,
@@ -1926,7 +2100,8 @@
       "name": "Shimla #2",
       "lat": 31.229999542236328,
       "lon": 76.19999694824219,
-      "elevation": 2200.0
+      "elevation": 2200.0,
+      "country": "IN"
     },
     "SLV003": {
       "rows": 105197,
@@ -1937,7 +2112,8 @@
       "name": "Shimla #3",
       "lat": 30.25,
       "lon": 76.81999969482422,
-      "elevation": 2200.0
+      "elevation": 2200.0,
+      "country": "IN"
     },
     "SXR": {
       "rows": 219178,
@@ -1948,7 +2124,8 @@
       "name": "Srinagar",
       "lat": 34.08000183105469,
       "lon": 74.80000305175781,
-      "elevation": 1585.0
+      "elevation": 1585.0,
+      "country": "IN"
     },
     "SXR001": {
       "rows": 149047,
@@ -1959,7 +2136,8 @@
       "name": "Srinagar #1",
       "lat": 34.5099983215332,
       "lon": 75.26000213623047,
-      "elevation": 1585.0
+      "elevation": 1585.0,
+      "country": "IN"
     },
     "SXR002": {
       "rows": 254244,
@@ -1970,7 +2148,8 @@
       "name": "Srinagar #2",
       "lat": 34.18000030517578,
       "lon": 74.05999755859375,
-      "elevation": 1585.0
+      "elevation": 1585.0,
+      "country": "IN"
     },
     "SXR003": {
       "rows": 113981,
@@ -1981,7 +2160,8 @@
       "name": "Srinagar #3",
       "lat": 34.060001373291016,
       "lon": 74.37999725341797,
-      "elevation": 1585.0
+      "elevation": 1585.0,
+      "country": "IN"
     },
     "SYD": {
       "rows": 105197,
@@ -1992,7 +2172,8 @@
       "name": "Sydney",
       "lat": -33.869998931884766,
       "lon": 151.2100067138672,
-      "elevation": 58.0
+      "elevation": 58.0,
+      "country": "AU"
     },
     "SYD001": {
       "rows": 105197,
@@ -2003,7 +2184,8 @@
       "name": "Sydney #1",
       "lat": -34.5099983215332,
       "lon": 150.72000122070312,
-      "elevation": 58.0
+      "elevation": 58.0,
+      "country": "AU"
     },
     "SYD002": {
       "rows": 245460,
@@ -2014,7 +2196,8 @@
       "name": "Sydney #2",
       "lat": -34.470001220703125,
       "lon": 151.47999572753906,
-      "elevation": 58.0
+      "elevation": 58.0,
+      "country": "AU"
     },
     "SYD003": {
       "rows": 149047,
@@ -2025,7 +2208,8 @@
       "name": "Sydney #3",
       "lat": -32.93000030517578,
       "lon": 151.47000122070312,
-      "elevation": 58.0
+      "elevation": 58.0,
+      "country": "AU"
     },
     "TRV": {
       "rows": 219178,
@@ -2036,7 +2220,8 @@
       "name": "Thiruvananthapuram",
       "lat": 8.520000457763672,
       "lon": 76.94000244140625,
-      "elevation": 10.0
+      "elevation": 10.0,
+      "country": "IN"
     },
     "TRV001": {
       "rows": 184113,
@@ -2047,7 +2232,8 @@
       "name": "Thiruvananthapuram #1",
       "lat": 8.34000015258789,
       "lon": 77.38999938964844,
-      "elevation": 10.0
+      "elevation": 10.0,
+      "country": "IN"
     },
     "TRV002": {
       "rows": 166568,
@@ -2058,7 +2244,8 @@
       "name": "Thiruvananthapuram #2",
       "lat": 7.590000152587891,
       "lon": 76.33000183105469,
-      "elevation": 10.0
+      "elevation": 10.0,
+      "country": "IN"
     },
     "TRV003": {
       "rows": 96436,
@@ -2069,7 +2256,8 @@
       "name": "Thiruvananthapuram #3",
       "lat": 8.75,
       "lon": 76.9800033569336,
-      "elevation": 10.0
+      "elevation": 10.0,
+      "country": "IN"
     },
     "TYO": {
       "rows": 201634,
@@ -2080,7 +2268,8 @@
       "name": "Tokyo",
       "lat": 35.68000030517578,
       "lon": 139.69000244140625,
-      "elevation": 40.0
+      "elevation": 40.0,
+      "country": "JP"
     },
     "TYO001": {
       "rows": 245460,
@@ -2091,7 +2280,8 @@
       "name": "Tokyo #1",
       "lat": 36.529998779296875,
       "lon": 140.61000061035156,
-      "elevation": 40.0
+      "elevation": 40.0,
+      "country": "JP"
     },
     "TYO002": {
       "rows": 105197,
@@ -2102,7 +2292,8 @@
       "name": "Tokyo #2",
       "lat": 35.43000030517578,
       "lon": 139.5800018310547,
-      "elevation": 40.0
+      "elevation": 40.0,
+      "country": "JP"
     },
     "TYO003": {
       "rows": 166568,
@@ -2113,7 +2304,8 @@
       "name": "Tokyo #3",
       "lat": 35.86000061035156,
       "lon": 139.47999572753906,
-      "elevation": 40.0
+      "elevation": 40.0,
+      "country": "JP"
     },
     "VTZ": {
       "rows": 113981,
@@ -2124,7 +2316,8 @@
       "name": "Visakhapatnam",
       "lat": 17.690000534057617,
       "lon": 83.22000122070312,
-      "elevation": 3.0
+      "elevation": 3.0,
+      "country": "IN"
     },
     "VTZ001": {
       "rows": 219178,
@@ -2135,7 +2328,8 @@
       "name": "Visakhapatnam #1",
       "lat": 17.65999984741211,
       "lon": 82.5999984741211,
-      "elevation": 3.0
+      "elevation": 3.0,
+      "country": "IN"
     },
     "VTZ002": {
       "rows": 105197,
@@ -2146,7 +2340,8 @@
       "name": "Visakhapatnam #2",
       "lat": 17.719999313354492,
       "lon": 83.80000305175781,
-      "elevation": 3.0
+      "elevation": 3.0,
+      "country": "IN"
     },
     "VTZ003": {
       "rows": 166568,
@@ -2157,7 +2352,8 @@
       "name": "Visakhapatnam #3",
       "lat": 17.31999969482422,
       "lon": 82.25,
-      "elevation": 3.0
+      "elevation": 3.0,
+      "country": "IN"
     },
     "YTO": {
       "rows": 105197,
@@ -2168,7 +2364,8 @@
       "name": "Toronto",
       "lat": 43.650001525878906,
       "lon": -79.37999725341797,
-      "elevation": 76.0
+      "elevation": 76.0,
+      "country": "CA"
     },
     "YTO001": {
       "rows": 96436,
@@ -2179,7 +2376,8 @@
       "name": "Toronto #1",
       "lat": 43.560001373291016,
       "lon": -79.77999877929688,
-      "elevation": 76.0
+      "elevation": 76.0,
+      "country": "CA"
     },
     "YTO002": {
       "rows": 105197,
@@ -2190,7 +2388,8 @@
       "name": "Toronto #2",
       "lat": 43.900001525878906,
       "lon": -79.6500015258789,
-      "elevation": 76.0
+      "elevation": 76.0,
+      "country": "CA"
     },
     "YTO003": {
       "rows": 96436,
@@ -2201,7 +2400,8 @@
       "name": "Toronto #3",
       "lat": 44.040000915527344,
       "lon": -78.80000305175781,
-      "elevation": 76.0
+      "elevation": 76.0,
+      "country": "CA"
     }
   },
   "n_stations": 200,

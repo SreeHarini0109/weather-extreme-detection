@@ -31,6 +31,21 @@ def read_manifest(data_dir: str | Path) -> dict:
         return json.load(f)
 
 
+def station_meta(manifest: dict) -> dict:
+    """{station_id: {"country", "elevation"}} for region-specific rules (IMD plains / hills)."""
+    return {s: {"country": m.get("country"), "elevation": m.get("elevation")} for s, m in manifest["stations"].items()}
+
+
+_META_CACHE: dict[str, dict] = {}
+
+
+def cached_station_meta(data_dir) -> dict:
+    key = str(data_dir)
+    if key not in _META_CACHE:
+        _META_CACHE[key] = station_meta(read_manifest(data_dir))
+    return _META_CACHE[key]
+
+
 def station_path(data_dir: str | Path, station_id: str) -> Path:
     return Path(data_dir) / f"station_id={station_id}"
 
@@ -112,7 +127,7 @@ def process_station(data_dir, station_id: str, cfg: dict, timer: PhaseTimer | No
     del raw, hourly
     with t.phase("thresholds"):
         mom, hist = climatology_arrays(daily, cfg)
-        thr = thresholds_from_arrays(mom, hist, [station_id], cfg)
+        thr = thresholds_from_arrays(mom, hist, [station_id], cfg, cached_station_meta(data_dir))
         dthr = attach_thresholds(daily, thr)
     with t.phase("detect"):
         events = detect_events(dthr, station_id, rules)

@@ -15,7 +15,7 @@ def make_daily(n=40, start="2000-01-01", **cols):
                 precip_max_1h=0.0, wind_max=10.0, gust_max=15.0, hi_max=30.0,
                 tmax_mean=30.0, tmax_std=2.0, tmin_mean=20.0, tmin_std=2.0, wind_mean=10.0, wind_std=3.0,
                 tmax_p90=33.0, tmax_p99=36.0, tmin_p01=14.0, precip_wet_p99=80.0, precip_wet_q1=2.0,
-                precip_wet_q3=20.0, wind_p99=40.0, wind_q1=8.0, wind_q3=14.0)
+                precip_wet_q3=20.0, wind_p99=40.0, wind_q1=8.0, wind_q3=14.0, imd_region=1, imd_hill=0)
     for k, v in base.items():
         d[k] = cols.get(k, v)
     return d
@@ -57,6 +57,25 @@ def test_heatwave_spell_and_imd_rule(cfg):
     assert len(sp) == 1 and sp.iloc[0]["duration_days"] == 4
     assert str(sp.iloc[0]["start_date"])[:10] == "2000-01-11"
     assert sp.iloc[0]["peak_value"] == 41.0 and str(sp.iloc[0]["peak_date"])[:10] == "2000-01-11"
+
+
+def test_imd_rules_are_regional(cfg):
+    """IMD heatwave / cold wave only for Indian stations; hill stations use IMD's hill criteria."""
+    t = np.full(40, 30.0)
+    t[10:13] = 41.0                                     # plains heatwave (departure 5 vs normal 36)
+    plains = make_daily(tmax=t, tmax_mean=36.0, tmax_p99=99, tmax_p90=99)
+    assert len(events_of(cfg, plains, "heatwave")) == 1
+    abroad = make_daily(tmax=t, tmax_mean=36.0, tmax_p99=99, tmax_p90=99, imd_region=0)
+    assert events_of(cfg, abroad, "heatwave").empty
+    th = np.full(40, 22.0)
+    th[5:8] = 31.0                                      # hill station: >= 30 °C and departure >= 4.5
+    hill = make_daily(tmax=th, tmax_mean=25.0, tmax_p99=99, tmax_p90=99, imd_hill=1)
+    assert len(events_of(cfg, hill, "heatwave")) == 1
+    assert events_of(cfg, make_daily(tmax=th, tmax_mean=25.0, tmax_p99=99, tmax_p90=99), "heatwave").empty
+    tn = np.full(40, 12.0)
+    tn[20] = 3.5                                        # plains: Tmin <= 4 °C is a cold wave by itself
+    cw = events_of(cfg, make_daily(tmin=tn, tmin_mean=6.0, tmin_p01=-99), "cold_wave")
+    assert len(cw) == 1 and cw.iloc[0]["severity"] == "cold_wave"
 
 
 def test_zscore_ignores_zero_std(cfg):
@@ -115,7 +134,8 @@ def test_ground_truth_recall(cfg):
         hourly, _ = clean_hourly(raw, cfg)
         daily = to_daily(hourly, cfg)
         mom, hist = climatology_arrays(daily, cfg)
-        d = attach_thresholds(daily, thresholds_from_arrays(mom, hist, [row["station_id"]], cfg))
+        meta = {row["station_id"]: {"country": row["country"], "elevation": row["elevation"]}}
+        d = attach_thresholds(daily, thresholds_from_arrays(mom, hist, [row["station_id"]], cfg, meta))
         ev = detect_events(d, row["station_id"], build_rules(cfg))
         ev["s"], ev["e"] = pd.to_datetime(ev["start_date"]), pd.to_datetime(ev["end_date"])
         for g_ in gt:

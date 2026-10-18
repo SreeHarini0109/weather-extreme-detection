@@ -12,7 +12,8 @@
       "name": "Mumbai",
       "lat": 19.079999923706055,
       "lon": 72.87999725341797,
-      "elevation": 14.0
+      "elevation": 14.0,
+      "country": "IN"
     },
     "DEL": {
       "rows": 43826,
@@ -23,7 +24,8 @@
       "name": "Delhi",
       "lat": 28.610000610351562,
       "lon": 77.20999908447266,
-      "elevation": 216.0
+      "elevation": 216.0,
+      "country": "IN"
     },
     "MAA": {
       "rows": 43826,
@@ -34,7 +36,8 @@
       "name": "Chennai",
       "lat": 13.079999923706055,
       "lon": 80.2699966430664,
-      "elevation": 7.0
+      "elevation": 7.0,
+      "country": "IN"
     }
   },
   "n_stations": 3,

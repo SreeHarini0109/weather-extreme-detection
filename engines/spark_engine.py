@@ -39,7 +39,7 @@ from core.aggregates import (DAILY_STAT_VARS, HOURLY_STAT_VARS, MEAN, M2, N, STA
 from core.cleaning import HOURLY_VARS, hi_parts  # noqa: E402
 from core.detection import EVENT_COLS, build_rules  # noqa: E402
 from core.outputs import write_outputs  # noqa: E402
-from core.pipeline import read_manifest, station_path  # noqa: E402
+from core.pipeline import read_manifest, station_meta, station_path  # noqa: E402
 from core.thresholds import (HIST_VARS, MOMENT_VARS, empty_arrays, hist_spec,  # noqa: E402
                              thresholds_from_arrays)
 from core.timing import PhaseTimer  # noqa: E402
@@ -357,7 +357,7 @@ def run(spark, data, cfg, stations=None, compare_approx=False, out_extra: dict |
         for v, gdf in hc.groupby("var"):
             si = gdf["station_id"].map(sidx).to_numpy()
             np.add.at(hist[v], (si, gdf["month"].to_numpy() - 1, gdf["bin"].to_numpy()), gdf["count"].to_numpy())
-        thr = thresholds_from_arrays(mom, hist, ids, cfg)
+        thr = thresholds_from_arrays(mom, hist, ids, cfg, station_meta(manifest))
         thr_sdf = spark.createDataFrame(thr)
         thr_sdf = thr_sdf.select(*[nan_to_null(F.col(c)).alias(c) if t == "double" else F.col(c)
                                    for c, t in thr_sdf.dtypes])

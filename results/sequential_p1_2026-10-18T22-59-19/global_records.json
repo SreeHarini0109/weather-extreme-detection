@@ -1,0 +1,58 @@
+{
+  "highest_temperature": {
+    "record": "highest_temperature",
+    "value": 48.1,
+    "unit": "°C",
+    "station_id": "PHL",
+    "time": "2024-05-27 09:00:00"
+  },
+  "lowest_temperature": {
+    "record": "lowest_temperature",
+    "value": 1.7,
+    "unit": "°C",
+    "station_id": "LKO",
+    "time": "2019-12-30 00:00:00"
+  },
+  "max_daily_rainfall": {
+    "record": "max_daily_rainfall",
+    "value": 254.9,
+    "unit": "mm/day",
+    "station_id": "MAA",
+    "time": "2023-12-04 00:00:00"
+  },
+  "max_hourly_rainfall": {
+    "record": "max_hourly_rainfall",
+    "value": 47.6,
+    "unit": "mm/h",
+    "station_id": "BOM",
+    "time": "2020-07-04 07:00:00"
+  },
+  "max_wind_speed": {
+    "record": "max_wind_speed",
+    "value": 68.9,
+    "unit": "km/h",
+    "station_id": "CCU",
+    "time": "2020-05-20 13:00:00"
+  },
+  "max_wind_gust": {
+    "record": "max_wind_gust",
+    "value": 142.9,
+    "unit": "km/h",
+    "station_id": "CCU",
+    "time": "2020-05-20 13:00:00"
+  },
+  "max_humidity": {
+    "record": "max_humidity",
+    "value": 100.0,
+    "unit": "%",
+    "station_id": "DEL",
+    "time": "2015-01-09 01:00:00"
+  },
+  "min_humidity": {
+    "record": "min_humidity",
+    "value": 3.0,
+    "unit": "%",
+    "station_id": "PHL",
+    "time": "2016-04-23 10:00:00"
+  }
+}

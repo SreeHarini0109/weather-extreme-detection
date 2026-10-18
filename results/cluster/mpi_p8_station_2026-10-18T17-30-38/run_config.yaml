@@ -1,0 +1,232 @@
+run:
+  engine: mpi
+  p: 8
+  nodes: 4
+  partition_mode: station
+  schedule: lpt
+  total_s: 4.306009169
+  tag: lan-sim
+  per_worker:
+    '0':
+      comm: 0.0388
+      load: 0.6444
+      clean: 0.7536
+      stats: 1.5455
+      thresholds: 0.0658
+      detect: 0.9438
+      trends: 0.293
+      merge: 0.0025
+      host: master
+      rows: 1841035
+      n_stations: 7
+    '1':
+      comm: 0.1359
+      load: 0.5109
+      clean: 0.696
+      stats: 1.6248
+      thresholds: 0.0768
+      detect: 0.9873
+      trends: 0.2264
+      merge: 0.0018
+      host: master
+      rows: 1841035
+      n_stations: 7
+    '2':
+      comm: 0.2901
+      load: 0.5515
+      clean: 0.7024
+      stats: 1.4821
+      thresholds: 0.0657
+      detect: 0.9142
+      trends: 0.2577
+      merge: 0.0017
+      host: worker1
+      rows: 1578030
+      n_stations: 6
+    '3':
+      comm: 0.115
+      load: 0.5825
+      clean: 0.6971
+      stats: 1.4071
+      thresholds: 0.0757
+      detect: 1.0428
+      trends: 0.3398
+      merge: 0.0014
+      host: worker1
+      rows: 1578030
+      n_stations: 6
+    '4':
+      comm: 0.4188
+      load: 0.5282
+      clean: 0.7128
+      stats: 1.4155
+      thresholds: 0.0453
+      detect: 0.8957
+      trends: 0.253
+      merge: 0.0041
+      host: worker2
+      rows: 1578030
+      n_stations: 6
+    '5':
+      comm: 0.4997
+      load: 0.5051
+      clean: 0.6553
+      stats: 1.4649
+      thresholds: 0.0832
+      detect: 0.7865
+      trends: 0.2667
+      merge: 0.004
+      host: worker2
+      rows: 1578030
+      n_stations: 6
+    '6':
+      comm: 0.4262
+      load: 0.452
+      clean: 0.6375
+      stats: 1.5508
+      thresholds: 0.0771
+      detect: 0.9141
+      trends: 0.2094
+      merge: 0.0045
+      host: worker3
+      rows: 1578030
+      n_stations: 6
+    '7':
+      comm: 0.4898
+      load: 0.5177
+      clean: 0.7168
+      stats: 1.4741
+      thresholds: 0.0698
+      detect: 0.7921
+      trends: 0.2095
+      merge: 0.0018
+      host: worker3
+      rows: 1578030
+      n_stations: 6
+machine:
+  host: master
+  platform: Linux-6.10.14-linuxkit-aarch64-with-glibc2.36
+  python: 3.11.17
+  cpu_count: 8
+  processor: ''
+  ram_gb: 9.7
+config:
+  paths:
+    stations: data/stations.csv
+    raw_synthetic: data/raw/synthetic
+    raw_openmeteo: data/raw/openmeteo
+    parquet: data/parquet/synthetic
+    results: results
+  generator:
+    start_year: 1995
+    end_year: 2024
+    seed: 42
+    n_stations: 50
+    workers: 8
+    format: parquet
+    warming_per_decade:
+    - 0.05
+    - 0.45
+    no_trend_fraction: 0.2
+    inject:
+      heatwave_rate: 0.5
+      coldwave_rate: 0.3
+      cloudburst_rate: 0.3
+      cyclone_rate: 0.25
+      rate_growth_per_year: 0.03
+    quality:
+      nan_frac: 0.001
+      spike_frac: 5.0e-05
+      dup_frac: 5.0e-05
+  downloader:
+    start: '1995-01-01'
+    end: '2024-12-31'
+    requests_per_second: 4
+    chunk_years: 10
+    threads: 4
+  cleaning:
+    round_decimals: 2
+    temp_range:
+    - -90
+    - 60
+    humidity_range:
+    - 0
+    - 100
+    humidity_clip_tolerance: 2
+    precip_range:
+    - 0
+    - 500
+    wind_range:
+    - 0
+    - 400
+    min_hours_complete: 20
+  thresholds:
+    imd:
+      countries:
+      - IN
+      hill_elevation_m: 1000
+      apply_everywhere: false
+    heatwave:
+      tmax_min: 40.0
+      hill_tmax_min: 30.0
+      departure: 4.5
+      severe_departure: 6.5
+      absolute: 45.0
+      severe_absolute: 47.0
+    coldwave:
+      tmin_max: 10.0
+      hill_tmin_max: 0.0
+      departure: -4.5
+      severe_departure: -6.5
+      absolute: 4.0
+      severe_absolute: 2.0
+    heavy_rain:
+      heavy: 64.5
+      very_heavy: 115.6
+      extremely_heavy: 204.5
+    cloudburst_mm_per_hour: 100.0
+    heat_index:
+      danger: 41.0
+      extreme_danger: 54.0
+    humidity:
+      high_mean: 95.0
+      low_min: 10.0
+    wind_beaufort:
+      B8_gale: 62.0
+      B9_strong_gale: 75.0
+      B10_storm: 89.0
+      B11_violent_storm: 103.0
+      B12_hurricane: 118.0
+    wet_day_mm: 1.0
+    zscore: 3.0
+    iqr_k: 3.0
+    spells:
+      heatwave_min_days: 3
+      warm_spell_min_days: 6
+  histograms:
+    tmax:
+      lo: -60.05
+      hi: 60.05
+      width: 0.1
+    tmin:
+      lo: -60.05
+      hi: 60.05
+      width: 0.1
+    precip_wet:
+      lo: -0.25
+      hi: 1000.25
+      width: 0.5
+    wind_max:
+      lo: -0.05
+      hi: 300.05
+      width: 0.1
+  trends:
+    min_days_per_year: 300
+    min_years: 8
+    alpha: 0.05
+  mpi:
+    halo_days: 31
+  spark:
+    shuffle_partitions: 16
+    driver_memory: 4g
+    approx_accuracy: 10000

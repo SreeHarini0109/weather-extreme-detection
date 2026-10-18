@@ -1,0 +1,21 @@
+# One service per PC, host networking (each PC keeps its own LAN IP; no shared Docker network).
+# Run on the master PC:   ROLE=master bash docker/lan/start_node.sh <MASTER_IP>
+# Run on every worker PC: ROLE=worker bash docker/lan/start_node.sh <MASTER_IP>
+services:
+  node:
+    image: pds-weather
+    build: {context: ../.., dockerfile: docker/Dockerfile}
+    container_name: pds-node
+    network_mode: host
+    shm_size: 1gb
+    volumes: ["../..:/app"]
+    environment:
+      ROLE: ${ROLE:?set ROLE=master or ROLE=worker}
+      SPARK_MASTER_HOST: ${MASTER_IP:?set MASTER_IP}
+      SPARK_LOCAL_IP: ${NODE_IP:?set NODE_IP}
+      SSH_PORT: "2222"                         # the PC's own sshd keeps port 22
+      SPARK_WORKER_CORES: ${SPARK_WORKER_CORES:-4}
+      SPARK_WORKER_MEMORY: ${SPARK_WORKER_MEMORY:-6g}
+      OMPI_MCA_plm_rsh_args: "-p 2222"         # mpirun reaches the other containers' sshd
+      OMPI_MCA_btl_tcp_if_include: ${LAN_SUBNET:?set LAN_SUBNET, e.g. 192.168.1.0/24}
+      OMPI_MCA_oob_tcp_if_include: ${LAN_SUBNET}

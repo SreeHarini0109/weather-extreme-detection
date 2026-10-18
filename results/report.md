@@ -163,6 +163,17 @@ Median of repeated runs on the same 13.1M-row dataset (T₁ = sequential):
 
 ![load balancing](plots/load_balancing.png)
 
+### Multi-node run: Docker Compose cluster (master + 3 workers)
+
+Same image on every node; MPI ranks launched over SSH from a hostfile, Spark in standalone mode (`spark://master:7077`). All four containers share one 8-CPU Docker Desktop VM and read the data through a virtualised shared volume, so absolute times are slower than native; the point is that the same code runs distributed and produces identical results (parity checked). The `fault-tolerance` row had worker2 stopped mid-job: Spark recomputed the lost partitions from lineage and finished correctly.
+
+| engine/mode | p | nodes | rows | total_s | tag |
+|---|---|---|---|---|---|
+| mpi/station | 8 | 4 | 13150250 | 7.16 | cluster |
+| mpi/time | 8 | 4 | 13150250 | 15.58 | cluster |
+| spark | 6 | 3 | 13150250 | 66.85 | cluster |
+| spark | 4 | 2 | 13150250 | 70.65 | fault-tolerance |
+
 ### File format: CSV vs Parquet
 
 | format | columns | rows | seconds | mib | mrows_per_s |

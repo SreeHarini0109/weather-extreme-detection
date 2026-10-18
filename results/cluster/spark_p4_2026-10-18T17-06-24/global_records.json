@@ -1,0 +1,58 @@
+{
+  "highest_temperature": {
+    "record": "highest_temperature",
+    "value": 52.6,
+    "unit": "°C",
+    "station_id": "PHL",
+    "time": "2021-06-15 10:00:00"
+  },
+  "lowest_temperature": {
+    "record": "lowest_temperature",
+    "value": -29.2,
+    "unit": "°C",
+    "station_id": "MOW",
+    "time": "2011-02-18 23:00:00"
+  },
+  "max_daily_rainfall": {
+    "record": "max_daily_rainfall",
+    "value": 891.8,
+    "unit": "mm/day",
+    "station_id": "CHE",
+    "time": "2015-07-21 00:00:00"
+  },
+  "max_hourly_rainfall": {
+    "record": "max_hourly_rainfall",
+    "value": 494.0,
+    "unit": "mm/h",
+    "station_id": "CHE",
+    "time": "2005-06-14 20:00:00"
+  },
+  "max_wind_speed": {
+    "record": "max_wind_speed",
+    "value": 149.8,
+    "unit": "km/h",
+    "station_id": "LOS",
+    "time": "2009-04-30 23:00:00"
+  },
+  "max_wind_gust": {
+    "record": "max_wind_gust",
+    "value": 218.3,
+    "unit": "km/h",
+    "station_id": "MAA",
+    "time": "2022-10-20 02:00:00"
+  },
+  "max_humidity": {
+    "record": "max_humidity",
+    "value": 100.0,
+    "unit": "%",
+    "station_id": "SAO",
+    "time": "1995-01-01 04:00:00"
+  },
+  "min_humidity": {
+    "record": "min_humidity",
+    "value": 5.0,
+    "unit": "%",
+    "station_id": "RUH",
+    "time": "1995-01-05 10:00:00"
+  }
+}

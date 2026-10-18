@@ -1,0 +1,113 @@
+{
+  "phases": {
+    "load": 1.105639,
+    "clean": 1.65389,
+    "stats": 3.869499,
+    "thresholds": 0.605068,
+    "detect": 6.532218,
+    "trends": 0.715057
+  },
+  "comm": 2.541478,
+  "merge": 0.160564,
+  "total_s": 15.583314632,
+  "write_s": 0.35710183300000153,
+  "per_worker": {
+    "0": {
+      "comm": 1.4057,
+      "load": 1.0497,
+      "clean": 1.5502,
+      "stats": 3.8695,
+      "thresholds": 0.6051,
+      "detect": 6.2113,
+      "trends": 0.7151,
+      "merge": 0.1606,
+      "host": "master",
+      "rows": 1753290,
+      "n_stations": 50
+    },
+    "1": {
+      "comm": 1.6333,
+      "load": 1.0299,
+      "clean": 1.4619,
+      "stats": 3.6432,
+      "thresholds": 0.4897,
+      "detect": 6.4141,
+      "trends": 0.4729,
+      "host": "master",
+      "rows": 1753289,
+      "n_stations": 50
+    },
+    "2": {
+      "comm": 1.4181,
+      "load": 1.0489,
+      "clean": 1.4759,
+      "stats": 3.8551,
+      "thresholds": 0.4619,
+      "detect": 6.3383,
+      "trends": 0.5289,
+      "host": "worker1",
+      "rows": 1753292,
+      "n_stations": 50
+    },
+    "3": {
+      "comm": 1.0411,
+      "load": 1.0923,
+      "clean": 1.6539,
+      "stats": 3.8676,
+      "thresholds": 0.5445,
+      "detect": 6.5322,
+      "trends": 0.3904,
+      "host": "worker1",
+      "rows": 1753291,
+      "n_stations": 50
+    },
+    "4": {
+      "comm": 1.4995,
+      "load": 1.0276,
+      "clean": 1.5116,
+      "stats": 3.8445,
+      "thresholds": 0.5665,
+      "detect": 6.2458,
+      "trends": 0.4358,
+      "host": "worker2",
+      "rows": 1753283,
+      "n_stations": 50
+    },
+    "5": {
+      "comm": 1.399,
+      "load": 1.1056,
+      "clean": 1.475,
+      "stats": 3.854,
+      "thresholds": 0.3701,
+      "detect": 6.4792,
+      "trends": 0.4432,
+      "host": "worker2",
+      "rows": 1753291,
+      "n_stations": 50
+    },
+    "6": {
+      "comm": 2.5415,
+      "load": 0.968,
+      "clean": 1.2119,
+      "stats": 3.3801,
+      "thresholds": 0.4514,
+      "detect": 6.0773,
+      "trends": 0.5058,
+      "host": "worker3",
+      "rows": 1315254,
+      "n_stations": 50
+    },
+    "7": {
+      "comm": 2.2025,
+      "load": 1.0019,
+      "clean": 1.2349,
+      "stats": 3.4461,
+      "thresholds": 0.4927,
+      "detect": 6.3891,
+      "trends": 0.3601,
+      "host": "worker3",
+      "rows": 1315260,
+      "n_stations": 50
+    }
+  }
+}

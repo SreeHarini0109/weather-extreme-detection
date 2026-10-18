@@ -447,14 +447,16 @@ def main(argv=None):
     t0 = time.perf_counter()
     spark = build_session(master, cfg, partitions)
     startup = time.perf_counter() - t0
-    if master.startswith("local"):
-        p, nodes = args.cores, 1
-    else:
-        sc = spark.sparkContext
-        p = int(sc.defaultParallelism)
-        nodes = max(1, len(sc._jsc.sc().getExecutorMemoryStatus().keySet()) - 1)
     extra = {}
     combined, timings, total = run(spark, data, cfg, args.stations, args.compare_approx, extra)
+    if master.startswith("local"):
+        p, nodes = args.cores, 1
+    else:   # executors register lazily, so count them after the job has run
+        sc = spark.sparkContext
+        p = int(sc.defaultParallelism)
+        hosts = {e.split(":")[0] for e in sc._jsc.sc().getExecutorMemoryStatus().keySet().toString()
+                 .strip("Set()").split(", ") if e}
+        nodes = max(1, len(hosts) - 1)      # minus the driver's entry
     run_info = {"engine": "spark", "p": p, "nodes": nodes, "partition_mode": "", "schedule": master,
                 "total_s": total, "startup_s": startup, "tag": args.tag}
     run_dir = write_outputs(out, combined, cfg, run_info, timings, write_files=not args.no_write, verbose=not args.quiet)

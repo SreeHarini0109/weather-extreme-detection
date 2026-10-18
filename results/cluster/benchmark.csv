@@ -1,0 +1,5 @@
+run_id,timestamp,engine,p,nodes,partition_mode,schedule,rows,stations,t_load,t_clean,t_stats,t_thresholds,t_detect,t_trends,t_comm,t_merge,t_compute_total,total_s,write_s,startup_s,rows_per_s,host,tag
+mpi_p8_station_2026-10-18T17-03-07,2026-10-18T17-03-07,mpi,8,4,station,lpt,13150250,50,1.8249,2.1479,2.1371,0.0865,1.5473,0.4453,0.7749,0.0063,8.189,7.1625,0.4819,,1835976.7,master,cluster
+mpi_p8_time_2026-10-18T17-03-24,2026-10-18T17-03-24,mpi,8,4,time,time,13150250,50,1.1056,1.6539,3.8695,0.6051,6.5322,0.7151,2.5415,0.1606,14.4814,15.5833,0.3571,,843867.3,master,cluster
+spark_p6_2026-10-18T17-04-56,2026-10-18T17-04-56,spark,6,3,,spark://master:7077,13150250,50,12.7776,21.9151,11.8859,6.6068,7.8123,5.3335,0.0,0.0103,66.3312,66.8515,0.351,1.801,196708.3,master,cluster
+spark_p4_2026-10-18T17-06-24,2026-10-18T17-06-24,spark,4,2,,spark://master:7077,13150250,50,10.757,34.9765,6.5881,5.2161,6.7398,5.8644,0.0,0.0058,70.1419,70.6482,0.5106,2.5794,186137.2,master,fault-tolerance

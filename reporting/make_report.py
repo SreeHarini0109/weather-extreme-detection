@@ -239,6 +239,17 @@ def build_markdown(run: Path, data: Path, plots: Path, results_root: Path, val: 
                          ("load_balancing.png", "load balancing")]:
             if (plots / img).exists():
                 L += [f"![{cap}]({rel(img)})", ""]
+    cl = results_root / "cluster" / "benchmark.csv"
+    if cl.exists():
+        c = pd.read_csv(cl)
+        c["engine/mode"] = c["engine"] + c["partition_mode"].fillna("").map(lambda m: f"/{m}" if m else "")
+        L += ["### Multi-node run: Docker Compose cluster (master + 3 workers)", "",
+              "Same image on every node; MPI ranks launched over SSH from a hostfile, Spark in standalone mode "
+              "(`spark://master:7077`). All four containers share one 8-CPU Docker Desktop VM and read the data "
+              "through a virtualised shared volume, so absolute times are slower than native; the point is that the "
+              "same code runs distributed and produces identical results (parity checked). The `fault-tolerance` row "
+              "had worker2 stopped mid-job: Spark recomputed the lost partitions from lineage and finished correctly.",
+              "", md_table(c[["engine/mode", "p", "nodes", "rows", "total_s", "tag"]], "{:.2f}"), ""]
     fb = results_root / "format_benchmark.csv"
     if fb.exists():
         L += ["### File format: CSV vs Parquet", "", md_table(pd.read_csv(fb)), ""]

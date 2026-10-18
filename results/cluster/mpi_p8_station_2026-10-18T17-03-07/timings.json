@@ -1,0 +1,120 @@
+{
+  "phases": {
+    "load": 1.824937,
+    "clean": 2.147863,
+    "stats": 2.137062,
+    "thresholds": 0.08653,
+    "detect": 1.547291,
+    "trends": 0.445303
+  },
+  "comm": 0.774925,
+  "merge": 0.00634,
+  "total_s": 7.162536545,
+  "write_s": 0.48191312600000913,
+  "per_worker": {
+    "0": {
+      "comm": 0.0808,
+      "load": 1.4208,
+      "clean": 1.4469,
+      "stats": 2.1371,
+      "thresholds": 0.0859,
+      "detect": 1.5473,
+      "trends": 0.4119,
+      "merge": 0.0039,
+      "host": "master",
+      "rows": 1841035,
+      "n_stations": 7
+    },
+    "1": {
+      "comm": 0.1822,
+      "load": 1.342,
+      "clean": 1.918,
+      "stats": 1.9665,
+      "thresholds": 0.0865,
+      "detect": 1.2736,
+      "trends": 0.3241,
+      "merge": 0.0038,
+      "host": "master",
+      "rows": 1841035,
+      "n_stations": 7
+    },
+    "2": {
+      "comm": 0.7749,
+      "load": 1.1147,
+      "clean": 1.4891,
+      "stats": 1.8425,
+      "thresholds": 0.0631,
+      "detect": 1.5419,
+      "trends": 0.2763,
+      "merge": 0.0063,
+      "host": "worker1",
+      "rows": 1578030,
+      "n_stations": 6
+    },
+    "3": {
+      "comm": 0.285,
+      "load": 1.8249,
+      "clean": 1.2916,
+      "stats": 1.8684,
+      "thresholds": 0.0486,
+      "detect": 1.3882,
+      "trends": 0.3978,
+      "merge": 0.0044,
+      "host": "worker1",
+      "rows": 1578030,
+      "n_stations": 6
+    },
+    "4": {
+      "comm": 0.2749,
+      "load": 1.3324,
+      "clean": 1.7027,
+      "stats": 2.0357,
+      "thresholds": 0.0805,
+      "detect": 1.3843,
+      "trends": 0.3037,
+      "merge": 0.0021,
+      "host": "worker2",
+      "rows": 1578030,
+      "n_stations": 6
+    },
+    "5": {
+      "comm": 0.6977,
+      "load": 1.2084,
+      "clean": 1.7482,
+      "stats": 1.9023,
+      "thresholds": 0.0857,
+      "detect": 1.1942,
+      "trends": 0.2673,
+      "merge": 0.0047,
+      "host": "worker2",
+      "rows": 1578030,
+      "n_stations": 6
+    },
+    "6": {
+      "comm": 0.3922,
+      "load": 1.1142,
+      "clean": 2.1479,
+      "stats": 1.8326,
+      "thresholds": 0.0728,
+      "detect": 1.3042,
+      "trends": 0.2536,
+      "merge": 0.0019,
+      "host": "worker3",
+      "rows": 1578030,
+      "n_stations": 6
+    },
+    "7": {
+      "comm": 0.3735,
+      "load": 1.74,
+      "clean": 1.4382,
+      "stats": 1.7491,
+      "thresholds": 0.0753,
+      "detect": 1.2985,
+      "trends": 0.4453,
+      "merge": 0.0018,
+      "host": "worker3",
+      "rows": 1578030,
+      "n_stations": 6
+    }
+  }
+}

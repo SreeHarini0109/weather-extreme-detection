@@ -59,6 +59,21 @@ Fault-tolerance demo: start a Spark run, then `docker stop worker2`; Spark recom
 from lineage and the job still completes. Lab LAN: run the same image on each PC, put their IPs in
 `docker/hostfile`, and start workers against `spark://<master-ip>:7077`.
 
+## Results summary (13.1M rows, Apple M4: 4 performance + 6 efficiency cores)
+
+| Engine | best wall time | speedup vs sequential (11.0 s) |
+|---|---|---|
+| MPI station mode (LPT) | 2.9 s at p=10 | 3.8× (3.3× at p=4, near-linear on the P-cores) |
+| MPI dynamic master–worker | 3.0 s at p=11 | 3.7× |
+| multiprocessing | 3.3 s at p=8 | 3.3× |
+| MPI time mode (halo exchange) | 4.8 s at p=4 | 2.3×, then slows: per-rank detection overhead + communication grow |
+| Spark local[p] | 24 s at p=4 | 0.45× — JVM/shuffle overhead dominates on one machine at this size |
+
+Medians of 3 runs (`results/speedup_table.csv`, plots in `results/plots/`, full report `results/report.html`).
+Detection vs injected ground truth: recall 90 % heatwaves, 96 % cold waves, 100 % cloudbursts and cyclones;
+true warming trends recovered with MAE 0.05 °C/decade. Verified on the Docker cluster: MPI across 4 containers
+and Spark on 3 workers give identical results; stopping a Spark worker mid-job still completes correctly.
+
 ## Pipeline (identical in every engine)
 
 | Phase | Work | Parallel pattern |

@@ -196,6 +196,7 @@ Every closed streamed event is compared with the batch run's events at the end o
 | cluster/stream_heatwave_2024_worker_killed | spark://master:7077 | 6 | 1.5 | 8784 | 232 | 190.0 | 3.03 / 15.57 | 101/101 |
 | stream/amphan_2020_2026-10-19T02-01-38 | local[4] | 6 | 2.0 | 3168 | 50 | 249.9 | 2.02 / 2.19 | 22/22 |
 | stream/heatwave_2024_2026-10-19T01-53-46 | local[4] | 6 | 1.0 | 8784 | 232 | 139.4 | 2.28 / 2.48 | 101/101 |
+| stream/heatwave_2024_2026-10-19T02-13-08 | local[4] | 6 | 1.0 | 8784 | 232 | 138.8 | 2.47 / 2.59 | 101/101 |
 | stream/heatwave_2024_resume_after_driver_kill | local[4] | 6 | 2.0 | 8784 | 232 | 267.0 | 2.22 / 10.17 | 101/101 |
 | stream/michaung_2023_2026-10-19T02-01-21 | local[4] | 6 | 2.0 | 2304 | 30 | 223.6 | 2.21 / 3.68 | 15/15 |
 | stream/synthetic_2024_2026-10-19T01-55-02 | local[4] | 50 | 0.0 | 146407 | 1893 | 14017.9 | 6.37 / 9.72 | 865/865 |

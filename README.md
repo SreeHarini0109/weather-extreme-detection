@@ -3,7 +3,7 @@
 Parallel and Distributed Systems Laboratory project. Ingests hourly weather observations (temperature,
 rainfall, humidity, wind), computes min / max / average statistics, detects extreme weather with fixed
 meteorological thresholds, statistical (percentile / z-score / IQR) methods and multi-day spells, finds
-long-term trends (OLS, Mann–Kendall, Sen's slope), and measures processing time for four engines:
+long-term trends (OLS, Mann–Kendall, Sen's slope), and measures processing time for four engines, plus a streaming extension for live alerts:
 
 | Engine | Module | Parallelism |
 |---|---|---|
@@ -112,9 +112,11 @@ networking, `start_node.sh`, `make_hostfile.sh`, `sync_project.sh` and an end-to
 | Spark local[p] | 24 s at p=4 | 0.45× — JVM/shuffle overhead dominates on one machine at this size |
 
 Medians of 3 runs (`results/speedup_table.csv`, plots in `results/plots/`, full report `results/report.html`).
-Detection vs injected ground truth: recall 90 % heatwaves, 96 % cold waves, 100 % cloudbursts and cyclones;
+Detection vs injected ground truth: recall 86 % heatwaves, 88 % cold waves (IMD rules now apply to Indian stations only; see Notes), 100 % cloudbursts and cyclones;
 true warming trends recovered with MAE 0.05 °C/decade. Verified on the Docker cluster: MPI across 4 containers
 and Spark on 3 workers give identical results; stopping a Spark worker mid-job still completes correctly.
+Streaming extension: alerts about 2 s after a day's last reading, identical to the batch events in every run
+(see [Streaming extension](#streaming-extension-live-alerts)).
 
 Real data (ERA5 via Open-Meteo, 6 Indian cities, 2015–2024, `data/parquet/real`): the unchanged pipeline finds
 the May–June 2024 North India heatwave (Phalodi 48.1 °C), Cyclone Amphan (Kolkata, 20 May 2020) and Cyclone

@@ -486,6 +486,8 @@ Everyone owns one section of the final report and one part of the demo.
 ## 15. Possible Extensions
 
 - **Streaming mode:** Kafka + Spark Structured Streaming to detect extremes in near real-time from a replayed feed
+  *(Implemented in `streaming/`. The replayed feed lands in a directory read by Spark's file source instead of
+  Kafka, so no extra service is needed. See README "Streaming extension".)*
 - **GPU acceleration:** CuPy / RAPIDS cuDF for the statistics phase
 - **Forecast-based alerts:** Open-Meteo forecast API, giving tomorrow's predicted extremes
 - **ML anomaly detection:** Isolation Forest per station as a fourth detection method

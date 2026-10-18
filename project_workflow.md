@@ -236,6 +236,14 @@ python reporting/make_report.py --run results/mpi_p8_latest --out results/report
 streamlit run reporting/dashboard.py
 ```
 
+Streaming extension (live alerts from a replayed feed, Spark Structured Streaming; the dashboard's
+"Live stream" tab follows it):
+
+```bash
+python -m streaming.demo --list
+python -m streaming.demo --scenario heatwave_2024
+```
+
 | Plot | Shows |
 |---|---|
 | Speedup vs p (with ideal line) | Scalability per engine |
@@ -399,5 +407,7 @@ Detection quality report on synthetic data:
 | Plots | `python benchmark/analyze.py` |
 | Report | `python reporting/make_report.py` |
 | Dashboard | `streamlit run reporting/dashboard.py` |
+| Streaming demo (extension) | `python -m streaming.demo --scenario heatwave_2024` (dashboard tab "Live stream") |
+| Streaming run summary | `python -m streaming.summarize` |
 | Tests | `pytest tests/ -v` |
 | Stop cluster | `docker compose -f docker/docker-compose.yml down` |

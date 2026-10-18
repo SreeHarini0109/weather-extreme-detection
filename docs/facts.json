@@ -539,6 +539,28 @@
    "parity_ok": true
   },
   {
+   "run": "stream/heatwave_2024_2026-10-19T02-13-08",
+   "scenario": "heatwave_2024",
+   "master": "local[4]",
+   "stations": 6,
+   "start": "2024-05-01",
+   "end": "2024-06-30",
+   "speed_days_per_s": 1.0,
+   "status": "finished",
+   "rows_in": 8784,
+   "station_days": 366,
+   "alerts": 232,
+   "closed_events": 109,
+   "batches": 62,
+   "replay_to_last_alert_s": 63.3,
+   "rows_per_s": 138.8,
+   "latency_median_s": 2.467,
+   "latency_p95_s": 2.5918,
+   "parity_matched": 101,
+   "parity_batch_events": 101,
+   "parity_ok": true
+  },
+  {
    "run": "stream/heatwave_2024_resume_after_driver_kill",
    "scenario": "heatwave_2024",
    "master": "local[4]",

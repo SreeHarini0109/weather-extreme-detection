@@ -26,6 +26,27 @@ PHASE_COLORS = dict(zip(PHASE_COLS, SERIES))
 LINE_ORDER = ["multiprocessing", "mpi/station", "mpi/time", "mpi/dynamic", "spark"]
 
 
+def performance_cores() -> int | None:
+    """Apple silicon / hybrid CPUs: number of performance cores (macOS sysctl), else None."""
+    import subprocess
+    try:
+        out = subprocess.run(["sysctl", "-n", "hw.perflevel0.physicalcpu", "hw.perflevel1.physicalcpu"],
+                             capture_output=True, text=True, timeout=5).stdout.split()
+        return int(out[0]) if len(out) == 2 else None
+    except (OSError, ValueError, subprocess.SubprocessError):
+        return None
+
+
+def _pcore_line(ax, pcores):
+    if pcores:
+        ax.axvline(pcores, color=MUTED, lw=0.8, ls=":")
+        ax.annotate(f"{pcores} performance cores | efficiency cores →", (pcores, 1), xycoords=("data", "axes fraction"),
+                    xytext=(4, -4), textcoords="offset points", fontsize=7.5, color=MUTED, va="top")
+
+
+PCORES = performance_cores()
+
+
 def label(r) -> str:
     if r["engine"] == "mpi":
         return f"mpi/{r['partition_mode']}"
@@ -100,6 +121,7 @@ def plot_all(m: pd.DataFrame, strong: pd.DataFrame, weak: pd.DataFrame, out: Pat
     ax.plot(ps, ps, ls="--", lw=1.2, color=MUTED, label="ideal (linear)")
     _lines(ax, strong, "speedup", labels)
     ax.set(xlabel="processes / cores (p)", ylabel="speedup vs sequential  T₁ / Tₚ", xticks=sorted(strong["p"].unique()))
+    _pcore_line(ax, PCORES)
     ax.set_title("Strong scaling: speedup (13.1M rows)")
     ax.legend(loc="upper left")
     style.save(fig, out / "speedup.png")
@@ -110,6 +132,7 @@ def plot_all(m: pd.DataFrame, strong: pd.DataFrame, weak: pd.DataFrame, out: Pat
     _lines(ax, strong, "efficiency", labels)
     ax.set(xlabel="processes / cores (p)", ylabel="efficiency  S / p", ylim=(0, 1.15),
            xticks=sorted(strong["p"].unique()))
+    _pcore_line(ax, PCORES)
     ax.set_title("Strong scaling: parallel efficiency")
     ax.legend(loc="lower left")
     style.save(fig, out / "efficiency.png")

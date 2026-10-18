@@ -132,3 +132,109 @@ Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
 Setting default log level to "WARN".
 To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
 26/10/18 21:05:45 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
++ python3 -m engines.parallel_mp --data data/parquet/synthetic -p 2 --no-write --quiet --tag strong
++ mpirun --oversubscribe -np 2 python3 -m engines.mpi_engine --data data/parquet/synthetic --mode station --no-write --quiet --tag strong
++ mpirun --oversubscribe -np 2 python3 -m engines.mpi_engine --data data/parquet/synthetic --mode time --no-write --quiet --tag strong
++ mpirun --oversubscribe -np 3 python3 -m engines.mpi_engine --data data/parquet/synthetic --mode dynamic --no-write --quiet --tag strong
++ python3 -m engines.spark_engine --data data/parquet/synthetic -p 2 --no-write --quiet --tag strong
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+26/10/18 21:08:24 WARN Utils: Your hostname, SreeHarinis-MacBook-Pro.local, resolves to a loopback address: 127.0.0.1; using 10.10.12.178 instead (on interface en0)
+26/10/18 21:08:24 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/18 21:08:24 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
++ python3 -m engines.parallel_mp --data data/parquet/synthetic -p 4 --no-write --quiet --tag strong
++ mpirun --oversubscribe -np 4 python3 -m engines.mpi_engine --data data/parquet/synthetic --mode station --no-write --quiet --tag strong
++ mpirun --oversubscribe -np 4 python3 -m engines.mpi_engine --data data/parquet/synthetic --mode time --no-write --quiet --tag strong
++ mpirun --oversubscribe -np 5 python3 -m engines.mpi_engine --data data/parquet/synthetic --mode dynamic --no-write --quiet --tag strong
++ python3 -m engines.spark_engine --data data/parquet/synthetic -p 4 --no-write --quiet --tag strong
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+26/10/18 21:10:29 WARN Utils: Your hostname, SreeHarinis-MacBook-Pro.local, resolves to a loopback address: 127.0.0.1; using 10.10.12.178 instead (on interface en0)
+26/10/18 21:10:29 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/18 21:10:29 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
++ python3 -m engines.parallel_mp --data data/parquet/synthetic -p 8 --no-write --quiet --tag strong
++ mpirun --oversubscribe -np 8 python3 -m engines.mpi_engine --data data/parquet/synthetic --mode station --no-write --quiet --tag strong
++ mpirun --oversubscribe -np 8 python3 -m engines.mpi_engine --data data/parquet/synthetic --mode time --no-write --quiet --tag strong
++ mpirun --oversubscribe -np 9 python3 -m engines.mpi_engine --data data/parquet/synthetic --mode dynamic --no-write --quiet --tag strong
++ python3 -m engines.spark_engine --data data/parquet/synthetic -p 8 --no-write --quiet --tag strong
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+26/10/18 21:12:58 WARN Utils: Your hostname, SreeHarinis-MacBook-Pro.local, resolves to a loopback address: 127.0.0.1; using 10.10.12.178 instead (on interface en0)
+26/10/18 21:12:58 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/18 21:12:59 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
++ python3 -m engines.sequential --data data/parquet/synthetic --stations AMD ATQ BBI BHO BJS BKK --no-write --quiet --tag weak
++ python3 -m engines.parallel_mp --data data/parquet/synthetic -p 1 --stations AMD ATQ BBI BHO BJS BKK --no-write --quiet --tag weak
++ mpirun --oversubscribe -np 1 python3 -m engines.mpi_engine --data data/parquet/synthetic --mode station --stations AMD ATQ BBI BHO BJS BKK --no-write --quiet --tag weak
++ python3 -m engines.parallel_mp --data data/parquet/synthetic -p 2 --stations AMD ATQ BBI BHO BJS BKK BLR BOM CAI CCU CHE CHI --no-write --quiet --tag weak
++ mpirun --oversubscribe -np 2 python3 -m engines.mpi_engine --data data/parquet/synthetic --mode station --stations AMD ATQ BBI BHO BJS BKK BLR BOM CAI CCU CHE CHI --no-write --quiet --tag weak
++ python3 -m engines.parallel_mp --data data/parquet/synthetic -p 4 --stations AMD ATQ BBI BHO BJS BKK BLR BOM CAI CCU CHE CHI COK CPT DAC DEL DXB GAU GOI HYD IXC JAI JKT KHI --no-write --quiet --tag weak
++ mpirun --oversubscribe -np 4 python3 -m engines.mpi_engine --data data/parquet/synthetic --mode station --stations AMD ATQ BBI BHO BJS BKK BLR BOM CAI CCU CHE CHI COK CPT DAC DEL DXB GAU GOI HYD IXC JAI JKT KHI --no-write --quiet --tag weak
++ python3 -m engines.parallel_mp --data data/parquet/synthetic -p 8 --stations AMD ATQ BBI BHO BJS BKK BLR BOM CAI CCU CHE CHI COK CPT DAC DEL DXB GAU GOI HYD IXC JAI JKT KHI LAX LDN LKO LOS MAA MEX MNL MOW NAG NBO NYC PAR PAT PHL PNQ REK RUH SAO SIN SLV SXR SYD TRV TYO --no-write --quiet --tag weak
++ mpirun --oversubscribe -np 8 python3 -m engines.mpi_engine --data data/parquet/synthetic --mode station --stations AMD ATQ BBI BHO BJS BKK BLR BOM CAI CCU CHE CHI COK CPT DAC DEL DXB GAU GOI HYD IXC JAI JKT KHI LAX LDN LKO LOS MAA MEX MNL MOW NAG NBO NYC PAR PAT PHL PNQ REK RUH SAO SIN SLV SXR SYD TRV TYO --no-write --quiet --tag weak
++ python3 -m engines.sequential --data data/parquet/large --stations AMD AMD001 AMD002 AMD003 ATQ ATQ001 ATQ002 ATQ003 BBI BBI001 --no-write --quiet --tag size
++ python3 -m engines.parallel_mp --data data/parquet/large -p 8 --stations AMD AMD001 AMD002 AMD003 ATQ ATQ001 ATQ002 ATQ003 BBI BBI001 --no-write --quiet --tag size
++ mpirun --oversubscribe -np 8 python3 -m engines.mpi_engine --data data/parquet/large --mode station --stations AMD AMD001 AMD002 AMD003 ATQ ATQ001 ATQ002 ATQ003 BBI BBI001 --no-write --quiet --tag size
++ python3 -m engines.spark_engine --data data/parquet/large -p 8 --stations AMD AMD001 AMD002 AMD003 ATQ ATQ001 ATQ002 ATQ003 BBI BBI001 --no-write --quiet --tag size
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+26/10/18 21:15:12 WARN Utils: Your hostname, SreeHarinis-MacBook-Pro.local, resolves to a loopback address: 127.0.0.1; using 10.10.12.178 instead (on interface en0)
+26/10/18 21:15:12 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/18 21:15:12 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
++ python3 -m engines.sequential --data data/parquet/large --stations AMD AMD001 AMD002 AMD003 ATQ ATQ001 ATQ002 ATQ003 BBI BBI001 BBI002 BBI003 BHO BHO001 BHO002 BHO003 BJS BJS001 BJS002 BJS003 BKK BKK001 BKK002 BKK003 BLR BLR001 BLR002 BLR003 BOM BOM001 BOM002 BOM003 CAI CAI001 CAI002 CAI003 CCU CCU001 CCU002 CCU003 CHE CHE001 CHE002 CHE003 CHI CHI001 CHI002 CHI003 COK COK001 --no-write --quiet --tag size
++ python3 -m engines.parallel_mp --data data/parquet/large -p 8 --stations AMD AMD001 AMD002 AMD003 ATQ ATQ001 ATQ002 ATQ003 BBI BBI001 BBI002 BBI003 BHO BHO001 BHO002 BHO003 BJS BJS001 BJS002 BJS003 BKK BKK001 BKK002 BKK003 BLR BLR001 BLR002 BLR003 BOM BOM001 BOM002 BOM003 CAI CAI001 CAI002 CAI003 CCU CCU001 CCU002 CCU003 CHE CHE001 CHE002 CHE003 CHI CHI001 CHI002 CHI003 COK COK001 --no-write --quiet --tag size
++ mpirun --oversubscribe -np 8 python3 -m engines.mpi_engine --data data/parquet/large --mode station --stations AMD AMD001 AMD002 AMD003 ATQ ATQ001 ATQ002 ATQ003 BBI BBI001 BBI002 BBI003 BHO BHO001 BHO002 BHO003 BJS BJS001 BJS002 BJS003 BKK BKK001 BKK002 BKK003 BLR BLR001 BLR002 BLR003 BOM BOM001 BOM002 BOM003 CAI CAI001 CAI002 CAI003 CCU CCU001 CCU002 CCU003 CHE CHE001 CHE002 CHE003 CHI CHI001 CHI002 CHI003 COK COK001 --no-write --quiet --tag size
++ python3 -m engines.spark_engine --data data/parquet/large -p 8 --stations AMD AMD001 AMD002 AMD003 ATQ ATQ001 ATQ002 ATQ003 BBI BBI001 BBI002 BBI003 BHO BHO001 BHO002 BHO003 BJS BJS001 BJS002 BJS003 BKK BKK001 BKK002 BKK003 BLR BLR001 BLR002 BLR003 BOM BOM001 BOM002 BOM003 CAI CAI001 CAI002 CAI003 CCU CCU001 CCU002 CCU003 CHE CHE001 CHE002 CHE003 CHI CHI001 CHI002 CHI003 COK COK001 --no-write --quiet --tag size
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+26/10/18 21:15:53 WARN Utils: Your hostname, SreeHarinis-MacBook-Pro.local, resolves to a loopback address: 127.0.0.1; using 10.10.12.178 instead (on interface en0)
+26/10/18 21:15:53 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/18 21:15:53 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+26/10/18 21:16:28 ERROR TaskSchedulerImpl: Exception in statusUpdate
+java.util.concurrent.RejectedExecutionException: Task org.apache.spark.scheduler.TaskResultGetter$$anon$3@5c530fa1 rejected from java.util.concurrent.ThreadPoolExecutor@7236ba8[Terminated, pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 133]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$AbortPolicy.rejectedExecution(ThreadPoolExecutor.java:2065)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.reject(ThreadPoolExecutor.java:833)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.execute(ThreadPoolExecutor.java:1365)
+	at org.apache.spark.scheduler.TaskResultGetter.enqueueSuccessfulTask(TaskResultGetter.scala:62)
+	at org.apache.spark.scheduler.TaskSchedulerImpl.statusUpdate(TaskSchedulerImpl.scala:808)
+	at org.apache.spark.scheduler.local.LocalEndpoint$$anonfun$receive$1.applyOrElse(LocalSchedulerBackend.scala:75)
+	at org.apache.spark.rpc.netty.Inbox.$anonfun$process$1(Inbox.scala:116)
+	at org.apache.spark.rpc.netty.Inbox.safelyCall(Inbox.scala:216)
+	at org.apache.spark.rpc.netty.Inbox.process(Inbox.scala:101)
+	at org.apache.spark.rpc.netty.MessageLoop.org$apache$spark$rpc$netty$MessageLoop$$receiveLoop(MessageLoop.scala:76)
+	at org.apache.spark.rpc.netty.MessageLoop$$anon$1.run(MessageLoop.scala:42)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+26/10/18 21:16:28 ERROR TaskSchedulerImpl: Exception in statusUpdate
+java.util.concurrent.RejectedExecutionException: Task org.apache.spark.scheduler.TaskResultGetter$$anon$3@5154b380 rejected from java.util.concurrent.ThreadPoolExecutor@7236ba8[Terminated, pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 133]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$AbortPolicy.rejectedExecution(ThreadPoolExecutor.java:2065)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.reject(ThreadPoolExecutor.java:833)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.execute(ThreadPoolExecutor.java:1365)
+	at org.apache.spark.scheduler.TaskResultGetter.enqueueSuccessfulTask(TaskResultGetter.scala:62)
+	at org.apache.spark.scheduler.TaskSchedulerImpl.statusUpdate(TaskSchedulerImpl.scala:808)
+	at org.apache.spark.scheduler.local.LocalEndpoint$$anonfun$receive$1.applyOrElse(LocalSchedulerBackend.scala:75)
+	at org.apache.spark.rpc.netty.Inbox.$anonfun$process$1(Inbox.scala:116)
+	at org.apache.spark.rpc.netty.Inbox.safelyCall(Inbox.scala:216)
+	at org.apache.spark.rpc.netty.Inbox.process(Inbox.scala:101)
+	at org.apache.spark.rpc.netty.MessageLoop.org$apache$spark$rpc$netty$MessageLoop$$receiveLoop(MessageLoop.scala:76)
+	at org.apache.spark.rpc.netty.MessageLoop$$anon$1.run(MessageLoop.scala:42)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+26/10/18 21:16:28 ERROR Executor: Exception in task 13.0 in stage 12.0 (TID 136): Block rdd_32_13 does not exist
+26/10/18 21:16:28 ERROR Executor: Exception in task 5.0 in stage 12.0 (TID 128): Block rdd_32_5 does not exist

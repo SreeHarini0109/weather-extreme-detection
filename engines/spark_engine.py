@@ -34,8 +34,8 @@ sys.path.insert(0, str(ROOT))
 from pyspark.sql import SparkSession, Window  # noqa: E402
 from pyspark.sql import functions as F  # noqa: E402
 
-from core.aggregates import (DAILY_STAT_VARS, HOURLY_STAT_VARS, MEAN, M2, N, STAT_FIELDS, STAT_VARS,  # noqa: E402
-                             empty_vec)
+from core.aggregates import (DAILY_STAT_VARS, HOURLY_STAT_VARS, MEAN, M2, N, STAT_VARS,  # noqa: E402
+                             frame_to_vec, merge_stats_frames)
 from core.cleaning import HOURLY_VARS, hi_parts  # noqa: E402
 from core.detection import EVENT_COLS, build_rules  # noqa: E402
 from core.outputs import write_outputs  # noqa: E402
@@ -70,7 +70,11 @@ def build_session(master: str, cfg: dict, partitions: int) -> SparkSession:
          .config("spark.sql.sources.partitionColumnTypeInference.enabled", "false")
          .config("spark.sql.execution.arrow.pyspark.enabled", "true")
          .config("spark.driver.memory", sc["driver_memory"])
-         .config("spark.ui.showConsoleProgress", "false"))
+         .config("spark.ui.showConsoleProgress", "false")
+         # Let the JIT compile Spark's large generated aggregation methods (the JVM skips methods
+         # > 8000 bytecodes by default and runs them interpreted): ~2x faster wide aggregations.
+         .config("spark.driver.extraJavaOptions", "-XX:-DontCompileHugeMethods")
+         .config("spark.executor.extraJavaOptions", "-XX:-DontCompileHugeMethods"))
     spark = b.getOrCreate()
     spark.sparkContext.setLogLevel("ERROR")
     # ship the shared code to executors (needed on a real cluster; harmless locally)
@@ -82,46 +86,55 @@ def build_session(master: str, cfg: dict, partitions: int) -> SparkSession:
 
 # ----------------------------------------------------------------------------- P2 expressions
 
+def _rounded(cfg):
+    r = cfg["cleaning"]["round_decimals"]
+    return {v: nan_to_null(np_round(F.col(v).cast("double"), r)) for v in HOURLY_VARS}
+
+
 def clean_columns(df, cfg):
+    """Cleaned values: same rules as core.cleaning.clean_hourly."""
     c = cfg["cleaning"]
-    r = c["round_decimals"]
-    cols = {v: nan_to_null(F.bround(F.col(v).cast("double"), r)) for v in HOURLY_VARS}
+    x = _rounded(cfg)
+    out = {}
     lo, hi = c["temp_range"]
-    t = cols["temp_c"]
-    out = {"temp_c": F.when((t < lo) | (t > hi), F.lit(None)).otherwise(t)}
+    t = x["temp_c"]
+    out["temp_c"] = F.when((t < lo) | (t > hi), F.lit(None)).otherwise(t)
     lo, hi = c["humidity_range"]
     tol = c["humidity_clip_tolerance"]
-    h = cols["humidity_pct"]
+    h = x["humidity_pct"]
     out["humidity_pct"] = (F.when((h > hi + tol) | (h < lo - tol), F.lit(None))
                            .when(h > hi, F.lit(float(hi))).when(h < lo, F.lit(float(lo))).otherwise(h))
     lo, hi = c["precip_range"]
-    p = cols["precip_mm"]
+    p = x["precip_mm"]
     out["precip_mm"] = F.when((p < lo) | (p > hi), F.lit(None)).otherwise(p)
     lo, hi = c["wind_range"]
     for v in ("wind_kmh", "gust_kmh"):
-        w = cols[v]
+        w = x[v]
         out[v] = F.when((w < lo) | (w > hi), F.lit(None)).otherwise(w)
     return df.select("station_id", "timestamp", *[out[v].alias(v) for v in HOURLY_VARS])
 
 
 def quality_columns(cfg):
-    """Per-station quality counters on the rounded (pre-cleaning) values; mirrors clean_hourly."""
+    """Per-station quality counters on the rounded (pre-cleaning) values; mirrors clean_hourly.
+
+    Kept as its own small aggregation (one row per station): folding these 11 sums into the wide
+    daily aggregation made that aggregation ~10x slower (oversized generated code).
+    """
     c = cfg["cleaning"]
-    r = c["round_decimals"]
-    x = {v: F.bround(F.col(v).cast("double"), r) for v in HOURLY_VARS}
+    x = _rounded(cfg)
     s = lambda cond: F.sum(F.when(cond, 1).otherwise(0))
     tl, th = c["temp_range"]
     hl, hh = c["humidity_range"]
     tol = c["humidity_clip_tolerance"]
     pl, ph = c["precip_range"]
     wl, wh = c["wind_range"]
+    h = x["humidity_pct"]
     aggs = [F.count(F.lit(1)).alias("rows_dedup")]
-    aggs += [s(x[v].isNull() | F.isnan(x[v])).alias(f"{v}_missing") for v in HOURLY_VARS]
+    aggs += [s(x[v].isNull()).alias(f"{v}_missing") for v in HOURLY_VARS]
     aggs += [
         s((x["temp_c"] < tl) | (x["temp_c"] > th)).alias("temp_c_flagged"),
-        s(((x["humidity_pct"] > hh) & (x["humidity_pct"] <= hh + tol)) |
-          ((x["humidity_pct"] < hl) & (x["humidity_pct"] >= hl - tol))).alias("humidity_pct_clipped"),
-        s((x["humidity_pct"] > hh + tol) | (x["humidity_pct"] < hl - tol)).alias("humidity_pct_flagged"),
+        s(((h > hh) & (h <= hh + tol)) | ((h < hl) & (h >= hl - tol))).alias("humidity_pct_clipped"),
+        s((h > hh + tol) | (h < hl - tol)).alias("humidity_pct_flagged"),
         s((x["precip_mm"] < pl) | (x["precip_mm"] > ph)).alias("precip_mm_flagged"),
         s((x["wind_kmh"] < wl) | (x["wind_kmh"] > wh)).alias("wind_kmh_flagged"),
         s((x["gust_kmh"] < wl) | (x["gust_kmh"] > wh)).alias("gust_kmh_flagged"),
@@ -140,6 +153,16 @@ def heat_index_col(t_c, rh):
     return (hi_f - 32.0) * 5.0 / 9.0
 
 
+def np_round(c, decimals: int):
+    """numpy's np.round(x, d) == rint(x * 10^d) / 10^d, as plain double arithmetic.
+
+    Bit-for-bit identical to the pandas engines and far cheaper than F.bround (Java BigDecimal),
+    which matters because the optimiser inlines cleaned columns into every expression using them.
+    """
+    scale = float(10 ** decimals)
+    return F.rint(c * scale) / scale
+
+
 def nan_to_null(c):
     """Spark orders NaN above every number (NaN > 0 is TRUE); pandas treats NaN as missing. Use null."""
     return F.when(F.isnan(c), F.lit(None)).otherwise(c)
@@ -147,34 +170,70 @@ def nan_to_null(c):
 
 # ----------------------------------------------------------------------------- P3 helpers
 
+# "min/max and WHEN it happened" as a single fixed-width long, so Spark can use its fast hash
+# aggregate (min/max over a struct forces a sort-based aggregate: ~4x slower here).
+#   key = (round(v * 1e4) + 1e8) << 32 | seconds          min(key) -> min value, earliest time
+#   key = (round(v * 1e4) + 1e8) << 32 | (2^32-1-seconds) max(key) -> max value, earliest time
+# Exact because cleaned values are on a 1e-4 grid (rounded to <= 4 decimals) and |v| < 10^4.
+_VSCALE, _VOFF, _TBITS = 10_000, 100_000_000, 32
+
+
+def _packed(x, secs, for_max: bool):
+    vk = (F.round(x * _VSCALE) + _VOFF).cast("long")
+    t = (F.lit((1 << _TBITS) - 1) - secs) if for_max else secs
+    return F.shiftleft(vk, _TBITS) + t
+
+
 def stats_aggs(vars_, tcol):
-    ts = F.col(tcol).cast("timestamp").cast("long")
+    secs = F.col(tcol).cast("timestamp").cast("long")
     aggs = []
     for v in vars_:
         x = F.col(v)
         aggs += [F.count(x).alias(f"{v}__count"), F.avg(x).alias(f"{v}__mean"),
                  (F.var_pop(x) * F.count(x)).alias(f"{v}__m2"),
-                 F.min(F.when(x.isNotNull(), F.struct(x.alias("v"), ts.alias("t")))).alias(f"{v}__mn"),
-                 F.max(F.when(x.isNotNull(), F.struct(x.alias("v"), (-ts).alias("t")))).alias(f"{v}__mx")]
+                 # coalesce -> never null, so the column stays int64 in pandas (float64 would
+                 # silently drop the low bits of the 60-bit key)
+                 F.coalesce(F.min(_packed(x, secs, False)), F.lit(-1)).alias(f"{v}__mn"),
+                 F.coalesce(F.max(_packed(x, secs, True)), F.lit(-1)).alias(f"{v}__mx")]
     return aggs
 
 
-def wide_to_long(pdf: pd.DataFrame, vars_, level: str, period_col: str | None) -> pd.DataFrame:
+def _unpack(keys: pd.Series, for_max: bool):
+    ki = keys.to_numpy()
+    assert ki.dtype == np.int64, ki.dtype
+    ok = ki >= 0
+    vk = ki >> _TBITS
+    t = ki & ((1 << _TBITS) - 1)
+    if for_max:
+        t = ((1 << _TBITS) - 1) - t
+    v = np.where(ok, (vk - _VOFF) / _VSCALE, np.nan)
+    when = pd.to_datetime(np.where(ok, t, 0), unit="s").where(ok)
+    return v, when
+
+
+def wide_to_partials(pdf: pd.DataFrame, vars_) -> pd.DataFrame:
+    """Wide Spark aggregate rows (station, year, month) -> long partial-stat rows."""
     rows = []
     for v in vars_:
-        n = pdf[f"{v}__count"].to_numpy()
-        mn, mx = pdf[f"{v}__mn"], pdf[f"{v}__mx"]
+        mn, tmn = _unpack(pdf[f"{v}__mn"], False)
+        mx, tmx = _unpack(pdf[f"{v}__mx"], True)
         f = pd.DataFrame({
-            "station_id": pdf["station_id"], "level": level,
-            "period": pdf[period_col].astype(np.int64) if period_col else 0, "variable": v,
-            "count": n.astype(np.int64), "mean": pdf[f"{v}__mean"], "m2": pdf[f"{v}__m2"],
-            "min": [r["v"] if r is not None else np.nan for r in mn],
-            "min_time": pd.to_datetime([r["t"] if r is not None else None for r in mn], unit="s"),
-            "max": [r["v"] if r is not None else np.nan for r in mx],
-            "max_time": pd.to_datetime([-r["t"] if r is not None else None for r in mx], unit="s"),
-        })
+            "station_id": pdf["station_id"], "year": pdf["year"].astype(np.int64),
+            "month": pdf["month"].astype(np.int64), "variable": v,
+            "count": pdf[f"{v}__count"].astype(np.int64), "mean": pdf[f"{v}__mean"], "m2": pdf[f"{v}__m2"],
+            "min": mn, "min_time": tmn, "max": mx, "max_time": tmx})
         rows.append(f[f["count"] > 0])
     return pd.concat(rows, ignore_index=True)
+
+
+def levels_from_partials(part: pd.DataFrame) -> pd.DataFrame:
+    """Exact Chan merge of (station, year, month) partials up to the overall / year / month levels."""
+    keys = ["station_id", "level", "period", "variable"]
+    out = []
+    for level, col in (("overall", None), ("year", "year"), ("month", "month")):
+        f = part.assign(level=level, period=part[col] if col else 0)
+        out.append(merge_stats_frames(f, keys))
+    return pd.concat(out, ignore_index=True)
 
 
 # ----------------------------------------------------------------------------- P6 UDFs
@@ -216,59 +275,55 @@ def run(spark, data, cfg, stations=None, compare_approx=False, out_extra: dict |
     rules = build_rules(cfg)
     C = Cols()
 
-    # P1 load ---------------------------------------------------------------------------
+    # P1 load: one shuffle (hash-partition by station); every later groupBy has station_id in its keys,
+    # so Spark reuses this partitioning instead of shuffling again ---------------------------
     with timer.phase("load"):
         paths = [str(station_path(data, s)) for s in ids]
         raw = (spark.read.option("basePath", str(data)).parquet(*paths)
                .select("station_id", "timestamp", *HOURLY_VARS)
                .repartition(nparts, "station_id").cache())
-        raw_counts = raw.groupBy("station_id").count().toPandas()
-        rows = int(raw_counts["count"].sum())
+        raw.count()
+        rows = int(sum(manifest["stations"][s]["rows"] for s in ids))
 
-    # P2 clean + daily -------------------------------------------------------------------
+    # P2 dedup (cached: narrow, reused by everything below), quality counters, clean, daily --------
     with timer.phase("clean"):
-        dedup = raw.dropDuplicates(["station_id", "timestamp"])
+        dedup = raw.dropDuplicates(["station_id", "timestamp"]).cache()
+        dedup.count()
+        raw.unpersist()
         qual = dedup.groupBy("station_id").agg(*quality_columns(cfg)).toPandas()
-        hourly = clean_columns(dedup, cfg).withColumn("hi", heat_index_col(F.col("temp_c"), F.col("humidity_pct"))).cache()
+        qual["rows_in"] = qual["station_id"].map(lambda s: manifest["stations"][s]["rows"])
+        qual["duplicates"] = qual["rows_in"] - qual["rows_dedup"]
+        qual = qual.drop(columns=["rows_dedup"])
+        # hourly is NOT cached: caching this wide 13M-row frame costs far more than recomputing it
+        # from the cached dedup table; it is used twice (daily here, stats in P3).
+        hourly = (clean_columns(dedup, cfg)
+                  .withColumn("hi", heat_index_col(F.col("temp_c"), F.col("humidity_pct")))
+                  .withColumn("year", F.year("timestamp")).withColumn("month", F.month("timestamp")))
         daily = (hourly.groupBy("station_id", F.to_date("timestamp").alias("date")).agg(
             F.count("temp_c").alias("n_hours"),
             F.max("temp_c").alias("tmax"), F.min("temp_c").alias("tmin"), F.avg("temp_c").alias("tmean"),
             F.avg("humidity_pct").alias("rh_mean"), F.max("humidity_pct").alias("rh_max"),
             F.min("humidity_pct").alias("rh_min"),
-            F.bround(F.sum("precip_mm"), 4).alias("precip_sum"), F.max("precip_mm").alias("precip_max_1h"),
+            np_round(F.sum("precip_mm"), 4).alias("precip_sum"), F.max("precip_mm").alias("precip_max_1h"),
             F.max("wind_kmh").alias("wind_max"), F.max("gust_kmh").alias("gust_max"),
-            F.bround(F.max("hi"), 4).alias("hi_max"))
+            np_round(F.max("hi"), 4).alias("hi_max"))
             .withColumn("year", F.year("date").cast("long")).withColumn("month", F.month("date").cast("long"))
             .withColumn("complete", F.col("n_hours") >= cfg["cleaning"]["min_hours_complete"])
             .cache())
         daily.count()
-        raw.unpersist()
-        qual = qual.merge(raw_counts, on="station_id")
-        qual["rows_in"] = qual["count"]
-        qual["duplicates"] = qual["count"] - qual["rows_dedup"]
-        qual = qual.drop(columns=["count", "rows_dedup"])
 
-    # P3 stats ---------------------------------------------------------------------------
+    # P3 stats: ONE fine-grained pass (station, year, month), then exact Chan merges up to the
+    # overall / year / month / global levels (mergeable partial aggregates) ----------------
     with timer.phase("stats"):
-        h = hourly.withColumn("year", F.year("timestamp")).withColumn("month", F.month("timestamp"))
-        frames = []
-        for level, key in (("overall", None), ("year", "year"), ("month", "month")):
-            keys = ["station_id"] + ([key] if key else [])
-            a = h.groupBy(*keys).agg(*stats_aggs(HOURLY_STAT_VARS, "timestamp")).toPandas()
-            b = daily.groupBy(*keys).agg(*stats_aggs(DAILY_STAT_VARS, "date")).toPandas()
-            frames += [wide_to_long(a, HOURLY_STAT_VARS, level, key), wide_to_long(b, DAILY_STAT_VARS, level, key)]
-        stats = pd.concat(frames, ignore_index=True)
-        # global level: a single Spark aggregation over all data
-        ga = h.agg(*stats_aggs(HOURLY_STAT_VARS, "timestamp")).toPandas().assign(station_id="ALL")
-        gb = daily.agg(*stats_aggs(DAILY_STAT_VARS, "date")).toPandas().assign(station_id="ALL")
-        g = pd.concat([wide_to_long(ga, HOURLY_STAT_VARS, "global", None),
-                       wide_to_long(gb, DAILY_STAT_VARS, "global", None)]).set_index("variable")
-        gvec = empty_vec(len(STAT_VARS))
-        for i, v in enumerate(STAT_VARS):
-            r = g.loc[v]
-            gvec[i] = [r["count"], r["mean"], r["m2"], r["min"], r["max"],
-                       pd.Timestamp(r["min_time"]).value // 10**9, pd.Timestamp(r["max_time"]).value // 10**9]
-        hourly.unpersist()
+        a = hourly.groupBy("station_id", "year", "month").agg(*stats_aggs(HOURLY_STAT_VARS, "timestamp")).toPandas()
+        b = daily.groupBy("station_id", "year", "month").agg(*stats_aggs(DAILY_STAT_VARS, "date")).toPandas()
+        part = pd.concat([wide_to_partials(a, HOURLY_STAT_VARS), wide_to_partials(b, DAILY_STAT_VARS)],
+                         ignore_index=True)
+        stats = levels_from_partials(part)
+        g = merge_stats_frames(stats[stats["level"] == "overall"].assign(station_id="ALL", level="global", period=0),
+                               ["station_id", "level", "period", "variable"])
+        gvec = frame_to_vec(g, STAT_VARS)
+        dedup.unpersist()
 
     # P4 thresholds: distributed histograms -> shared percentile code -> broadcast join ---
     with timer.phase("thresholds"):
@@ -372,6 +427,7 @@ def run(spark, data, cfg, stations=None, compare_approx=False, out_extra: dict |
 
     with timer.phase("merge"):
         q = {k: int(qual[k].sum()) for k in qual.columns if k != "station_id"}
+        daily.unpersist()
         combined = {"stats": stats, "thresholds": thr, "events": events, "indices": indices, "trends": trends,
                     "global_vec": gvec, "quality": q, "quality_rows": qual,
                     "precip_hist": hist["precip_wet"].sum(axis=(0, 1)), "rows": rows, "stations": S}

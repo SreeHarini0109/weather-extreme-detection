@@ -120,11 +120,54 @@ Recovery of the generator's true trend: mean absolute error **0.051 °C/decade**
 
 This run: **11.12 s** wall (excluding 0.25 s writing outputs). Phases (slowest worker): load 0.21 s, clean 1.80 s, stats 6.38 s, thresholds 0.18 s, detect 1.86 s, trends 0.64 s.
 
+Median of repeated runs on the same 13.1M-row dataset (T₁ = sequential):
+
+| label | p | runs | total_s | speedup | efficiency | karp_flatt |
+|---|---|---|---|---|---|---|
+| mpi/dynamic | 3 | 3 | 5.695 | 1.929 | 0.643 | 0.278 |
+| mpi/dynamic | 5 | 3 | 3.548 | 3.096 | 0.619 | 0.154 |
+| mpi/dynamic | 9 | 3 | 3.052 | 3.599 | 0.400 | 0.188 |
+| mpi/dynamic | 11 | 3 | 2.992 | 3.671 | 0.334 | 0.200 |
+| mpi/station | 1 | 3 | 10.966 | 1.002 | 1.002 |  |
+| mpi/station | 2 | 3 | 5.935 | 1.851 | 0.925 | 0.081 |
+| mpi/station | 4 | 3 | 3.281 | 3.348 | 0.837 | 0.065 |
+| mpi/station | 8 | 3 | 3.133 | 3.506 | 0.438 | 0.183 |
+| mpi/station | 10 | 3 | 2.921 | 3.761 | 0.376 | 0.184 |
+| mpi/time | 2 | 3 | 6.326 | 1.736 | 0.868 | 0.152 |
+| mpi/time | 4 | 3 | 4.780 | 2.298 | 0.575 | 0.247 |
+| mpi/time | 8 | 3 | 6.156 | 1.784 | 0.223 | 0.498 |
+| mpi/time | 10 | 3 | 7.140 | 1.538 | 0.154 | 0.611 |
+| multiprocessing | 1 | 3 | 11.359 | 0.967 | 0.967 |  |
+| multiprocessing | 2 | 3 | 6.303 | 1.743 | 0.871 | 0.148 |
+| multiprocessing | 4 | 3 | 3.662 | 2.999 | 0.750 | 0.111 |
+| multiprocessing | 8 | 3 | 3.325 | 3.304 | 0.413 | 0.203 |
+| multiprocessing | 10 | 3 | 3.577 | 3.071 | 0.307 | 0.251 |
+| sequential | 1 | 3 | 10.984 | 1.000 | 1.000 |  |
+| spark | 1 | 3 | 43.007 | 0.255 | 0.255 |  |
+| spark | 2 | 3 | 32.057 | 0.343 | 0.171 | 4.837 |
+| spark | 4 | 3 | 24.405 | 0.450 | 0.113 | 2.629 |
+| spark | 8 | 3 | 25.109 | 0.438 | 0.055 | 2.470 |
+| spark | 10 | 3 | 26.720 | 0.411 | 0.041 | 2.592 |
+
+![speedup](plots/speedup.png)
+
+![efficiency](plots/efficiency.png)
+
+![phase breakdown](plots/phase_breakdown.png)
+
+![Amdahl](plots/amdahl.png)
+
+![weak scaling](plots/weak_scaling.png)
+
+![size scaling](plots/size_scaling.png)
+
+![load balancing](plots/load_balancing.png)
+
 ### File format: CSV vs Parquet
 
 | format | columns | rows | seconds | mib | mrows_per_s |
 |---|---|---|---|---|---|
-| csv | all | 1315025 | 1.664 | 94.311 | 0.790 |
-| csv | 6 needed | 1315025 | 1.552 | 94.311 | 0.847 |
-| parquet | all | 1315025 | 0.044 | 17.446 | 30.225 |
-| parquet | 6 needed (pruned) | 1315025 | 0.015 | 17.446 | 87.905 |
+| csv | all | 2630050 | 3.252 | 186.941 | 0.809 |
+| csv | 6 needed | 2630050 | 2.968 | 186.941 | 0.886 |
+| parquet | all | 2630050 | 0.059 | 34.829 | 44.721 |
+| parquet | 6 needed (pruned) | 2630050 | 0.027 | 34.829 | 95.737 |

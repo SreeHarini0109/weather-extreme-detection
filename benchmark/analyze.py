@@ -198,6 +198,7 @@ def plot_all(m: pd.DataFrame, strong: pd.DataFrame, weak: pd.DataFrame, out: Pat
     sz = m[m["tag"] == "size"]
     if len(sz):
         fig, ax = plt.subplots(figsize=(7.2, 4.2))
+        labelled = []
         for lab in ["sequential", *LINE_ORDER]:
             d = sz[sz["label"] == lab].sort_values("rows")
             if d.empty:
@@ -206,8 +207,10 @@ def plot_all(m: pd.DataFrame, strong: pd.DataFrame, weak: pd.DataFrame, out: Pat
                     label=lab + ("" if lab == "sequential" else " (p=8)"), markeredgecolor=style.SURFACE,
                     markeredgewidth=1.5)
             r = d.iloc[-1]
-            ax.annotate(f"{r['total_s']:.1f} s", (r["rows"] / 1e6, r["total_s"]), xytext=(6, 0),
-                        textcoords="offset points", va="center", fontsize=8, color=INK2)
+            if all(abs(r["total_s"] - v) > 0.06 * sz["total_s"].max() for v in labelled):   # skip colliding labels
+                ax.annotate(f"{r['total_s']:.1f} s", (r["rows"] / 1e6, r["total_s"]), xytext=(6, 0),
+                            textcoords="offset points", va="center", fontsize=8, color=INK2)
+                labelled.append(r["total_s"])
         ax.set(xlabel="rows processed (millions)", ylabel="wall time (s)")
         ax.set_title("Data-size scaling")
         ax.legend(loc="upper left")
